@@ -1,3 +1,8 @@
 {
-    "welcome": "Welcome to Login!"
+    "top-description": "Login eller opret en konto",
+    "email": "E-mail",
+    "divider-text": "eller",
+    "continue-with-google": "Fortsæt med Google",
+    "continue-with-facebook": "Fortsæt med Facebook",
+    "continue-with-apple": "Fortsæt med Apple"
 }

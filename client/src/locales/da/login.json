@@ -1,3 +1,10 @@
 {
-    "welcome": "Velkommen til Login!"
+    "top-description": "Login eller opret en konto",
+    "email": "E-mail",
+    "email-placeholder": "Indtast din e-mail",
+    "continue-button-text": "Fortsæt",
+    "divider-text": "eller",
+    "continue-google": "Fortsæt med Google",
+    "continue-facebook": "Fortsæt med Facebook",
+    "continue-apple": "Fortsæt med Apple"
 }
