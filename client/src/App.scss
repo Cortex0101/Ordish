@@ -1,5 +1,6 @@
 // App-specific SCSS styles
 // Using SCSS variables and nesting
+@use "sass:color";
 
 $app-primary: #007bff;
 $app-accent: #28a745;
@@ -10,7 +11,7 @@ $border-radius: 0.375rem;
   background-color: #f8f9fa;
   
   .app-header {
-    background: linear-gradient(135deg, $app-primary, lighten($app-primary, 20%));
+    background: linear-gradient(135deg, $app-primary, color.scale($app-primary, $lightness: 20%));
     color: white;
     padding: 2rem 0;
     margin-bottom: 2rem;

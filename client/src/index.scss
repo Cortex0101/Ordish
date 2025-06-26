@@ -1,5 +1,5 @@
-// Import Bootstrap SCSS
-@import 'bootstrap/scss/bootstrap';
+// Import Bootstrap SCSS (warnings suppressed in vite.config.ts)
+@use 'bootstrap/scss/bootstrap';
 
 // Custom variables (place before Bootstrap import to override)
 // $primary: #007bff;
