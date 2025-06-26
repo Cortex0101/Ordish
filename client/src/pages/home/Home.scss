@@ -1,0 +1,124 @@
+// App-specific SCSS styles
+// Using SCSS variables and nesting
+@use "sass:color";
+
+$app-primary: #007bff;
+$app-accent: #28a745;
+$border-radius: 0.375rem;
+
+.app-container {
+  min-height: 100vh;
+  background-color: #f8f9fa;
+  
+  .app-header {
+    background: linear-gradient(135deg, $app-primary, color.scale($app-primary, $lightness: 20%));
+    color: white;
+    padding: 2rem 0;
+    margin-bottom: 2rem;
+    
+    h1 {
+      margin: 0;
+      font-weight: 700;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+  }
+  
+  .main-content {
+    padding: 0 1rem;
+    
+    .status-indicator {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      margin-right: 0.5rem;
+      
+      &.loading {
+        background-color: #ffc107;
+        animation: pulse 1.5s infinite;
+      }
+      
+      &.success {
+        background-color: $app-accent;
+      }
+      
+      &.error {
+        background-color: #dc3545;
+      }
+    }
+    
+    .api-response-card {
+      border: none;
+      border-radius: $border-radius;
+      box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+      transition: all 0.3s ease;
+      
+      &:hover {
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        transform: translateY(-2px);
+      }
+      
+      .card-header {
+        background: linear-gradient(90deg, #f8f9fa, #e9ecef);
+        border-bottom: 1px solid #dee2e6;
+        font-weight: 600;
+        color: $app-primary;
+      }
+      
+      .timestamp {
+        font-family: 'Courier New', monospace;
+        font-size: 0.9rem;
+        color: #6c757d;
+        background-color: #f1f3f4;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.25rem;
+      }
+    }
+    
+    .feature-checklist {
+      .list-group-item {
+        border: none;
+        background: transparent;
+        padding: 0.75rem 0;
+        
+        &::before {
+          content: "✅";
+          margin-right: 0.75rem;
+          font-size: 1.1rem;
+        }
+        
+        &:hover {
+          background-color: rgba($app-accent, 0.1);
+          border-radius: $border-radius;
+        }
+      }
+    }
+  }
+}
+
+// Loading animation
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .app-container {
+    .app-header {
+      padding: 1.5rem 0;
+      
+      h1 {
+        font-size: 1.75rem;
+      }
+    }
+    
+    .main-content {
+      padding: 0 0.5rem;
+    }
+  }
+}
