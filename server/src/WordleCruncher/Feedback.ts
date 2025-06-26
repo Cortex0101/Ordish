@@ -1,13 +1,23 @@
 type Feedback = 'G' | 'Y' | 'B';
 
+// Danish alphabet: A-Z, Æ, Ø, Å
+const DANISH_ALPHABET = [
+  ...'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+  'Æ', 'Ø', 'Å'
+];
+const LETTER_TO_INDEX: Record<string, number> = {};
+DANISH_ALPHABET.forEach((ch, idx) => {
+  LETTER_TO_INDEX[ch] = idx;
+});
+
 /**
- * Given two equal-length strings `guess` and `secret` (A–Z only),
+ * Given two equal-length strings `guess` and `secret` (A–Z, Æ, Ø, Å only),
  * returns an array of length N with:
  *   G = green (correct letter & position)
  *   Y = yellow (in secret but wrong position)
  *   B = black  (not in secret, or all copies already matched)
  *
- * Runs in O(N) time with a single 26-slot int array and two simple loops.
+ * Runs in O(N) time with a single 29-slot int array and two simple loops.
  */
 export function wordleFeedback(guess: string, secret: string): Feedback[] {
   const n = guess.length;
@@ -16,29 +26,31 @@ export function wordleFeedback(guess: string, secret: string): Feedback[] {
   }
 
   const feedback = new Array<Feedback>(n);
-  const counts = new Array<number>(26).fill(0);
+  const counts = new Array<number>(29).fill(0);
 
   // ---- Pass 1: mark greens & tally unmatched secret letters ----
   for (let i = 0; i < n; i++) {
-    // map 'A'..'Z' → 0..25
-    const g = guess.charCodeAt(i) - 65;
-    const s = secret.charCodeAt(i) - 65;
+    // Normalize to uppercase
+    const gChar = guess[i].toUpperCase();
+    const sChar = secret[i].toUpperCase();
+    const g = LETTER_TO_INDEX[gChar];
+    const s = LETTER_TO_INDEX[sChar];
 
-    if (g === s && g >= 0 && g < 26) {
+    if (g !== undefined && s !== undefined && g === s) {
       feedback[i] = 'G';
-    } else if (s >= 0 && s < 26) {
+    } else if (s !== undefined) {
       counts[s]++;              // secret letter s remains available
     } else {
-      feedback[i] = 'B';        // any non-A–Z char we treat as “not in secret”
+      feedback[i] = 'B';        // any non-alphabet char we treat as “not in secret”
     }
   }
 
   // ---- Pass 2: mark yellows or blacks for everything not yet green ----
   for (let i = 0; i < n; i++) {
     if (feedback[i] === 'G') continue;
-
-    const g = guess.charCodeAt(i) - 65;
-    if (g >= 0 && g < 26 && counts[g] > 0) {
+    const gChar = guess[i].toUpperCase();
+    const g = LETTER_TO_INDEX[gChar];
+    if (g !== undefined && counts[g] > 0) {
       feedback[i] = 'Y';
       counts[g]--;
     } else {

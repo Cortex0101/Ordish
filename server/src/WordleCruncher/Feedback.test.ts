@@ -16,4 +16,11 @@ describe("wordleFeedback", () => {
   it("yellows are marked after greens", () => {
     expect(wordleFeedback("FOTON", "FYNBO")).toEqual(["G", "Y", "B", "B", "Y"]);
   });
+
+  it('handles Danish letters correctly', () => {
+    expect(wordleFeedback("ÆBLE", "ÆBLE")).toEqual(["G", "G", "G", "G"]);
+    expect(wordleFeedback("ÆBLE", "ØBLE")).toEqual(["B", "G", "G", "G"]);
+    expect(wordleFeedback("ÆBLE", "ÅBLE")).toEqual(["B", "G", "G", "G"]);
+    expect(wordleFeedback("ÆBLE", "ABCD")).toEqual(["B", "B", "B", "B"]);
+  });
 });
