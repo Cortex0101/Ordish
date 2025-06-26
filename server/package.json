@@ -11,7 +11,8 @@
     "build:client": "cd ../client && npm run build",
     "build:all": "npm run build:client && npm run build",
     "start:prod": "cross-env NODE_ENV=production npm start",
-    "test": "jest"
+    "test": "jest",
+    "bench": "tsx src/benchmarks/wordleFeedback.bench.ts"
   },
   "keywords": [],
   "author": "",
@@ -22,13 +23,16 @@
     "express": "^4.21.2"
   },
   "devDependencies": {
+    "@types/benchmark": "^2.1.5",
     "@types/cors": "^2.8.19",
     "@types/express": "^4.17.23",
     "@types/jest": "^30.0.0",
     "@types/node": "^22.15.33",
+    "benchmark": "^2.1.4",
     "jest": "^30.0.3",
     "ts-jest": "^29.4.0",
     "tsx": "^4.20.3",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4"
   }
 }
