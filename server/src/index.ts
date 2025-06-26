@@ -1,16 +1,30 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 // Load environment variables
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+const NODE_ENV = process.env.NODE_ENV || 'development';
+
+// Get the directory name for ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+// Serve static files from the React app build directory
+if (NODE_ENV === 'production') {
+  // In production, serve the built React app
+  const clientBuildPath = path.join(__dirname, '../../client/dist');
+  app.use(express.static(clientBuildPath));
+}
 
 // Routes
 app.get('/api/test', (_req: Request, res: Response) => {
@@ -34,11 +48,24 @@ app.use((err: Error, _req: Request, res: Response, _next: any) => {
 
 // 404 handler
 app.use('*', (_req: Request, res: Response) => {
-  res.status(404).json({ error: 'Route not found' });
+  if (NODE_ENV === 'production') {
+    // In production, serve index.html for any unmatched routes (SPA routing)
+    const clientBuildPath = path.join(__dirname, '../../client/dist');
+    res.sendFile(path.join(clientBuildPath, 'index.html'));
+  } else {
+    // In development, return 404 JSON
+    res.status(404).json({ error: 'Route not found' });
+  }
 });
 
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
   console.log(`📊 Health check: http://localhost:${PORT}/health`);
   console.log(`🧪 Test endpoint: http://localhost:${PORT}/api/test`);
+  
+  if (NODE_ENV === 'production') {
+    console.log(`🌐 Serving React app from http://localhost:${PORT}`);
+  } else {
+    console.log(`🔧 Development mode - React dev server should run on port 5173`);
+  }
 });
