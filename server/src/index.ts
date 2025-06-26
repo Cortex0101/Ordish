@@ -8,6 +8,9 @@ import { fileURLToPath } from 'url';
 dotenv.config();
 
 const app = express();
+const envFile = process.env.NODE_ENV === 'production' ? '.env.production' : '.env.development';
+dotenv.config({ path: envFile });
+
 const PORT = process.env.PORT || 3001;
 const NODE_ENV = process.env.NODE_ENV || 'development';
 
@@ -35,11 +38,6 @@ app.get('/api/test', (_req: Request, res: Response) => {
   });
 });
 
-// Health check endpoint
-app.get('/health', (_req: Request, res: Response) => {
-  res.status(200).json({ status: 'OK', uptime: process.uptime() });
-});
-
 // Error handling middleware
 app.use((err: Error, _req: Request, res: Response, _next: any) => {
   console.error(err.stack);
@@ -59,10 +57,6 @@ app.use('*', (_req: Request, res: Response) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
-  console.log(`📊 Health check: http://localhost:${PORT}/health`);
-  console.log(`🧪 Test endpoint: http://localhost:${PORT}/api/test`);
-  
   if (NODE_ENV === 'production') {
     console.log(`🌐 Serving React app from http://localhost:${PORT}`);
   } else {
