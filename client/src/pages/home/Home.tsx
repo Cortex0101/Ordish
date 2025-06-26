@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Container, Card, ListGroup, Badge, Spinner, Alert } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
+
 import './Home.scss';
 
 
@@ -10,6 +12,8 @@ interface ApiResponse {
 }
 
 function Home() {
+  const { t } = useTranslation('home');
+
   const [apiData, setApiData] = useState<ApiResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -77,7 +81,7 @@ function Home() {
         {/* Features Section */}
         <Card>
           <Card.Header>
-            <h3 className="mb-0">🎯 Development Setup Complete!</h3>
+            <h3 className="mb-0">🎯 {t('welcome')}</h3>
           </Card.Header>
           <Card.Body>
             <ListGroup className="feature-checklist" variant="flush">
