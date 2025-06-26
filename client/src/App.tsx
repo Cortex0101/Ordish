@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Container, Card, ListGroup, Badge, Spinner, Alert } from 'react-bootstrap';
+import Header from './components/Header/Header';
 import './App.scss';
+
 
 interface ApiResponse {
   message: string;
@@ -34,6 +36,7 @@ function App() {
 
   return (
     <div className="app-container">
+      <Header />
       <div className="app-header text-center">
         <Container>
           <h1>🚀 Ordish - Full Stack App</h1>
