@@ -12,61 +12,19 @@
   font-weight: 400;
 }
 
-body {
-  margin: 0;
-  min-height: 100vh;
+:root,
+[data-bs-theme="light"] {
+  --bs-body-bg: #fff;
+  --bs-body-color: #212529;
+  --bs-primary: #007bff;
+  --bs-secondary: #6c757d;
+  --bs-success: #28a745;
 }
 
-// Custom SCSS variables and mixins
-$custom-primary: #007bff;
-$custom-secondary: #6c757d;
-$custom-success: #28a745;
-
-// Example of SCSS nesting and mixins
-.app-container {
-  padding: 2rem;
-  
-  .api-response-card {
-    background-color: #f8f9fa;
-    border: 1px solid #dee2e6;
-    border-radius: 0.375rem;
-    padding: 1.5rem;
-    margin-top: 1.5rem;
-    
-    h2 {
-      color: $custom-primary;
-      margin-bottom: 1rem;
-    }
-    
-    p {
-      margin-bottom: 0.5rem;
-      
-      strong {
-        color: $custom-secondary;
-      }
-    }
-  }
-  
-  .feature-list {
-    margin-top: 2rem;
-    
-    h3 {
-      color: $custom-success;
-      margin-bottom: 1rem;
-    }
-    
-    ul {
-      list-style-type: none;
-      padding-left: 0;
-      
-      li {
-        padding: 0.5rem 0;
-        
-        &::before {
-          content: "✅ ";
-          margin-right: 0.5rem;
-        }
-      }
-    }
-  }
+[data-bs-theme="dark"] {
+  --bs-body-bg: #181a1b;
+  --bs-body-color: #f8f9fa;
+  --bs-primary: #0d6efd;
+  --bs-secondary: #adb5bd;
+  --bs-success: #198754;
 }
