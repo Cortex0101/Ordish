@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { Container, Card, ListGroup, Badge, Spinner, Alert } from 'react-bootstrap';
+import './App.scss';
 
 interface ApiResponse {
   message: string;
@@ -30,36 +32,72 @@ function App() {
       });
   }, []);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
-
   return (
-    <div style={{ padding: '20px', fontFamily: 'Arial, sans-serif' }}>
-      <h1>🚀 Ordish - Full Stack App</h1>
-      
-      {apiData && (
-        <div style={{ 
-          backgroundColor: '#f0f0f0', 
-          padding: '15px', 
-          borderRadius: '5px',
-          marginTop: '20px'
-        }}>
-          <h2>API Response:</h2>
-          <p><strong>Message:</strong> {apiData.message}</p>
-          <p><strong>Environment:</strong> {apiData.environment}</p>
-          <p><strong>Timestamp:</strong> {new Date(apiData.timestamp).toLocaleString()}</p>
-        </div>
-      )}
-      
-      <div style={{ marginTop: '30px' }}>
-        <h3>🎯 Development Setup Complete!</h3>
-        <ul>
-          <li>✅ React Frontend (Vite + TypeScript)</li>
-          <li>✅ Express Backend (TypeScript + ES Modules)</li>
-          <li>✅ API Proxy Configuration</li>
-          <li>✅ Production Build Support</li>
-        </ul>
+    <div className="app-container">
+      <div className="app-header text-center">
+        <Container>
+          <h1>🚀 Ordish - Full Stack App</h1>
+          <p className="lead mb-0">React + TypeScript + Express + Bootstrap + SCSS</p>
+        </Container>
       </div>
+
+      <Container className="main-content">
+        {/* API Status Section */}
+        <Card className="api-response-card mb-4">
+          <Card.Header className="d-flex align-items-center">
+            <span className={`status-indicator ${loading ? 'loading' : error ? 'error' : 'success'}`}></span>
+            API Connection Status
+          </Card.Header>
+          <Card.Body>
+            {loading && (
+              <div className="text-center">
+                <Spinner animation="border" role="status" className="me-2" />
+                <span>Loading API data...</span>
+              </div>
+            )}
+            
+            {error && (
+              <Alert variant="danger" className="mb-0">
+                <strong>Error:</strong> {error}
+              </Alert>
+            )}
+            
+            {apiData && (
+              <div>
+                <p><strong>Message:</strong> {apiData.message}</p>
+                <p><strong>Environment:</strong> 
+                  <Badge bg={apiData.environment === 'production' ? 'success' : 'warning'} className="ms-2">
+                    {apiData.environment}
+                  </Badge>
+                </p>
+                <p><strong>Timestamp:</strong> 
+                  <span className="timestamp ms-2">
+                    {new Date(apiData.timestamp).toLocaleString()}
+                  </span>
+                </p>
+              </div>
+            )}
+          </Card.Body>
+        </Card>
+
+        {/* Features Section */}
+        <Card>
+          <Card.Header>
+            <h3 className="mb-0">🎯 Development Setup Complete!</h3>
+          </Card.Header>
+          <Card.Body>
+            <ListGroup className="feature-checklist" variant="flush">
+              <ListGroup.Item>React Frontend (Vite + TypeScript)</ListGroup.Item>
+              <ListGroup.Item>Express Backend (TypeScript + ES Modules)</ListGroup.Item>
+              <ListGroup.Item>Bootstrap 5 + React Bootstrap Components</ListGroup.Item>
+              <ListGroup.Item>SCSS with Variables and Nesting</ListGroup.Item>
+              <ListGroup.Item>API Proxy Configuration</ListGroup.Item>
+              <ListGroup.Item>Production Build Support</ListGroup.Item>
+              <ListGroup.Item>Responsive Design</ListGroup.Item>
+            </ListGroup>
+          </Card.Body>
+        </Card>
+      </Container>
     </div>
   );
 }
