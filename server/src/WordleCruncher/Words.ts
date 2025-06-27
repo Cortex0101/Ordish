@@ -24,9 +24,10 @@ export interface WordEntry {
 }
 
 export class Words {
-  private static words: WordEntry[] = [];
+  private words: WordEntry[] = [];
+  private validWords: string[] = [];
 
-  public static loadWords() {
+  public loadWords() {
     if (this.words.length > 0) return; // Already loaded
 
     const csvContent = readFileSync(CSV_FILE_PATH, "utf-8");
@@ -42,14 +43,28 @@ export class Words {
       .filter((entry) => entry.singular && entry.plural && entry.type); // Filter out any empty entries
     this.words = parsed as WordEntry[];
     console.log(`Loaded ${this.words.length} words from ${CSV_FILE_PATH}`);
+
+    this.validWords = this.words
+  .filter((word) => word.plural.length === 5)
+  .filter((word) => !word.plural.includes("'") && !word.plural.includes("-"))
+  .filter((word) => word.plural === word.plural.toLowerCase())
+  .filter((word) => word.singular === word.plural) // lemma forms only
+  .filter((word) => /^[a-zæøå]+$/.test(word.plural)) // only Danish alphabet
+  .filter((word) => ["sb.", "vb.", "adj.", "adv."].includes(word.type.trim()))
+  .map((word) => word.plural);
   }
 
-  public static getWords(): WordEntry[] {
+  public getWords(): WordEntry[] {
     this.loadWords();
     return this.words;
   }
 
-  public static getAllUniqueTypes(): string[] {
+  public getValidWords(): string[] {
+    this.loadWords();
+    return this.validWords;
+  }
+
+  public getAllUniqueTypes(): string[] {
     this.loadWords();
     const types = new Set<string>();
     for (const word of this.words) {
@@ -59,7 +74,9 @@ export class Words {
   }
 }
 
-console.log("Words: " + Words.getAllUniqueTypes().join(", "));
+/*
+let words = new Words();
+let valid = words.getValidWords();
 
-let fiveLetterWords = Words.getWords().filter((word) => word.plural.length === 5).map((word) => word.plural);
-console.log("Five-letter words: " + fiveLetterWords.length);
+console.log("Five-letter words: " + valid.slice(0, 10).join(", ") + " ... (" + valid.length + " total)")
+*/
