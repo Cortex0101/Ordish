@@ -5,9 +5,22 @@ services:
     restart: always
     environment:
       MARIADB_ROOT_PASSWORD: devpassword
-      MARIADB_DATABASE: woordle_db_dev
+      MARIADB_DATABASE: ordish_db_dev
       MARIADB_USER: devuser
       MARIADB_PASSWORD: devpassword
       MARIADB_DEFAULT_AUTHENTICATION_PLUGIN: mysql_native_password
     ports:
       - "3306:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+      - ./server/database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost", "-u", "devuser", "-pdevpassword"]
+      start_period: 30s
+      interval: 10s
+      timeout: 10s
+      retries: 5
+    command: --init-connect='SET SESSION sql_mode=TRADITIONAL' --innodb-buffer-pool-size=256M --max-connections=100
+
+volumes:
+  mariadb_data:

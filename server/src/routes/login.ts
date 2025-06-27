@@ -1,14 +1,15 @@
 import { Router } from 'express';
-import pool from '../db';
+import { getPool } from '../db';
 const router = Router();
 
-router.get('/', (req, res) => {
+router.get('/', (_req, res) => {
   // Return wordle game data
   res.json({ word: 'login' });
 });
 
-router.get('/api/users', async (req, res) => {
+router.get('/api/users', async (_req, res) => {
   try {
+    const pool = getPool();
     const [rows] = await pool.query('SELECT * FROM users');
     res.json(rows);
   } catch (err) {

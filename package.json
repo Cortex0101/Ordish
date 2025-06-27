@@ -4,12 +4,19 @@
   "description": "Full-stack web application",
   "private": true,
   "scripts": {
-    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "dev": "npm run dev:db && npm run dev:with-db",
+    "dev:quick": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
 
     "dev:db": "docker compose up -d",
+    "dev:db:logs": "docker compose logs -f mariadb",
+    "dev:db:reset": "docker compose down -v && docker compose up -d && timeout /t 15",
+    "dev:db:restart": "docker compose restart mariadb",
+    "dev:db:status": "docker compose ps mariadb",
+    "dev:db:check": "cd server && node scripts/checkDb.js",
     "dev:all": "npm run dev:db && npm run dev:with-db",
     "dev:with-db": "concurrently --kill-others-on-fail \"npm run dev:server\" \"npm run dev:client\"",
     "dev:db:down": "docker compose down",
+    "dev:db:stop": "docker compose stop mariadb",
     "postdev:with-db": "npm run dev:db:down",
 
     "dev:client": "cd client && npm run dev",

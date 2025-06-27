@@ -1,12 +1,12 @@
-import bcrypt from 'bcryptjs';
+import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import pool from '../db';
-import { User, UserPreferences } from '../models/User';
+import { getPool } from '../db';
+import { User } from '../models/User';
 
 export class AuthService {
-  // Create user with email/password
   static async createUser(email: string, password: string, firstName?: string, lastName?: string): Promise<User> {
     const passwordHash = await bcrypt.hash(password, 12);
+    const pool = getPool();
     
     const [result] = await pool.execute(
       'INSERT INTO users (email, password_hash, first_name, last_name) VALUES (?, ?, ?, ?)',
@@ -28,82 +28,89 @@ export class AuthService {
     return user;
   }
 
-  // Create user from social login
-  static async createSocialUser(provider: string, providerData: any): Promise<User> {
+  static async verifyPassword(email: string, password: string): Promise<User | null> {
+    const pool = getPool();
     const [result] = await pool.execute(
-      'INSERT INTO users (email, first_name, last_name, avatar_url, email_verified) VALUES (?, ?, ?, ?, ?)',
-      [providerData.email, providerData.given_name, providerData.family_name, providerData.picture, true]
-    );
+      'SELECT id, email, password_hash, first_name, last_name, email_verified FROM users WHERE email = ?',
+      [email]
+    ) as any;
     
-    const userId = (result as any).insertId;
+    if (result.length === 0) return null;
     
-    // Link social account
-    await pool.execute(
-      'INSERT INTO social_accounts (user_id, provider, provider_id, provider_email) VALUES (?, ?, ?, ?)',
-      [userId, provider, providerData.id, providerData.email]
-    );
+    const user = result[0];
+    const isValid = await bcrypt.compare(password, user.password_hash);
     
-    // Create default preferences
-    await pool.execute(
-      'INSERT INTO user_preferences (user_id, theme, language) VALUES (?, ?, ?)',
-      [userId, 'auto', 'en']
-    );
+    if (!isValid) return null;
     
-    const user = await this.getUserById(userId);
-    if (!user) {
-      throw new Error('Social user creation failed');
-    }   
-    return user;
+    // Remove password hash from return value
+    const { password_hash, ...userWithoutPassword } = user;
+    return userWithoutPassword;
   }
 
-  // Get user by email
+  static async createSession(userId: number, sessionData: any): Promise<string> {
+    const sessionId = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+    const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 7 days
+    const pool = getPool();
+    
+    await pool.execute(
+      'INSERT INTO user_sessions (id, user_id, data, expires_at) VALUES (?, ?, ?, ?)',
+      [sessionId, userId, JSON.stringify(sessionData), expiresAt]
+    );
+    
+    return sessionId;
+  }
+
+  static generateJWT(user: User): string {
+    const payload = {
+      id: user.id,
+      email: user.email,
+    };
+    
+    return jwt.sign(payload, process.env.JWT_SECRET!, { expiresIn: '7d' });
+  }
+
   static async getUserByEmail(email: string): Promise<User | null> {
-    const [rows] = await pool.execute('SELECT * FROM users WHERE email = ?', [email]);
-    return (rows as User[])[0] || null;
+    const pool = getPool();
+    const [rows] = await pool.execute('SELECT * FROM users WHERE email = ?', [email]) as any;
+    return rows.length > 0 ? rows[0] : null;
   }
 
-  // Get user by ID with preferences
   static async getUserById(id: number): Promise<User | null> {
-    const [rows] = await pool.execute('SELECT * FROM users WHERE id = ?', [id]);
-    return (rows as User[])[0] || null;
+    const pool = getPool();
+    const [rows] = await pool.execute('SELECT * FROM users WHERE id = ?', [id]) as any;
+    return rows.length > 0 ? rows[0] : null;
   }
 
-  // Get user preferences
-  static async getUserPreferences(userId: number): Promise<UserPreferences | null> {
-    const [rows] = await pool.execute('SELECT * FROM user_preferences WHERE user_id = ?', [userId]);
-    return (rows as UserPreferences[])[0] || null;
+  static async getUserPreferences(userId: number): Promise<any> {
+    const pool = getPool();
+    const [rows] = await pool.execute('SELECT * FROM user_preferences WHERE user_id = ?', [userId]) as any;
+    return rows.length > 0 ? rows[0] : null;
   }
 
-  // Update user preferences
-  static async updateUserPreferences(userId: number, preferences: Partial<UserPreferences>): Promise<void> {
-    const fields = Object.keys(preferences).filter(key => key !== 'id' && key !== 'user_id');
-    const values = fields.map(field => preferences[field as keyof UserPreferences]);
+  static async updateUserPreferences(userId: number, preferences: any): Promise<void> {
+    const pool = getPool();
+    const { theme, language, timezone, notifications_enabled } = preferences;
     
-    if (fields.length > 0) {
-      const setClause = fields.map(field => `${field} = ?`).join(', ');
+    // Use REPLACE to update or insert preferences
+    if (theme || language || timezone || notifications_enabled !== undefined) {
       await pool.execute(
-        `UPDATE user_preferences SET ${setClause} WHERE user_id = ?`,
-        [...values, userId]
+        'REPLACE INTO user_preferences (user_id, theme, language, timezone, notifications_enabled) VALUES (?, ?, ?, ?, ?)',
+        [userId, theme || 'auto', language || 'en', timezone || 'UTC', notifications_enabled !== undefined ? notifications_enabled : true]
       );
     }
   }
 
-  // Verify password
-  static async verifyPassword(plainPassword: string, hashedPassword: string): Promise<boolean> {
-    return bcrypt.compare(plainPassword, hashedPassword);
+  static verifyJWT(token: string): any {
+    try {
+      return jwt.verify(token, process.env.JWT_SECRET!);
+    } catch (error) {
+      return null;
+    }
   }
 
-  // Generate JWT
-  static generateToken(user: User): string {
-    return jwt.sign(
-      { userId: user.id, email: user.email },
-      process.env.JWT_SECRET!,
-      { expiresIn: '7d' }
-    );
-  }
-
-  // Verify JWT
-  static verifyToken(token: string): any {
-    return jwt.verify(token, process.env.JWT_SECRET!);
+  static async checkEmailExists(email: string): Promise<boolean> {
+    const pool = getPool();
+    const [rows] = await pool.execute('SELECT COUNT(*) as count FROM users WHERE email = ?', [email]) as any;
+    return rows[0].count > 0;
   }
 }
