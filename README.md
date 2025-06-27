@@ -276,6 +276,53 @@ Translation files are organized by namespace:
 - API Base: `http://localhost:3000/api/`
 - Test Endpoint: `http://localhost:3000/api/test`
 
+## Database
+
+CREATE TABLE users (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  email VARCHAR(255) UNIQUE NOT NULL,
+  password_hash VARCHAR(255), -- NULL for social logins
+  first_name VARCHAR(100),
+  last_name VARCHAR(100),
+  avatar_url TEXT,
+  email_verified BOOLEAN DEFAULT FALSE,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE social_accounts (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  user_id INT NOT NULL,
+  provider ENUM('google', 'apple', 'facebook') NOT NULL,
+  provider_id VARCHAR(255) NOT NULL, -- ID from the social provider
+  provider_email VARCHAR(255),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+  UNIQUE KEY unique_provider_account (provider, provider_id)
+);
+
+CREATE TABLE user_preferences (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  user_id INT NOT NULL,
+  theme ENUM('light', 'dark', 'auto') DEFAULT 'auto',
+  language VARCHAR(10) DEFAULT 'en',
+  timezone VARCHAR(50) DEFAULT 'UTC',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE user_sessions (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  user_id INT NOT NULL,
+  token_hash VARCHAR(255) NOT NULL,
+  expires_at TIMESTAMP NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+  INDEX idx_token_hash (token_hash),
+  INDEX idx_expires_at (expires_at)
+);
+
 ## 🐛 Troubleshooting
 
 ### Common Issues
