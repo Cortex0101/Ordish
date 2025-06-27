@@ -7,7 +7,10 @@
     "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
 
     "dev:db": "docker compose up -d",
-    "dev:all": "npm run dev:db && npm run dev",
+    "dev:all": "npm run dev:db && npm run dev:with-db",
+    "dev:with-db": "concurrently --kill-others-on-fail \"npm run dev:server\" \"npm run dev:client\"",
+    "dev:db:down": "docker compose down",
+    "postdev:with-db": "npm run dev:db:down",
 
     "dev:client": "cd client && npm run dev",
     "dev:server": "cd server && npm run dev",

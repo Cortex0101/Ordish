@@ -12,6 +12,8 @@ router.get('/api/users', async (req, res) => {
     const [rows] = await pool.query('SELECT * FROM users');
     res.json(rows);
   } catch (err) {
+    // Log full error details for debugging
+    console.error('Database error in /api/users:', err);
     res.status(500).json({ error: 'Database error' });
   }
 });

@@ -8,5 +8,6 @@ services:
       MARIADB_DATABASE: woordle_db_dev
       MARIADB_USER: devuser
       MARIADB_PASSWORD: devpassword
+      MARIADB_DEFAULT_AUTHENTICATION_PLUGIN: mysql_native_password
     ports:
       - "3306:3306"

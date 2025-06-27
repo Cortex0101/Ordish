@@ -4,29 +4,43 @@ import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-import homeRoutes from './routes/home';
-import loginRoutes from './routes/login';
+async function startServer() {
+  // Load environment variables
+  dotenv.config();
 
-// Load environment variables
-dotenv.config();
+  const app = express();
+  const envFile = process.env.NODE_ENV === 'production' ? '.env.production' : '.env.development';
+  dotenv.config({ path: envFile });
 
-const app = express();
-const envFile = process.env.NODE_ENV === 'production' ? '.env.production' : '.env.development';
-dotenv.config({ path: envFile });
+  const PORT = process.env.PORT || 3001;
+  const NODE_ENV = process.env.NODE_ENV || 'development';
 
-const PORT = process.env.PORT || 3001;
-const NODE_ENV = process.env.NODE_ENV || 'development';
+  // Get the directory name for ES modules
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = path.dirname(__filename);
 
-// Get the directory name for ES modules
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+  // Middleware
+  app.use(cors());
+  app.use(express.json());
 
-// Middleware
-app.use(cors());
-app.use(express.json());
+  // Import routes AFTER loading environment variables using dynamic imports
+  const homeRoutes = (await import('./routes/home')).default;
+  const loginRoutes = (await import('./routes/login')).default;
 
-app.use('/api/home', homeRoutes);
-app.use('/api/login', loginRoutes);
+  app.use('/api/home', homeRoutes);
+  app.use('/api/login', loginRoutes);
+
+app.use((err: Error, req: Request, res: Response, _next: any) => {
+  console.error('Unhandled error:', {
+    message: err.message,
+    stack: err.stack,
+    url: req.originalUrl,
+    method: req.method,
+    body: req.body,
+    query: req.query,
+  });
+  res.status(500).json({ error: 'Something went wrong!' });
+});
 
 // Serve static files from the React app build directory
 if (NODE_ENV === 'production') {
@@ -62,10 +76,14 @@ app.use('*', (_req: Request, res: Response) => {
   }
 });
 
-app.listen(PORT, () => {
-  if (NODE_ENV === 'production') {
-    console.log(`🌐 Serving React app from http://localhost:${PORT}`);
-  } else {
-    console.log(`🔧 Development mode - React dev server should run on port 5173`);
-  }
-});
+  app.listen(PORT, () => {
+    if (NODE_ENV === 'production') {
+      console.log(`🌐 Serving React app from http://localhost:${PORT}`);
+    } else {
+      console.log(`🔧 Development mode - React dev server should run on port 5173`);
+    }
+  });
+}
+
+// Start the server
+startServer().catch(console.error);
