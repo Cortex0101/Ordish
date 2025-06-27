@@ -1,0 +1,12 @@
+version: '3.1'
+services:
+  mariadb:
+    image: mariadb:11
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: devpassword
+      MARIADB_DATABASE: woordle_db_dev
+      MARIADB_USER: devuser
+      MARIADB_PASSWORD: devpassword
+    ports:
+      - "3306:3306"
