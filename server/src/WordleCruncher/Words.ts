@@ -48,9 +48,7 @@ export class Words {
   .filter((word) => word.plural.length === 5)
   .filter((word) => !word.plural.includes("'") && !word.plural.includes("-"))
   .filter((word) => word.plural === word.plural.toLowerCase())
-  .filter((word) => word.singular === word.plural) // lemma forms only
-  .filter((word) => /^[a-zæøå]+$/.test(word.plural)) // only Danish alphabet
-  .filter((word) => ["sb.", "vb.", "adj.", "adv."].includes(word.type.trim()))
+  .filter((word) => /^[a-zæøå]+$/.test(word.plural)) // Ensure only Danish letters
   .map((word) => word.plural);
   }
 
@@ -80,3 +78,7 @@ let valid = words.getValidWords();
 
 console.log("Five-letter words: " + valid.slice(0, 10).join(", ") + " ... (" + valid.length + " total)")
 */
+let valid = new Words().getValidWords();
+// write to words.txt line by line
+import { writeFileSync } from "fs";
+writeFileSync("words.txt", valid.join("\n"), "utf-8");

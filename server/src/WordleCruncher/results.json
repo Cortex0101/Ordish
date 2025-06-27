@@ -1,0 +1,3139 @@
+{
+  "tobis": {
+    "ent": 4.383793,
+    "next": {
+      "GGGGG": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "GGGGG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BGBBB": {
+        "guess": "lover",
+        "ent": 2.0,
+        "next": {
+          "GGGGG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BGBGB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BGBYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BGGGB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BBBBB": {
+        "guess": "jøder",
+        "ent": 4.001823,
+        "next": {
+          "BBBGG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YYBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BYBGG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YBBGG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBBY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBBG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BYBYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "GGGGG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBYGB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BGBGB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BGGGG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBYYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBYY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBGB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBYBG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBYYY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BBBYG": {
+        "guess": "lover",
+        "ent": 2.0,
+        "next": {
+          "BBBBY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "GBBGB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBGB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBYY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BBYBG": {
+        "guess": "lover",
+        "ent": 1.584963,
+        "next": {
+          "BBBYY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBBY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "GBBBB": {
+        "guess": "tyder",
+        "ent": 2.321928,
+        "next": {
+          "GGGGG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "GBBYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "GBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "GBBGG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "GBYBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "YBBGB": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "YBBGB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BBBBY": {
+        "guess": "salts",
+        "ent": 2.321928,
+        "next": {
+          "YBBBY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "GBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "GYBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "GGYBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YGYBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "YBBBB": {
+        "guess": "øffer",
+        "ent": 2.321928,
+        "next": {
+          "BBBGB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBGY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BYBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BGGBG": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "BGGBG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "YBYBB": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "YBYBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BBBBG": {
+        "guess": "søger",
+        "ent": 2.807355,
+        "next": {
+          "YBYBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "GBBYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YBBGB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YBBYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "GBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YBYGB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "YBBBY": {
+        "guess": "lejer",
+        "ent": 2.321928,
+        "next": {
+          "BBBGB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YYBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BGBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBGGB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "YBBBG": {
+        "guess": "yndet",
+        "ent": 1.584963,
+        "next": {
+          "BBBBY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BYBYY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBYY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BBBYB": {
+        "guess": "lover",
+        "ent": 2.321928,
+        "next": {
+          "BBYBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YBBYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBYGG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "GBBGG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BBYBB": {
+        "guess": "lover",
+        "ent": 2.0,
+        "next": {
+          "BBBYG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBBY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBYY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BGBBY": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "BGBBY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BYBBG": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "BYBBG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "YBBYB": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "YBBYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "GGBBY": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "GGBBY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BBBGB": {
+        "guess": "lover",
+        "ent": 1.0,
+        "next": {
+          "BBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "YBBYG": {
+        "guess": "lover",
+        "ent": 1.584963,
+        "next": {
+          "BBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBGB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBBY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BYBBB": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "BYBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "GGBBB": {
+        "guess": "lover",
+        "ent": 1.0,
+        "next": {
+          "BGBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BGBYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BGBBG": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "BGBBG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BYBYG": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "BYBYG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BBBGY": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "BBBGY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "YBBYY": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "YBBYY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "GYBBB": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "GYBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BBYBY": {
+        "guess": "lover",
+        "ent": 1.0,
+        "next": {
+          "BBBYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YBBYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "GBBYB": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "GBBYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BBBGG": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "BBBGG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BBBYY": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "BBBYY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "GBBBG": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "GBBBG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      }
+    }
+  },
+  "lover": {
+    "ent": 4.464793,
+    "next": {
+      "BGBBB": {
+        "guess": "tobis",
+        "ent": 1.0,
+        "next": {
+          "GGGGG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "GGBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "GGGGG": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "BGBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BBGGG": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "BBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "YBBBB": {
+        "guess": "torsk",
+        "ent": 2.521641,
+        "next": {
+          "BBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YBBYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YBBBY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "GBBBG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "GBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BBBBY": {
+        "guess": "påtal",
+        "ent": 2.584963,
+        "next": {
+          "GBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBYBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YYBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BYBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BBBYY": {
+        "guess": "tobis",
+        "ent": 2.321928,
+        "next": {
+          "BBYBG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBYG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "GBBYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBYBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BBBGG": {
+        "guess": "jøder",
+        "ent": 2.807355,
+        "next": {
+          "BYBGG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBGGG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BGBGG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "GGGGG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YGBGG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BGGGG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBGG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BBBBB": {
+        "guess": "salts",
+        "ent": 3.0,
+        "next": {
+          "BYBYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBBG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BGBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBGG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YBBBG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BGBBG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YYBYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BBBYB": {
+        "guess": "units",
+        "ent": 3.57782,
+        "next": {
+          "BBBBY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YBBGB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BYBBG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBYY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "GYYBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBYBY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BYBGG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBGB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YYBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BYBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBYG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BBBGB": {
+        "guess": "tunes",
+        "ent": 3.321928,
+        "next": {
+          "YBYGB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YBBGY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBGG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBYGG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBGGB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBGGG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBYGB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YBBGG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YGBGY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "GGGGG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BBYGY": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "YBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BGBGB": {
+        "guess": "tobis",
+        "ent": 1.584963,
+        "next": {
+          "BGGBG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BGBBG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BGBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "GBBGG": {
+        "guess": "tobis",
+        "ent": 1.0,
+        "next": {
+          "BBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "YBYYB": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "BBBBG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "GBBGB": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "BBBYG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BBYBB": {
+        "guess": "tobis",
+        "ent": 1.584963,
+        "next": {
+          "BBBYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBBG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBYY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "YBBYB": {
+        "guess": "tobis",
+        "ent": 2.0,
+        "next": {
+          "BBBYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YBBBY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBBY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBYBY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BBGBB": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "BBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BBBBG": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "BBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BBBYG": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "BBYBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BGBYB": {
+        "guess": "tobis",
+        "ent": 1.584963,
+        "next": {
+          "BGBBY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BGBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "GGBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BYBGY": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "BYBBG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "YBBBY": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "BBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BBYYB": {
+        "guess": "tobis",
+        "ent": 1.0,
+        "next": {
+          "BBBBG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BGBBY": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "GGBBY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "YBBGB": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "BBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BYYYB": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "BYBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BBYGG": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "BBBYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "YYBBB": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "BYBYG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BBYYY": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "BBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "GBBYB": {
+        "guess": "tobis",
+        "ent": 1.0,
+        "next": {
+          "YBBYY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBBY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BBYBY": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "BBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BYBBG": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "GYBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "YBBBG": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "BBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BGGGB": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "BGBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      }
+    }
+  },
+  "væver": {
+    "ent": 3.597433,
+    "next": {
+      "BBBBB": {
+        "guess": "tobis",
+        "ent": 3.75,
+        "next": {
+          "GGGGG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YBBGB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YBBBG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YBBYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBGB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YBBYG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "GBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBBG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "GGBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BYBYG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBGG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BBGGG": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "BGBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "GGGGG": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "BBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BBBBY": {
+        "guess": "kamik",
+        "ent": 2.807355,
+        "next": {
+          "YBBYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BGYBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BYYBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBBG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BBBYY": {
+        "guess": "tobis",
+        "ent": 2.321928,
+        "next": {
+          "BBYBG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBYG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "GBBYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBYBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BBBGG": {
+        "guess": "jøder",
+        "ent": 2.947703,
+        "next": {
+          "BYBGG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBGGG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YBBGG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BGBGG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "GGGGG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YGBGG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BGGGG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBGG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BBBYB": {
+        "guess": "abens",
+        "ent": 3.855389,
+        "next": {
+          "BBYBY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BYYBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBYBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBYYY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBGBY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "GGGGG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBYYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YBYBY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBYYG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBGBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BYYYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YBYBG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YYYBY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBYGB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BYYBY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YBYYY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BGBYB": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "GBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BBBGB": {
+        "guess": "tobis",
+        "ent": 3.235926,
+        "next": {
+          "YBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BGGBG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBYG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YBBBY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBBG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BGBBG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BGBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YBBYG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "GBBBG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "GBBGY": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "YBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BGBBB": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "BBBBG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "YBBYB": {
+        "guess": "fløjl",
+        "ent": 2.0,
+        "next": {
+          "BGBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBYBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBGBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "YBBBB": {
+        "guess": "tobis",
+        "ent": 1.584963,
+        "next": {
+          "BBBYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBBG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBYY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BYGBB": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "BBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BBBBG": {
+        "guess": "lover",
+        "ent": 1.584963,
+        "next": {
+          "BBBBG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BYBBG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YBBBG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BBBYG": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "BBYBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BBBGY": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "BYBBG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BGBGB": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "BBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "GBBGG": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "BBBYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "YBBYY": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "BBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "YYBBY": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "BBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BGBBY": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "BBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BYBBB": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "YBBBY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BBGGB": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "BGBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      }
+    }
+  },
+  "fløjl": {
+    "ent": 2.240523,
+    "next": {
+      "BBBBB": {
+        "guess": "tunes",
+        "ent": 5.161948,
+        "next": {
+          "GBBBG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBGB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBBG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBYG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "GBBGB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YGBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBYY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "GBBYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YBYGB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YBBGB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBGG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YGBYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBGBG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YBBGY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BGBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBYYY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBYGG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "GBBBY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YYYBG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBYBG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBYYG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "GBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YBBYY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BYGYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBGGG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YBGYG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBYYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YBBYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBYGB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BGGYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBGYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YBBGG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "GGBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YBBYG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "GBYYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBYBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBGBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBBY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YBYBY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "GGGGG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BYBBB": {
+        "guess": "limes",
+        "ent": 3.459432,
+        "next": {
+          "GBBGB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "GGGGG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YBBBG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YYBYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YBBGB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YYBBG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "GGBYY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YBGYY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YBBYY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "GBBYY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "GGBGB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "GGGGG": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "BBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "YBYBB": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "BBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BYBYB": {
+        "guess": "pirks",
+        "ent": 1.584963,
+        "next": {
+          "BBYBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BBBBG": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "YBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BGBBB": {
+        "guess": "lover",
+        "ent": 2.321928,
+        "next": {
+          "YBYYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YBBBY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YBBYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YBBBG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "GBBBB": {
+        "guess": "tobis",
+        "ent": 1.0,
+        "next": {
+          "BBBYG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBYBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BBYBB": {
+        "guess": "tobis",
+        "ent": 1.584963,
+        "next": {
+          "BBBYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBBY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "YBBBB": {
+        "guess": "tobis",
+        "ent": 1.0,
+        "next": {
+          "BBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YBBYG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BBBYB": {
+        "guess": "tobis",
+        "ent": 1.0,
+        "next": {
+          "BBBBG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YBBBY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BBYYB": {
+        "guess": "tobis",
+        "ent": 1.0,
+        "next": {
+          "BBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "GBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BBGBB": {
+        "guess": "tobis",
+        "ent": 1.0,
+        "next": {
+          "BYBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBYBG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "GBYBB": {
+        "guess": "lover",
+        "ent": 1.0,
+        "next": {
+          "BBBGB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBGG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "GYBBB": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "YBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      }
+    }
+  },
+  "pirks": {
+    "ent": 4.311343,
+    "next": {
+      "BYBBG": {
+        "guess": "tyder",
+        "ent": 2.321928,
+        "next": {
+          "GBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBYBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YBBGB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BBYBB": {
+        "guess": "jøder",
+        "ent": 3.188722,
+        "next": {
+          "BBBGG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BYBGG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBGGG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YBBGG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBYG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBBY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "GGGGG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YGBGG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BGGGG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBBG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BBBBB": {
+        "guess": "yndet",
+        "ent": 3.947703,
+        "next": {
+          "BBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "GGGGG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBYY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BYBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BYYGB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BYBGB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YBGBY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "GBYYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBYBY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YBYYY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BYYYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YBYYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BYBYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBYBG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBYGB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "GGGGG": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "BBBYG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BBYBG": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "BBYBG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BYBBB": {
+        "guess": "lover",
+        "ent": 2.0,
+        "next": {
+          "BBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBYBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YBBYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BBBBY": {
+        "guess": "tjald",
+        "ent": 3.0,
+        "next": {
+          "BBBBY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YBBYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBYGB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YYBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBGB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBYYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YBYBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "YBBBB": {
+        "guess": "tobis",
+        "ent": 1.0,
+        "next": {
+          "GBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BYBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BBGBB": {
+        "guess": "tyder",
+        "ent": 2.584963,
+        "next": {
+          "YBBGY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBBY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBYY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BGBBY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBYYY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BYYYY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BBBBG": {
+        "guess": "yndet",
+        "ent": 3.459432,
+        "next": {
+          "BBBGB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BYBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBBY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "YYBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BYBYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BGBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BYBGB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BYBYY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBYY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BYBGY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "GBBBB": {
+        "guess": "tobis",
+        "ent": 1.0,
+        "next": {
+          "YBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BGBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BGBBG": {
+        "guess": "lover",
+        "ent": 1.0,
+        "next": {
+          "GBBGB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBGB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "YBBBY": {
+        "guess": "tobis",
+        "ent": 1.0,
+        "next": {
+          "YBBBY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBBY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BBYYB": {
+        "guess": "lover",
+        "ent": 1.0,
+        "next": {
+          "BBBBG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBYBY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BBYYG": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "BYBBG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BBBYG": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "BBBBG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BBYBY": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "BBBBY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BYBYB": {
+        "guess": "tobis",
+        "ent": 1.0,
+        "next": {
+          "YBBYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBGB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "GBBBG": {
+        "guess": "tobis",
+        "ent": 1.0,
+        "next": {
+          "BBBBG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BGBBG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BBGYY": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "GGBBY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BBBYB": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "GBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BGYBB": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "BBBYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BBBYY": {
+        "guess": "tobis",
+        "ent": 1.0,
+        "next": {
+          "YBBBY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBYBY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BYBYY": {
+        "guess": "tobis",
+        "ent": 1.0,
+        "next": {
+          "BBBGY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          },
+          "BBBYY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BGBBY": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "YBBYY": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BYYBG": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "BBBYG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "GBBGB": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "BBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BGYBG": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "YBBYG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BYYBB": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "GBBYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "YBGBB": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "BBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BGBGB": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "BBBYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BBYGG": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "BBYBG": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "GBYBB": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "BBBBB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      },
+      "BGGBB": {
+        "guess": "tobis",
+        "ent": 0.0,
+        "next": {
+          "BBBYB": {
+            "guess": null,
+            "ent": 0.0,
+            "next": {}
+          }
+        }
+      }
+    }
+  }
+}
