@@ -1,0 +1,17 @@
+{
+  "account_info": "Kontoinformation",
+  "username": "Brugernavn",
+  "email": "E-mail",
+  "user_id": "Bruger ID",
+  "preferences": "Indstillinger",
+  "theme": "Tema",
+  "language": "Sprog",
+  "timezone": "Tidszone",
+  "light": "Lyst",
+  "dark": "Mørkt",
+  "auto": "Auto",
+  "save_preferences": "Gem indstillinger",
+  "logout": "Log ud",
+  "preferences_updated": "Indstillinger opdateret!",
+  "update_error": "Kunne ikke opdatere indstillinger"
+}

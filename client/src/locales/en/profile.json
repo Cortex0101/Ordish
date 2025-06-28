@@ -1,0 +1,17 @@
+{
+  "account_info": "Account Information",
+  "username": "Username",
+  "email": "Email",
+  "user_id": "User ID",
+  "preferences": "Preferences",
+  "theme": "Theme",
+  "language": "Language",
+  "timezone": "Timezone",
+  "light": "Light",
+  "dark": "Dark",
+  "auto": "Auto",
+  "save_preferences": "Save Preferences",
+  "logout": "Logout",
+  "preferences_updated": "Preferences updated successfully!",
+  "update_error": "Failed to update preferences"
+}

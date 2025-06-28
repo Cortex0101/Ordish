@@ -1,4 +1,7 @@
 {
     "login": "Log ind",
-    "signup": "Opret konto"
+    "signup": "Opret konto",
+    "profile": "Profil",
+    "settings": "Indstillinger", 
+    "logout": "Log ud"
 }
