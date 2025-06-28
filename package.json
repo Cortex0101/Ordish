@@ -13,7 +13,7 @@
     "dev:db:restart": "docker compose restart mariadb",
     "dev:db:status": "docker compose ps mariadb",
     "dev:db:check": "cd server && node scripts/checkDb.js",
-    "dev:db:init": "Get-Content server/database/init.sql | docker exec -i ordish-mariadb-1 mariadb -u root -pdevpassword ordish_db_dev",
+    "dev:db:init": "cd server && node scripts/initDb.js",
     "dev:all": "npm run dev:db && npm run dev:with-db",
     "dev:with-db": "concurrently --kill-others-on-fail \"npm run dev:server\" \"npm run dev:client\"",
     "dev:db:down": "docker compose down",

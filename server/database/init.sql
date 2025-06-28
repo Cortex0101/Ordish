@@ -11,9 +11,8 @@ SELECT CONCAT('Starting database initialization at ', NOW()) AS initialization_l
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     email VARCHAR(255) UNIQUE NOT NULL,
+    username VARCHAR(50) UNIQUE NOT NULL,
     password_hash VARCHAR(255),
-    first_name VARCHAR(100),
-    last_name VARCHAR(100),
     avatar_url VARCHAR(500),
     email_verified BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

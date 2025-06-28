@@ -1,29 +1,10 @@
 import { Navbar, Container, Nav, Button } from "react-bootstrap";
-import { useAuth } from "../../contexts/AuthContext";
 import { useTranslation } from "react-i18next";
 import "./Header.scss";
 import smLogo from "../../assets/img/logo-sm.webp";
 
 const Header = () => {
   const { t } = useTranslation("header");
-  const { user, logout } = useAuth();
-
-  const handleLogout = async () => {
-    try {
-      await logout();
-      // Optionally redirect to home page or show a message
-      window.location.href = "/";
-    } catch (error) {
-      console.error("Logout failed:", error);
-    }
-  };
-
-  const getUserDisplayName = () => {
-    if (user?.first_name || user?.last_name) {
-      return `${user.first_name || ""} ${user.last_name || ""}`.trim();
-    }
-    return user?.email || "User";
-  };
 
   return (
     <Navbar bg="primary" expand="xl" className="mb-4">

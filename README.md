@@ -196,8 +196,14 @@ The project includes VS Code debug configurations for full-stack debugging:
 ```bash
 # Start individual components for debugging
 npm run dev:db           # Database only
+npm run dev:db:init      # reinitialize tables to default values
 npm run dev:client       # React dev server
 npm run dev:server       # Express with debugging enabled
+
+# normal flow
+npm run dev:db           # Database only
+npm run dev:db:init      # reinitialize tables to default values
+npm run dev:all
 ```
 
 ## 🧪 Testing & Benchmarking
