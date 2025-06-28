@@ -1,6 +1,7 @@
 import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
 import { useAuth } from '../../contexts/AuthContext';
 import './Header.scss';
+import smLogo from '../../assets/img/logo-sm.webp'
 
 const Header = () => {
   const { user, logout } = useAuth();
@@ -25,7 +26,16 @@ const Header = () => {
   return (
     <Navbar bg="primary" variant="dark" expand="lg" className="mb-4">
       <Container>
-        <Navbar.Brand href="/">Ordish</Navbar.Brand>
+        <Navbar.Brand href="/">
+            <img
+              alt=""
+              src={smLogo}
+              width="30"
+              height="30"
+              className="d-inline-block align-top"
+            />{' '}
+            Ordish
+          </Navbar.Brand>
         <Navbar.Toggle aria-controls="main-navbar" />
         <Navbar.Collapse id="main-navbar">
           <Nav className="me-auto">
