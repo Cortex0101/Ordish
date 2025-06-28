@@ -14,7 +14,7 @@ export const authMiddleware = async (req: AuthRequest, res: Response, next: Next
     }
     
     const decoded = AuthService.verifyJWT(token);
-    const user = await AuthService.getUserById(decoded.userId);
+    const user = await AuthService.getUserById(decoded.id);
     
     if (!user) {
       return res.status(401).json({ error: 'Invalid token' });

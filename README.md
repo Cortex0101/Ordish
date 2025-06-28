@@ -170,6 +170,36 @@ npm run build
 npm start
 ```
 
+## 🐛 Debugging
+
+### VS Code Debug Setup
+
+The project includes VS Code debug configurations for full-stack debugging:
+
+1. **Debug Full Stack**: Starts database, client, and server with debugging enabled
+2. **Debug Server Only**: Debugs just the Express server
+
+#### How to Debug:
+1. Open VS Code Debug Panel (`Ctrl+Shift+D`)
+2. Select "Debug Full Stack" from dropdown
+3. Press `F5` to start debugging
+4. Set breakpoints in any server TypeScript files
+5. Make API requests from React app to hit breakpoints
+
+#### Debug Features:
+- **Breakpoints**: Set in routes, services, middleware
+- **Watch Variables**: Monitor values in real-time
+- **Call Stack**: See full execution path
+- **Hot Reload**: Server restarts on changes while maintaining debug session
+
+### Manual Debug Commands
+```bash
+# Start individual components for debugging
+npm run dev:db           # Database only
+npm run dev:client       # React dev server
+npm run dev:server       # Express with debugging enabled
+```
+
 ## 🧪 Testing & Benchmarking
 
 ### Unit Tests
@@ -327,10 +357,35 @@ CREATE TABLE user_sessions (
 
 ### Common Issues
 
+**Database tables missing (shows "Database connected but missing tables"):**
+```bash
+# The init.sql script doesn't run if the Docker volume already exists
+# Solution: Manually create tables
+Get-Content server/database/init.sql | docker exec -i ordish-mariadb-1 mariadb -u root -pdevpassword ordish_db_dev
+
+# OR reset database completely (removes all data)
+docker compose down -v
+docker compose up -d
+```
+
+**Authentication method failures:**
+```bash
+# Check if another MariaDB instance is running
+netstat -ano | findstr :3306
+
+# Kill conflicting process
+taskkill /pid <PID> /F
+
+# Restart with clean database
+docker compose down -v
+docker compose up -d
+```
+
 **Port conflicts:**
 ```bash
 # Check what's using a port
 netstat -ano | findstr :3000
+netstat -ano | findstr :5173
 
 # Kill process by PID
 Stop-Process -Id <PID> -Force
@@ -342,9 +397,12 @@ Stop-Process -Id <PID> -Force
 docker ps
 
 # Check container logs
-docker logs <container_name>
+docker logs ordish-mariadb-1
 
-# Reset database
+# Test connection manually
+docker exec -it ordish-mariadb-1 mariadb -u root -pdevpassword ordish_db_dev
+
+# Reset database (removes all data)
 docker compose down -v && docker compose up -d
 ```
 
@@ -352,6 +410,11 @@ docker compose down -v && docker compose up -d
 - Ensure `.env.development` exists in `server/` directory
 - Restart the server after editing env files
 - Check that dynamic imports are used in server startup
+
+**Debug mode not hitting breakpoints:**
+- Ensure you're using "Debug Full Stack" configuration
+- Set breakpoints in server TypeScript files (not compiled JS)
+- Make sure the request actually reaches your breakpoint code path
 
 **Build errors:**
 ```bash

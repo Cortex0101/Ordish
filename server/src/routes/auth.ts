@@ -80,7 +80,7 @@ router.post('/login', async (req, res) => {
       return;
     }
     
-    const isValidPassword = await AuthService.verifyPassword(password, user.password_hash);
+    const isValidPassword = await AuthService.verifyPassword(user.email, password);
     if (!isValidPassword) {
       res.status(401).json({ error: 'Invalid credentials' });
       return;
