@@ -13,6 +13,8 @@
     "sign-in": "Log ind",
     "signupg-in": "Logger ind...",
     "already-have-account": "Har du allerede en konto?",
+    "invalid-email": "Ugyldig e-mail",
+    "email-already-exists": "En konto med denne e-mail eksisterer allerede. Prøv at logge ind istedet.",
     "username": "Brugernavn",
     "username-placeholder": "Indtast dit brugernavn",
     "password-requirements": "Adgangskoden skal være mindst 8 tegn lang",

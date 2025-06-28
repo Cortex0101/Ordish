@@ -1,4 +1,6 @@
 import { Router } from 'express';
+import validator from 'validator';
+
 // import passport from 'passport'; // Commented out until OAuth is configured
 import { AuthService } from '../services/authService';
 import { authMiddleware, AuthRequest } from '../middleware/auth';
@@ -7,6 +9,8 @@ import { User } from '../models/User';
 const router = Router();
 
 // Check if email exists
+// This endpoint checks if an email is already registered,
+// and wether
 router.post('/check-email', async (req, res) => {
   try {
     const { email } = req.body;
@@ -17,7 +21,7 @@ router.post('/check-email', async (req, res) => {
     }
     
     const user = await AuthService.getUserByEmail(email);
-    const exists = !!user;
+    const exists = !!user; // true if user exists false if 'exists' is null
     
     // Check if user has social accounts only (no password)
     const requiresPassword = exists && user.password_hash;

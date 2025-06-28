@@ -9,7 +9,7 @@ export class AuthService {
     const pool = getPool();
     
     const [result] = await pool.execute(
-      'INSERT INTO users (email, username, password_hash) VALUES (?, ?, ?, ?)',
+      'INSERT INTO users (email, username, password_hash) VALUES (?, ?, ?)',
       [email, username, passwordHash]
     );
     
@@ -31,7 +31,7 @@ export class AuthService {
   static async verifyPassword(email: string, password: string): Promise<User | null> {
     const pool = getPool();
     const [result] = await pool.execute(
-      'SELECT id, email, password_hash, first_name, last_name, email_verified FROM users WHERE email = ?',
+      'SELECT id, email, username, password_hash, email_verified FROM users WHERE email = ?',
       [email]
     ) as any;
     

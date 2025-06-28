@@ -8,6 +8,7 @@ import {
   Alert,
   Spinner,
 } from "react-bootstrap";
+import validator from 'validator';
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../contexts/AuthContext";
 
@@ -33,11 +34,29 @@ function SignUp() {
   const [error, setError] = useState("");
   const [hasSocialAccounts, setHasSocialAccounts] = useState(false);
 
-  const handleEmailSubmit = async (e: React.FormEvent) => {
+  const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email.trim()) return;
-
     setLoading(true);
+
+    if (!validator.isEmail(email)) {
+      setError(t("invalid-email"));
+      return;
+    }
+    if (userName.trim().length < 3) {
+      setError(t("username-too-short"));
+      return;
+    }
+    if (validator.isStrongPassword(password, {
+      minLength: 8,
+      minLowercase: 1,
+      minUppercase: 1,
+      minNumbers: 1,
+      minSymbols: 0,
+    })) {
+      setError(t("password-requirements"));
+      return;
+    } 
+
     setError("");
 
     try {
@@ -52,51 +71,22 @@ function SignUp() {
       }
 
       const data: EmailCheckResponse = await response.json();
+
+      if (data.exists) {
+        setError(t("email-already-exists"));
+        return;
+      }
+
       setHasSocialAccounts(data.hasSocialAccounts);
 
-      if (data.exists && data.requiresPassword) {
-        setStep("password");
-      } else if (data.exists && data.hasSocialAccounts) {
-        setError(t("social-account-exists"));
-      } else {
-        setStep("register");
-      }
+      // Proceed with registration
+      await register(email.trim(), userName.trim(), password);
+      // Automatically log in the user after registration
+      await login(email.trim(), password);
+      // Redirect to home or dashboard
+      window.location.href = "/";
     } catch {
       setError(t("email-check-error"));
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handlePasswordSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!password.trim()) return;
-
-    setLoading(true);
-    setError("");
-
-    try {
-      await login(email, password);
-      window.location.href = "/";
-    } catch (err) {
-      setError(err instanceof Error ? err.message : t("login-error"));
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleRegisterSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!password.trim()) return;
-
-    setLoading(true);
-    setError("");
-
-    try {
-      await register(email, password, undefined, undefined);
-      // AuthContext will handle navigation/state updates
-    } catch (err) {
-      setError(err instanceof Error ? err.message : t("register-error"));
     } finally {
       setLoading(false);
     }
@@ -123,7 +113,7 @@ function SignUp() {
             </Alert>
           )}
 
-          <Form className="mt-4" onSubmit={handleRegisterSubmit}>
+          <Form className="mt-4" onSubmit={handleSignUp}>
             <Row className="mb-3">
               <Form.Group as={Col} controlId="formEmailDisplay">
                 <Form.Label>Email</Form.Label>
@@ -138,7 +128,7 @@ function SignUp() {
               </Form.Group>
             </Row>
             <Row className="mb-3">
-              <Form.Group as={Col} controlId="formEmailDisplay">
+              <Form.Group as={Col} controlId="formUsernameDisplay">
                 <Form.Label>{t("username")}</Form.Label>
                 <Form.Control
                   type="text"
