@@ -20,7 +20,7 @@ interface EmailCheckResponse {
 }
 
 function SignUp() {
-  const { t } = useTranslation("login");
+  const { t } = useTranslation("signup");
   const { login, register, loading: authLoading } = useAuth();
 
   // Form state

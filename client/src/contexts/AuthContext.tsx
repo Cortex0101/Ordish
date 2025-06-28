@@ -18,7 +18,7 @@ interface AuthContextType {
   user: User | null;
   preferences: UserPreferences | null;
   login: (email: string, password: string) => Promise<void>;
-  register: (email: string, password: string, firstName?: string, lastName?: string) => Promise<void>;
+  register: (email: string, username: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
   updatePreferences: (prefs: Partial<UserPreferences>) => Promise<void>;
   loading: boolean;
@@ -81,12 +81,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setPreferences(data.preferences);
   };
 
-  const register = async (email: string, password: string, firstName?: string, lastName?: string) => {
+  const register = async (email: string, username: string, password: string) => {
     const response = await fetch('/api/auth/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
-      body: JSON.stringify({ email, password, firstName, lastName })
+      body: JSON.stringify({ email, username, password })
     });
 
     if (!response.ok) {

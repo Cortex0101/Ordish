@@ -4,13 +4,13 @@ import { getPool } from '../db';
 import { User } from '../models/User';
 
 export class AuthService {
-  static async createUser(email: string, password: string, firstName?: string, lastName?: string): Promise<User> {
+  static async createUser(email: string, username: string, password: string): Promise<User> {
     const passwordHash = await bcrypt.hash(password, 12);
     const pool = getPool();
     
     const [result] = await pool.execute(
-      'INSERT INTO users (email, password_hash, first_name, last_name) VALUES (?, ?, ?, ?)',
-      [email, passwordHash, firstName, lastName]
+      'INSERT INTO users (email, username, password_hash) VALUES (?, ?, ?, ?)',
+      [email, username, passwordHash]
     );
     
     const userId = (result as any).insertId;

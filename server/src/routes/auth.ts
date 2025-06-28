@@ -37,7 +37,7 @@ router.post('/check-email', async (req, res) => {
 // Email/Password Registration
 router.post('/register', async (req, res) => {
   try {
-    const { email, password, firstName, lastName } = req.body;
+    const { email, username, password } = req.body;
     
     // Check if user exists
     const existingUser = await AuthService.getUserByEmail(email);
@@ -46,7 +46,7 @@ router.post('/register', async (req, res) => {
       return;
     }
     
-    const user = await AuthService.createUser(email, password, firstName, lastName);
+    const user = await AuthService.createUser(email, username, password);
     const token = AuthService.generateJWT(user);
     const preferences = await AuthService.getUserPreferences(user.id);
     
