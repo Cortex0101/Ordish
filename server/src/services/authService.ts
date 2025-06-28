@@ -4,12 +4,6 @@ import { getPool } from '../db';
 import { User } from '../models/User';
 
 export class AuthService {
-  static verifyToken(token: any) {
-      throw new Error('Method not implemented.');
-  }
-  static generateToken(user: User) {
-      throw new Error('Method not implemented.');
-  }
   static async createUser(email: string, password: string, firstName?: string, lastName?: string): Promise<User> {
     const passwordHash = await bcrypt.hash(password, 12);
     const pool = getPool();

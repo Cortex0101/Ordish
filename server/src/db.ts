@@ -25,6 +25,10 @@ export function initializeDatabase() {
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0,
+    charset: 'utf8mb4',
+    authPlugins: {
+      mysql_native_password: () => require('mysql2/lib/auth_plugins').mysql_native_password
+    }
   });
 
   return pool;

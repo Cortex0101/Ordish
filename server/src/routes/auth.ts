@@ -47,7 +47,7 @@ router.post('/register', async (req, res) => {
     }
     
     const user = await AuthService.createUser(email, password, firstName, lastName);
-    const token = AuthService.generateToken(user);
+    const token = AuthService.generateJWT(user);
     const preferences = await AuthService.getUserPreferences(user.id);
     
     // Set secure cookie
@@ -86,7 +86,7 @@ router.post('/login', async (req, res) => {
       return;
     }
     
-    const token = AuthService.generateToken(user);
+    const token = AuthService.generateJWT(user);
     const preferences = await AuthService.getUserPreferences(user.id);
     
     // Set secure cookie

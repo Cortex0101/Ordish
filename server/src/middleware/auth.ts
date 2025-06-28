@@ -13,7 +13,7 @@ export const authMiddleware = async (req: AuthRequest, res: Response, next: Next
       return res.status(401).json({ error: 'No token provided' });
     }
     
-    const decoded = AuthService.verifyToken(token);
+    const decoded = AuthService.verifyJWT(token);
     const user = await AuthService.getUserById(decoded.userId);
     
     if (!user) {

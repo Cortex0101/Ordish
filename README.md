@@ -365,3 +365,10 @@ npm run install:all
 ## 📄 License
 
 This project is private and not licensed for public use.
+
+## Known issues
+If starting the database fails with (authententicaiton method xxxxx failed), a different 
+mariadb might be runnning
+
+1. Run netstat -ano -p tcp
+2. See if anything is running on port 3000/3006, if so do taskkill /pid xyxy /F    
