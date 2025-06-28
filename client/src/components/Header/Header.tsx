@@ -36,7 +36,9 @@ const Header = () => {
             height="30"
             className="d-inline-block align-top"
           />{" "}
-          Ordish
+          { /* show text Ordish on every size except xs */}
+          <span className="d-none d-sm-inline">Ordish</span>
+          { /* show text Ordish on every size except xs */}
         </Navbar.Brand>
 
         <Navbar.Collapse id="main-navbar">
