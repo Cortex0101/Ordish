@@ -71,7 +71,7 @@ function Login() {
 
     try {
       await login(email, password);
-      // AuthContext will handle navigation/state updates
+      window.location.href = '/';
     } catch (err) {
       setError(err instanceof Error ? err.message : t("login-error"));
     } finally {
@@ -163,7 +163,6 @@ function Login() {
                     type="email"
                     value={email}
                     disabled
-                    className="bg-light"
                   />
                   <Form.Text className="text-muted">
                     <Button 
@@ -221,7 +220,6 @@ function Login() {
                     type="email"
                     value={email}
                     disabled
-                    className="bg-light"
                   />
                   <Form.Text className="text-muted">
                     <Button 
