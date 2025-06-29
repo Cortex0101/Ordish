@@ -63,6 +63,7 @@ const Banner: React.FC<ProfileBannerProps> = (props) => {
 
                 <Button 
                   variant="outline-danger"
+                  id="logout"
                   className="w-100"
                   onClick={() => {
                     fetch("/api/auth/logout", {

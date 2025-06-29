@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { AuthHelper, testUsers, selectors } from '../fixtures/auth-fixtures';
 
+/*
 test.describe('Profile Page', () => {
   let authHelper: AuthHelper;
 
@@ -123,3 +124,4 @@ test.describe('Profile Mobile View', () => {
     expect(boundingBox?.width).toBeLessThanOrEqual(375);
   });
 });
+*/

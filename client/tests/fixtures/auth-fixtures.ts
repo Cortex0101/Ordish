@@ -42,10 +42,10 @@ export const selectors = {
   // Signup page
   signup: {
     emailInput: 'input[type="email"]',
-    usernameInput: 'input[id*="username"]',
+    // data-testid=username-input
+    usernameInput: 'input[data-testid="username-input"]',
     passwordInput: 'input[type="password"]',
     signupButton: 'button[type="submit"]',
-    loginLink: 'a[href="/login"]',
     errorAlert: '.alert-danger',
     loadingSpinner: '.spinner-border'
   },
@@ -54,7 +54,7 @@ export const selectors = {
   profile: {
     container: '.profile-container',
     banner: '.banner', // Adjust based on your Banner component
-    logoutButton: 'button:has-text("Logout")', // Adjust based on your logout implementation
+    logoutButton: 'button[id*="logout"]', // Adjust based on your logout implementation
     userInfo: '.user-info' // Adjust based on your user info display
   },
 

@@ -132,6 +132,7 @@ function SignUp() {
                 <Form.Label>{t("username")}</Form.Label>
                 <Form.Control
                   type="text"
+                  data-testid="username-input"
                   value={userName}
                   placeholder={t("username-placeholder")}
                   disabled={isFormLoading}

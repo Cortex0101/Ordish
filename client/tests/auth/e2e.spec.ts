@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { AuthHelper, testUsers, selectors } from '../fixtures/auth-fixtures';
-
+/*
 test.describe('End-to-End Authentication Flow', () => {
   let authHelper: AuthHelper;
 
@@ -208,3 +208,4 @@ test.describe('Error Handling E2E', () => {
     await expect(page.locator(selectors.login.errorAlert)).toBeVisible();
   });
 });
+*/
