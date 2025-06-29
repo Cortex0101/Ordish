@@ -3,9 +3,7 @@ import {
   Container,
   Nav,
   Button,
-  Offcanvas,
-  Dropdown,
-  Badge,
+  Offcanvas
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
