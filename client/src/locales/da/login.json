@@ -1,0 +1,19 @@
+{
+    "top-description": "Log ind på din konto",
+    "email-placeholder": "Indtast din e-mail",
+    "password": "Adgangskode",
+    "password-placeholder": "Indtast din adgangskode",
+    "login-button-text": "Log ind",
+    "logging-in": "Logger ind...",
+    "or": "eller",
+    "not-registered": "Ikke registreret?",
+    "signup-instead": "Opret en konto",
+    "login-facebook": "Login med Facebook",
+    "login-apple": "Login med Apple",
+    "login-google": "Login med Google",
+
+    "password-too-short": "Adgangskoden skal være mindst 8 tegn lang",
+    "email-dosent-exists": "En konto med denne e-mail eksisterer ikke. Prøv at oprette en konto.",
+    "wrong-credentials": "Ingen bruger med denne e-mail og adgangskode. Prøv igen.",
+    "invalid-email": "Ugyldig e-mail"
+}

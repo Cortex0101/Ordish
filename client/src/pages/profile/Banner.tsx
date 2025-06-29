@@ -61,7 +61,26 @@ const Banner: React.FC<ProfileBannerProps> = (props) => {
         </Col>
         <Col xs={3}>
 
-                <Button>
+                <Button 
+                  variant="outline-danger"
+                  className="w-100"
+                  onClick={() => {
+                    fetch("/api/auth/logout", {
+                      method: "POST",
+                      credentials: "include",
+                    })
+                      .then((response) => {
+                        if (response.ok) {
+                          window.location.href = "/";
+                        } else {
+                          console.error("Logout failed");
+                        }
+                      })
+                      .catch((error) => {
+                        console.error("Logout error:", error);
+                      });
+                  }}
+                >
                     {t("logout")}
                 </Button>
         </Col>

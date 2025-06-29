@@ -1,0 +1,22 @@
+{
+    "top-description": "Log ind på din konto",
+    "email-placeholder": "Indtast din e-mail",
+    "login-button-text": "Log ind",
+    "or": "eller",
+    "login-facebook": "Login med Facebook",
+    "login-apple": "Login med Apple",
+    "login-google": "Login med Google",
+    "checking": "Kontrollerer...",
+    "password": "Adgangskode",
+    "password-placeholder": "Indtast din adgangskode",
+    "change-email": "Skift e-mail",
+    "login": "Log ind",
+    "logging-in": "Logger ind...",
+    "invalid-email": "Ugyldig e-mail",
+    "username": "Brugernavn",
+    "username-placeholder": "Indtast dit brugernavn",
+    "password-requirements": "Adgangskoden skal være mindst 8 tegn lang",
+    "social-account-exists": "En konto med denne e-mail eksisterer allerede med social sign up. Brug venligst social sign up-knapperne nedenfor.",
+    "email-check-error": "Kunne ikke kontrollere e-mail. Prøv igen.",
+    "login-error": "Kunne ikke logge ind. Kontroller venligst dine sign upoplysninger."
+}
