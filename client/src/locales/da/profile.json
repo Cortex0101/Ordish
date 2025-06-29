@@ -13,5 +13,6 @@
   "save_preferences": "Gem indstillinger",
   "logout": "Log ud",
   "preferences_updated": "Indstillinger opdateret!",
-  "update_error": "Kunne ikke opdatere indstillinger"
+  "update_error": "Kunne ikke opdatere indstillinger",
+  "member_since": "Medlem siden"
 }
