@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { 
   Container, 
   Spinner
 } from 'react-bootstrap';
-import { useTranslation } from 'react-i18next';
+// import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../contexts/AuthContext';
 
 import './Profile.scss'; // Assuming you have a Profile.scss for styles
@@ -11,7 +11,7 @@ import Banner from './Banner';
 
 const Profile: React.FC = () => {
   const { user } = useAuth();
-  const { t } = useTranslation(['profile']);
+  // const { t } = useTranslation(['profile']);
 
   if (!user) {
     return (

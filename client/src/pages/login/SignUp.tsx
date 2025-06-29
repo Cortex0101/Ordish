@@ -32,7 +32,7 @@ function SignUp() {
   // UI state
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [hasSocialAccounts, setHasSocialAccounts] = useState(false);
+  // const [hasSocialAccounts, setHasSocialAccounts] = useState(false);
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -77,7 +77,7 @@ function SignUp() {
         return;
       }
 
-      setHasSocialAccounts(data.hasSocialAccounts);
+      // setHasSocialAccounts(data.hasSocialAccounts);
 
       // Proceed with registration
       await register(email.trim(), userName.trim(), password);
@@ -93,7 +93,7 @@ function SignUp() {
   };
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const handleSocialLogin = (provider: "google" | "facebook" | "apple") => {
+  const handleSocialLogin = (_provider: "google" | "facebook" | "apple") => {
     // TODO: OAuth not configured yet
     setError(t("social-login-not-configured"));
     // window.location.href = `/api/auth/${provider}`;

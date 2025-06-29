@@ -27,7 +27,7 @@ function SignUp() {
   // Form state
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [hasSocialAccounts, setHasSocialAccounts] = useState(false);
+  //const [hasSocialAccounts, setHasSocialAccounts] = useState(false);
 
   // UI state
   const [loading, setLoading] = useState(false);
@@ -68,7 +68,7 @@ function SignUp() {
         return;
       }
 
-      setHasSocialAccounts(data.hasSocialAccounts);
+      // setHasSocialAccounts(data.hasSocialAccounts);
 
       await login(email.trim(), password);
       window.location.href = "/";
@@ -80,7 +80,7 @@ function SignUp() {
   };
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const handleSocialLogin = (provider: "google" | "facebook" | "apple") => {
+  const handleSocialLogin = (_provider: "google" | "facebook" | "apple") => {
     // TODO: OAuth not configured yet
     setError(t("social-login-not-configured"));
     // window.location.href = `/api/auth/${provider}`;
