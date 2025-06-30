@@ -9,7 +9,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../contexts/AuthContext";
-import { PersonCircle, List, X } from "react-bootstrap-icons";
+import { PersonCircle, List, X, PersonCheckFill } from "react-bootstrap-icons";
 import { useState, useRef, useEffect } from "react";
 import "./Header.scss";
 import smLogo from "../../assets/img/logo-sm.webp";
@@ -279,7 +279,7 @@ const NavigationBar = ({
 
         {/* Right: Auth Button */}
         <Button
-          variant={user ? "outline-primary" : "outline-secondary"}
+          variant={"outline-secondary"}
           className="border-0 d-flex align-items-center justify-content-center"
           style={{ width: "40px", height: "40px" }}
           onClick={handleAuthButtonClick}
@@ -287,7 +287,14 @@ const NavigationBar = ({
           data-testid={headerTestIds.authButton}
           aria-label={user ? "Go to profile" : "Login"}
         >
-          <PersonCircle size={20} />
+          { loading ?
+            <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            : null
+          }
+          { user ?
+            <PersonCheckFill size={20}/>
+            : <PersonCircle size={20} />
+          }
         </Button>
       </Container>
     </Navbar>
