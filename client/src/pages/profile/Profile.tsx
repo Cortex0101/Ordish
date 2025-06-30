@@ -1,39 +1,55 @@
-import React from 'react';
-import { 
-  Container, 
-  Spinner
-} from 'react-bootstrap';
+import React from "react";
+import { Tabs, Tab } from "react-bootstrap";
 // import { useTranslation } from 'react-i18next';
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuth } from "../../contexts/AuthContext";
+import { useTranslation } from "react-i18next";
+import { profileTestIds } from "./Profile.testIds"; // Assuming you have a test IDs file for Profile
 
-import './Profile.scss'; // Assuming you have a Profile.scss for styles
-import Banner from './Banner';
+import "./Profile.scss"; // Assuming you have a Profile.scss for styles
 
 const Profile: React.FC = () => {
-  const { user } = useAuth();
-  // const { t } = useTranslation(['profile']);
+  const { user, loading } = useAuth();
+  const { t } = useTranslation("profile");
+
+  if (loading) {
+    return <div>Loading...</div>; // You can replace this with a spinner or loading
+  }
 
   if (!user) {
-    return (
-      <Container className="d-flex justify-content-center align-items-center" style={{ minHeight: '400px' }}>
-        <Spinner animation="border" />
-      </Container>
-    );
+    window.location.href = "/login"; // Redirect to login if user is not authenticated
   }
 
   return (
-    <Container className="profile-container">
-      <Banner
-        userName={user.username || user.email}
-        userVisitedCount={undefined} // Assuming you will fetch this data
-        userVisitedDays={undefined}
-        userJoinedDate={undefined}
-        userLastActive={undefined}
-        userAvatarUrl={user.avatar_url}
-        userFriendsCount={undefined}
-      />
-    </Container>
-  )
+      <Tabs
+        defaultActiveKey="tab1"
+        id="justify-tab-example"
+        className="mb-3"
+        data-testid={profileTestIds.tabs}
+        justify
+      >
+        <Tab 
+        eventKey="tab1" 
+        title={t("tab1-title")}
+        data-testid={profileTestIds.tab1}
+        >
+          Content for account
+        </Tab>
+        <Tab 
+        eventKey="tab2" 
+        title={t("tab2-title")}
+        data-testid={profileTestIds.tab2}
+        >
+          Content for friends
+        </Tab>
+        <Tab 
+        eventKey="tab3" 
+        title={t("tab3-title")}
+        data-testid={profileTestIds.tab3}
+        >
+          Content for settings
+        </Tab>
+      </Tabs>
+  );
 };
 
 export default Profile;

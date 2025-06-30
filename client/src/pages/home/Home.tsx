@@ -38,7 +38,7 @@ function Home() {
   }, []);
 
   return (
-      <Container className="main-content">
+      <Container className="main-content mt-2">
         {/* API Status Section */}
         <Card className="api-response-card mb-4">
           <Card.Header className="d-flex align-items-center">

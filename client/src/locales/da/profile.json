@@ -1,18 +1,8 @@
 {
-  "account_info": "Kontoinformation",
-  "username": "Brugernavn",
-  "email": "E-mail",
-  "user_id": "Bruger ID",
-  "preferences": "Indstillinger",
-  "theme": "Tema",
-  "language": "Sprog",
-  "timezone": "Tidszone",
-  "light": "Lyst",
-  "dark": "Mørkt",
-  "auto": "Auto",
-  "save_preferences": "Gem indstillinger",
-  "logout": "Log ud",
-  "preferences_updated": "Indstillinger opdateret!",
-  "update_error": "Kunne ikke opdatere indstillinger",
-  "member_since": "Medlem siden"
+  "tab1-title": "Konto",
+  "tab2-title": "Venner",
+  "tab3-title": "Indstillinger",
+
+  "settings-title": "Indstillinger",
+  "settings-description": "Tilpas dine kontoindstillinger her."
 }

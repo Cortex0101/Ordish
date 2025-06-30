@@ -227,7 +227,7 @@ const NavigationBar = ({
     <Navbar 
       expand={false} 
       as={"header"}
-      className="mb-2 px-0 py-0 bg-primary" 
+      className="px-0 py-0 bg-primary" 
       data-testid={headerTestIds.navbar}
       ref={headerRef}
     >
