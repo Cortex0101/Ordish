@@ -1,0 +1,134 @@
+// Settings page specific styles
+.settings-container {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+
+  .page-title {
+    color: var(--bs-body-color);
+    font-weight: 600;
+    margin-bottom: 2rem;
+  }
+
+  .card {
+    border: 1px solid var(--bs-border-color);
+    background-color: var(--bs-body-bg);
+    transition: box-shadow 0.15s ease-in-out;
+
+    &:hover {
+      box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+    }
+
+    .card-header {
+      background-color: var(--bs-gray-50);
+      border-bottom: 1px solid var(--bs-border-color);
+      padding: 1.25rem;
+
+      h5 {
+        color: var(--bs-body-color);
+        margin-bottom: 0.25rem;
+        font-weight: 600;
+      }
+
+      p {
+        color: var(--bs-secondary-color);
+        margin-bottom: 0;
+        font-size: 0.875rem;
+      }
+    }
+
+    .card-body {
+      padding: 0;
+    }
+  }
+
+  .list-group-item {
+    border: none;
+    border-bottom: 1px solid var(--bs-border-color);
+    background-color: transparent;
+    padding: 1.25rem 1.5rem;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    .fw-bold {
+      color: var(--bs-body-color);
+      font-size: 0.9rem;
+    }
+
+    .text-muted {
+      color: var(--bs-secondary-color) !important;
+      font-size: 0.875rem;
+    }
+
+    .btn {
+      min-width: 70px;
+    }
+
+    .form-select {
+      border-color: var(--bs-border-color);
+      background-color: var(--bs-body-bg);
+      color: var(--bs-body-color);
+
+      &:focus {
+        border-color: var(--bs-primary);
+        box-shadow: 0 0 0 0.2rem rgba(var(--bs-primary-rgb), 0.25);
+      }
+
+      option {
+        background-color: var(--bs-body-bg);
+        color: var(--bs-body-color);
+      }
+    }
+  }
+
+  // Dark mode adjustments
+  @media (prefers-color-scheme: dark) {
+    .card-header {
+      background-color: var(--bs-gray-800);
+    }
+
+    .list-group-item:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+  }
+
+  // Dark theme when applied via data attribute
+  [data-bs-theme="dark"] & {
+    .card-header {
+      background-color: var(--bs-gray-800);
+    }
+
+    .list-group-item:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 767.98px) {
+  .settings-container {
+    padding-top: 1rem;
+    
+    .page-title {
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .card-header {
+      padding: 1rem;
+    }
+
+    .list-group-item {
+      padding: 1rem;
+
+      .row {
+        gap: 0.75rem;
+      }
+    }
+
+    .form-select {
+      min-width: 100px !important;
+    }
+  }
+}

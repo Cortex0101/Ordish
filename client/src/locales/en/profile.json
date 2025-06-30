@@ -4,5 +4,30 @@
   "tab3-title": "Settings",
 
   "settings-title": "Settings",
-  "settings-description": "Customize your account settings here."
+  "settings-description": "Customize your account settings here.",
+  
+  "account-section-title": "Account Details",
+  "account-section-description": "Manage your personal account information",
+  
+  "username-label": "Username",
+  "email-label": "Email Address",
+  "password-label": "Password",
+  "password-value": "••••••••",
+  
+  "edit-button": "Edit",
+  "change-button": "Change",
+  
+  "preferences-section-title": "Preferences",
+  "preferences-section-description": "Customize your experience",
+  
+  "theme-label": "Theme",
+  "theme-description": "Choose your preferred color scheme",
+  "theme-light": "Light",
+  "theme-dark": "Dark",
+  "theme-auto": "Auto",
+  
+  "language-label": "Language",
+  "language-description": "Select your preferred language",
+  "language-english": "English",
+  "language-danish": "Danish"
 }

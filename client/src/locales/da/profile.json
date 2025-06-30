@@ -4,5 +4,30 @@
   "tab3-title": "Indstillinger",
 
   "settings-title": "Indstillinger",
-  "settings-description": "Tilpas dine kontoindstillinger her."
+  "settings-description": "Tilpas dine kontoindstillinger her.",
+  
+  "account-section-title": "Kontooplysninger",
+  "account-section-description": "Administrer dine personlige kontooplysninger",
+  
+  "username-label": "Brugernavn",
+  "email-label": "E-mailadresse",
+  "password-label": "Adgangskode",
+  "password-value": "••••••••",
+  
+  "edit-button": "Rediger",
+  "change-button": "Skift",
+  
+  "preferences-section-title": "Præferencer",
+  "preferences-section-description": "Tilpas din oplevelse",
+  
+  "theme-label": "Tema",
+  "theme-description": "Vælg dit foretrukne farveskema",
+  "theme-light": "Lys",
+  "theme-dark": "Mørk",
+  "theme-auto": "Auto",
+  
+  "language-label": "Sprog",
+  "language-description": "Vælg dit foretrukne sprog",
+  "language-english": "Engelsk",
+  "language-danish": "Dansk"
 }

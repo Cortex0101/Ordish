@@ -4,6 +4,7 @@ import { Tabs, Tab } from "react-bootstrap";
 import { useAuth } from "../../contexts/AuthContext";
 import { useTranslation } from "react-i18next";
 import { profileTestIds } from "./Profile.testIds"; // Assuming you have a test IDs file for Profile
+import Settings from "./Settings";
 
 import "./Profile.scss"; // Assuming you have a Profile.scss for styles
 
@@ -46,7 +47,7 @@ const Profile: React.FC = () => {
         title={t("tab3-title")}
         data-testid={profileTestIds.tab3}
         >
-          Content for settings
+          <Settings />
         </Tab>
       </Tabs>
   );
