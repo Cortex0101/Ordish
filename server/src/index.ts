@@ -52,10 +52,12 @@ async function startServer() {
   const homeRoutes = (await import('./routes/home')).default;
   const loginRoutes = (await import('./routes/login')).default;
   const authRoutes = (await import('./routes/auth')).default;
+  const aboutRoutes = (await import('./routes/about')).default;
 
   app.use('/api/home', homeRoutes);
   app.use('/api/login', loginRoutes);
   app.use('/api/auth', authRoutes);
+  app.use('/api/about', aboutRoutes);
 
 app.use((err: Error, req: Request, res: Response, _next: any) => {
   console.error('Unhandled error:', {

@@ -38,7 +38,6 @@ function Home() {
   }, []);
 
   return (
-    <div className="app-container">
       <Container className="main-content">
         {/* API Status Section */}
         <Card className="api-response-card mb-4">
@@ -96,7 +95,6 @@ function Home() {
           </Card.Body>
         </Card>
       </Container>
-    </div>
   );
 }
 

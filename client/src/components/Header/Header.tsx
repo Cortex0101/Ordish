@@ -3,7 +3,8 @@ import {
   Container,
   Nav,
   Button,
-  Offcanvas
+  Offcanvas,
+  Image
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -82,58 +83,31 @@ const ProfileBadge = () => {
 const Header = () => {
   const { user, loading } = useAuth();
 
-  // Show loading spinner while checking auth status
-  if (loading) {
-    return (
-      <Navbar bg="primary" expand="xl" className="mb-4">
-        <Container fluid>
-          <Navbar.Brand href="/">
-            <img
-              alt=""
-              src={smLogo}
-              width="30"
-              height="30"
-              className="d-inline-block align-top"
-            />{" "}
-            <span className="d-none d-sm-inline">Ordish</span>
-          </Navbar.Brand>
-          <div className="d-flex align-items-center ms-auto">
-            <div
-              className="spinner-border spinner-border-sm text-light"
-              role="status"
-            >
-              <span className="visually-hidden">Loading...</span>
-            </div>
-          </div>
-        </Container>
-      </Navbar>
-    );
-  }
-
   return (
-    <Navbar bg="primary" expand="xl" className="mb-4">
+    <Navbar expand={false} className="mb-2">
       <Container fluid>
+        <Navbar.Toggle aria-controls="main-navbar" />
+
         <Navbar.Brand href="/">
-          <img
+          <Image
             alt=""
             src={smLogo}
             width="30"
             height="30"
-            className="d-inline-block align-top"
-          />{" "}
+            className="d-inline-block align-top mx-2"
+          />
           <span className="d-none d-sm-inline">Ordish</span>
         </Navbar.Brand>
-
+      
         <Navbar.Offcanvas
-          id={`offcanvasNavbar-expand`}
-          aria-labelledby={`offcanvasNavbarLabel-expand`}
-          placement="end"
+          id={`navbar-offcanvas-expand`}
+          aria-labelledby={`offcanvas-title-expand`}
+          placement="start"
         >
           <Offcanvas.Header closeButton>
-            <Offcanvas.Title id={`offcanvasNavbarLabel-expand}`}>
+            <Offcanvas.Title id={`offcanvas-title-expand`}>
               Ordish
             </Offcanvas.Title>
-            {user ? <ProfileBadge /> : <LoginAndSignupButtons />}
           </Offcanvas.Header>
           <Offcanvas.Body>
             <Nav className="justify-content-end flex-grow-1 pe-3">
@@ -143,10 +117,7 @@ const Header = () => {
           </Offcanvas.Body>
         </Navbar.Offcanvas>
 
-        {/* Show profile badge or login buttons based on auth state */}
         {user ? <ProfileBadge /> : <LoginAndSignupButtons />}
-
-        <Navbar.Toggle aria-controls="main-navbar" />
       </Container>
     </Navbar>
   );
