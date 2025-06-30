@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import i18n from '../i18n';
 
 interface User {
   id: number;
@@ -39,12 +40,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [preferences, setPreferences] = useState<UserPreferences | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // Check if user is logged in on app start
-  useEffect(() => {
-    checkAuthStatus();
+  const applyTheme = useCallback((theme: 'light' | 'dark' | 'auto') => {
+    const htmlElement = document.documentElement;
+    
+    if (theme === 'auto') {
+      // Remove data-bs-theme to use system preference
+      htmlElement.removeAttribute('data-bs-theme');
+    } else {
+      // Set explicit theme
+      htmlElement.setAttribute('data-bs-theme', theme);
+    }
   }, []);
 
-  const checkAuthStatus = async () => {
+  const checkAuthStatus = useCallback(async () => {
     try {
       const response = await fetch('/api/auth/me', {
         credentials: 'include'
@@ -54,13 +62,28 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         const data = await response.json();
         setUser(data.user);
         setPreferences(data.preferences);
+        
+        // Apply user preferences to front-end
+        if (data.preferences) {
+          if (data.preferences.theme) {
+            applyTheme(data.preferences.theme);
+          }
+          if (data.preferences.language) {
+            i18n.changeLanguage(data.preferences.language);
+          }
+        }
       }
     } catch (error) {
       console.error('Auth check failed:', error);
     } finally {
       setLoading(false);
     }
-  };
+  }, [applyTheme]);
+
+  // Check if user is logged in on app start
+  useEffect(() => {
+    checkAuthStatus();
+  }, [checkAuthStatus]);
 
   const login = async (email: string, password: string) => {
     const response = await fetch('/api/auth/login', {
@@ -78,6 +101,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const data = await response.json();
     setUser(data.user);
     setPreferences(data.preferences);
+    
+    // Apply user preferences to front-end
+    if (data.preferences) {
+      if (data.preferences.theme) {
+        applyTheme(data.preferences.theme);
+      }
+      if (data.preferences.language) {
+        i18n.changeLanguage(data.preferences.language);
+      }
+    }
   };
 
   const register = async (email: string, username: string, password: string) => {
@@ -96,6 +129,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const data = await response.json();
     setUser(data.user);
     setPreferences(data.preferences);
+    
+    // Apply user preferences to front-end
+    if (data.preferences) {
+      if (data.preferences.theme) {
+        applyTheme(data.preferences.theme);
+      }
+      if (data.preferences.language) {
+        i18n.changeLanguage(data.preferences.language);
+      }
+    }
   };
 
   const logout = async () => {
@@ -119,6 +162,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     if (response.ok) {
       const data = await response.json();
       setPreferences(data.preferences);
+      
+      // Apply front-end changes immediately
+      if (prefs.theme) {
+        applyTheme(prefs.theme);
+      }
+      
+      if (prefs.language) {
+        i18n.changeLanguage(prefs.language);
+      }
     }
   };
 

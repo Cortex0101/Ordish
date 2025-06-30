@@ -45,9 +45,9 @@ SELECT 'Social accounts table created successfully' AS table_status;
 CREATE TABLE IF NOT EXISTS user_preferences (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
-    theme ENUM('light', 'dark', 'auto') DEFAULT 'auto',
-    language VARCHAR(10) DEFAULT 'en',
-    timezone VARCHAR(50) DEFAULT 'UTC',
+    theme ENUM('light', 'dark', 'auto') DEFAULT 'dark',
+    language VARCHAR(10) DEFAULT 'da',
+    timezone VARCHAR(50) DEFAULT 'CEST',
     notifications_enabled BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

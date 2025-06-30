@@ -4,7 +4,7 @@ import './i18n';
 import './index.scss'
 import App from './App.tsx'
 
-document.body.setAttribute('data-bs-theme', 'dark');
+document.documentElement.setAttribute('data-bs-theme', 'dark');
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

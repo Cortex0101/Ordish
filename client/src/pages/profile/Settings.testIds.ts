@@ -40,4 +40,7 @@ export const settingsTestIds = {
   languageLabel: 'settings-language-label',
   languageDescription: 'settings-language-description',
   languageSelect: 'settings-language-select',
+
+  // Delete account 
+  deleteAccountButton: 'settings-delete-account-button'
 };

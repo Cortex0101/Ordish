@@ -221,6 +221,15 @@ const Settings: React.FC = () => {
               </ListGroup>
             </Card.Body>
           </Card>
+
+          <Button 
+          variant="danger" 
+          className="w-100 mb-2"
+          data-testid={settingsTestIds.deleteAccountButton}
+          onClick={() => {console.log("Delete account")}}
+            >
+                {t("delete-account-button-text")}
+            </Button>
         </Col>
       </Row>
     </Container>

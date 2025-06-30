@@ -29,5 +29,7 @@
   "language-label": "Language",
   "language-description": "Select your preferred language",
   "language-english": "English",
-  "language-danish": "Danish"
+  "language-danish": "Danish",
+
+  "delete-account-button-text": "Slet konto"
 }
