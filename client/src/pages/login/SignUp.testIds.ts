@@ -16,16 +16,20 @@ export const signUpTestIds = {
   emailGroup: 'signup-email-group',
   emailLabel: 'signup-email-label',
   emailInput: 'signup-email-input',
+  emailFeedback: 'signup-email-feedback',
+  emailExistsLink: 'signup-email-exists-link',
   
   // Username field
   usernameGroup: 'signup-username-group',
   usernameLabel: 'signup-username-label',
   usernameInput: 'signup-username-input',
+  usernameFeedback: 'signup-username-feedback',
   
   // Password field
   passwordGroup: 'signup-password-group',
   passwordLabel: 'signup-password-label',
   passwordInput: 'signup-password-input',
+  passwordFeedback: 'signup-password-feedback',
   passwordHelpText: 'signup-password-help-text',
   
   // Submit button

@@ -18,16 +18,20 @@ export class SignUpPage {
   readonly emailGroup: Locator;
   readonly emailLabel: Locator;
   readonly emailInput: Locator;
+  readonly emailFeedback: Locator;
+  readonly emailExistsLink: Locator;
   
   // Username field
   readonly usernameGroup: Locator;
   readonly usernameLabel: Locator;
   readonly usernameInput: Locator;
+  readonly usernameFeedback: Locator;
   
   // Password field
   readonly passwordGroup: Locator;
   readonly passwordLabel: Locator;
   readonly passwordInput: Locator;
+  readonly passwordFeedback: Locator;
   readonly passwordHelpText: Locator;
   
   // Submit button
@@ -68,16 +72,20 @@ export class SignUpPage {
     this.emailGroup = page.getByTestId(signUpTestIds.emailGroup);
     this.emailLabel = page.getByTestId(signUpTestIds.emailLabel);
     this.emailInput = page.getByTestId(signUpTestIds.emailInput);
+    this.emailFeedback = page.getByTestId(signUpTestIds.emailFeedback);
+    this.emailExistsLink = page.getByTestId(signUpTestIds.emailExistsLink);
     
     // Username field
     this.usernameGroup = page.getByTestId(signUpTestIds.usernameGroup);
     this.usernameLabel = page.getByTestId(signUpTestIds.usernameLabel);
     this.usernameInput = page.getByTestId(signUpTestIds.usernameInput);
+    this.usernameFeedback = page.getByTestId(signUpTestIds.usernameFeedback);
     
     // Password field
     this.passwordGroup = page.getByTestId(signUpTestIds.passwordGroup);
     this.passwordLabel = page.getByTestId(signUpTestIds.passwordLabel);
     this.passwordInput = page.getByTestId(signUpTestIds.passwordInput);
+    this.passwordFeedback = page.getByTestId(signUpTestIds.passwordFeedback);
     this.passwordHelpText = page.getByTestId(signUpTestIds.passwordHelpText);
     
     // Submit button
@@ -171,6 +179,32 @@ export class SignUpPage {
     return await this.submitButton.isDisabled();
   }
 
+  async getFieldError(field: 'email' | 'username' | 'password') {
+    switch (field) {
+      case 'email':
+        return await this.emailFeedback.textContent();
+      case 'username':
+        return await this.usernameFeedback.textContent();
+      case 'password':
+        return await this.passwordFeedback.textContent();
+    }
+  }
+
+  async hasFieldError(field: 'email' | 'username' | 'password') {
+    switch (field) {
+      case 'email':
+        return await this.emailFeedback.isVisible();
+      case 'username':
+        return await this.usernameFeedback.isVisible();
+      case 'password':
+        return await this.passwordFeedback.isVisible();
+    }
+  }
+
+  async clickEmailExistsLink() {
+    await this.emailExistsLink.click();
+  }
+
   async isFormDisabled() {
     const emailDisabled = await this.emailInput.isDisabled();
     const usernameDisabled = await this.usernameInput.isDisabled();
@@ -196,15 +230,50 @@ export const testUsers = {
     username: 'testuser',
     password: 'TestPass123'
   },
+  emptyEmail: {
+    email: '',
+    username: 'testuser', 
+    password: 'TestPass123'
+  },
   shortUsername: {
     email: 'test@example.com',
     username: 'ab',
+    password: 'TestPass123'
+  },
+  emptyUsername: {
+    email: 'test@example.com',
+    username: '',
+    password: 'TestPass123'
+  },
+  invalidUsername: {
+    email: 'test@example.com',
+    username: 'test user!',
     password: 'TestPass123'
   },
   weakPassword: {
     email: 'test@example.com',
     username: 'testuser',
     password: 'weak'
+  },
+  emptyPassword: {
+    email: 'test@example.com',
+    username: 'testuser',
+    password: ''
+  },
+  passwordNoUppercase: {
+    email: 'test@example.com',
+    username: 'testuser',
+    password: 'testpass123'
+  },
+  passwordNoLowercase: {
+    email: 'test@example.com',
+    username: 'testuser',
+    password: 'TESTPASS123'
+  },
+  passwordNoNumbers: {
+    email: 'test@example.com',
+    username: 'testuser',
+    password: 'TestPassword'
   },
   existingEmail: {
     email: 'existing@example.com',

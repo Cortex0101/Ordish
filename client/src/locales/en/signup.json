@@ -1,5 +1,5 @@
 {
-    "top-description": "Login or create an account",
+    "top-description": "Create an account",
     "email-placeholder": "Enter your email address",
     "continue-button-text": "Continue",
     "or": "or",
@@ -25,5 +25,17 @@
     "email-check-error": "Failed to check email. Please try again.",
     "login-error": "Failed to sign in. Please check your credentials.",
     "register-error": "Failed to create account. Please try again.",
-    "social-login-not-configured": "Social login is not configured yet. Please use email/password login."
+    "social-login-not-configured": "Social login is not configured yet. Please use email/password login.",
+    "already-have-account": "Already have an account?",
+    "signin-facebook": "Sign up with Facebook",
+    "signin-apple": "Sign up with Apple",
+    "signin-google": "Sign up with Google",
+
+    "_comment_field_errors": "=== FIELD VALIDATION ERRORS ===",
+    "email-invalid": "Please enter a valid email address",
+    "email-exists": "This email is already registered.",
+    "email-exists-signin": "Sign in instead",
+    "username-too-short": "Username must be at least 3 characters long",
+    "username-invalid-chars": "Username can only contain letters, numbers, and underscores",
+    "password-too-weak": "Password must contain at least 8 characters, including uppercase, lowercase, and numbers"
 }
