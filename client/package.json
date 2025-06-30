@@ -21,6 +21,7 @@
     "i18next-browser-languagedetector": "^8.2.0",
     "react": "^19.1.0",
     "react-bootstrap": "^2.10.10",
+    "react-bootstrap-icons": "^1.11.6",
     "react-dom": "^19.1.0",
     "react-i18next": "^15.5.3",
     "sass": "^1.89.2",

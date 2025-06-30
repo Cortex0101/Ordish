@@ -3,5 +3,19 @@
     "signup": "Sign up",
     "profile": "Profile",
     "settings": "Settings",
-    "logout": "Logout"
+    "logout": "Logout",
+    "games": "Games",
+    "tools": "Tools", 
+    "articles": "Articles",
+    "more": "More",
+    "wordle": "Wordle 2.0",
+    "spellingBee": "Spelling Bee",
+    "wordFinder": "Word Finder",
+    "wordleCheat": "Wordle Cheat",
+    "recent": "Recent",
+    "home": "Home",
+    "about": "About",
+    "contact": "Contact",
+    "faq": "FAQ",
+    "goToAccount": "Go to Account"
 }

@@ -3,5 +3,19 @@
     "signup": "Opret konto",
     "profile": "Profil",
     "settings": "Indstillinger", 
-    "logout": "Log ud"
+    "logout": "Log ud",
+    "games": "Spil",
+    "tools": "Værktøjer",
+    "articles": "Artikler", 
+    "more": "Mere",
+    "wordle": "Wordle 2.0",
+    "spellingBee": "Stavekoncurrence",
+    "wordFinder": "Ordfinder",
+    "wordleCheat": "Wordle Snyd",
+    "recent": "Seneste",
+    "home": "Hjem",
+    "about": "Om",
+    "contact": "Kontakt",
+    "faq": "FAQ",
+    "goToAccount": "Gå til Konto"
 }
