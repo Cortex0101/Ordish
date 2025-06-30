@@ -38,6 +38,7 @@ function SignUp() {
     e.preventDefault();
     setLoading(true);
 
+    // Validate email front end:
     if (!validator.isEmail(email)) {
       setError(t("invalid-email"));
       return;

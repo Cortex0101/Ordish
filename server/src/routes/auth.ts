@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import validator from 'validator';
 
 // import passport from 'passport'; // Commented out until OAuth is configured
 import { AuthService } from '../services/authService';
