@@ -31,6 +31,7 @@ export const signUpTestIds = {
   passwordInput: 'signup-password-input',
   passwordFeedback: 'signup-password-feedback',
   passwordHelpText: 'signup-password-help-text',
+  passwordToggleIcon: 'signup-password-toggle-icon',
   
   // Submit button
   submitButtonGroup: 'signup-submit-button-group',

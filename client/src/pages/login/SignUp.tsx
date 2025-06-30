@@ -12,6 +12,7 @@ import validator from "validator";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../contexts/AuthContext";
 import { signUpTestIds } from "./SignUp.testIds";
+import { Eye, EyeSlash } from "react-bootstrap-icons";
 
 import "./SignUp.scss";
 
@@ -29,6 +30,9 @@ function SignUp() {
   const [email, setEmail] = useState("");
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordType, setPasswordType] = useState('password');
+  const [passwordIcon, setPasswordIcon] = useState<'eye' | 'eye-slash'>('eye-slash');
+
   const [shouldLiveValidate, setShouldLiveValidate] = useState(false); // only live update after attempted submit
 
   // UI state
@@ -45,7 +49,6 @@ function SignUp() {
 
   // Validation functions
   const validateEmail = (emailValue: string) => {
-    if (!emailValue.trim()) return "";
     if (!validator.isEmail(emailValue)) {
       return t("email-invalid");
     }
@@ -53,7 +56,6 @@ function SignUp() {
   };
 
   const validateUsername = (usernameValue: string) => {
-    if (!usernameValue.trim()) return "";
     if (usernameValue.trim().length < 3) {
       return t("username-too-short");
     }
@@ -65,7 +67,6 @@ function SignUp() {
   };
 
   const validatePassword = (passwordValue: string) => {
-    if (!passwordValue.trim()) return "";
     if (!validator.isStrongPassword(passwordValue, {
       minLength: 8,
       minLowercase: 1,
@@ -264,16 +265,17 @@ function SignUp() {
               </Form.Group>
             </Row>
             <Row className="mb-3">
-              <Form.Group
+                <Form.Group
                 as={Col}
                 controlId="formPassword"
                 data-testid={signUpTestIds.passwordGroup}
-              >
+                >
                 <Form.Label data-testid={signUpTestIds.passwordLabel}>
                   {t("password")}
                 </Form.Label>
-                <Form.Control
-                  type="password"
+                <div className="position-relative">
+                  <Form.Control
+                  type={passwordType}
                   placeholder={t("password-placeholder")}
                   value={password}
                   onChange={handlePasswordChange}
@@ -281,7 +283,23 @@ function SignUp() {
                   required
                   data-testid={signUpTestIds.passwordInput}
                   isInvalid={!!fieldErrors.password}
-                />
+                  />
+                  <span
+                  className="position-absolute top-50 end-0 translate-middle-y me-3"
+                  style={{ cursor: "pointer", zIndex: 2 }}
+                  onClick={() => {
+                    setPasswordType(passwordType === "password" ? "text" : "password");
+                    setPasswordIcon(passwordIcon === "eye-slash" ? "eye" : "eye-slash");
+                  }}
+                  data-testid={signUpTestIds.passwordToggleIcon}
+                  >
+                  {passwordIcon === "eye-slash" ? (
+                    <EyeSlash size={20} />
+                  ) : (
+                    <Eye size={20} />
+                  )}
+                  </span>
+                </div>
                 <Form.Control.Feedback type="invalid" data-testid={signUpTestIds.passwordFeedback}>
                   {fieldErrors.password}
                 </Form.Control.Feedback>
@@ -291,7 +309,7 @@ function SignUp() {
                 >
                   {t("password-requirements")}
                 </Form.Text>
-              </Form.Group>
+                </Form.Group>
             </Row>
             <Row className="mb-3">
               <Col
