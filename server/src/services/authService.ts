@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { getPool } from '../db';
-import { User } from '../models/User';
+import { getPool } from '../db.js';
+import { User } from '../models/User.js';
 
 export class AuthService {
   static async createUser(email: string, username: string, password: string): Promise<User> {

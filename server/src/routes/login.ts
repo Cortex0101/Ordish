@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getPool } from '../db';
+import { getPool } from '../db.js';
 const router = Router();
 
 router.get('/', (_req, res) => {

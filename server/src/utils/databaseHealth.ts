@@ -1,4 +1,4 @@
-import { getPool } from '../db';
+import { getPool } from '../db.js';
 
 /**
  * Check if all required tables exist in the database

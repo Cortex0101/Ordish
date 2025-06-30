@@ -4,8 +4,8 @@ import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { waitForDatabase } from './utils/databaseHealth';
-import { initializeDatabase } from './db';
+import { waitForDatabase } from './utils/databaseHealth.js';
+import { initializeDatabase } from './db.js';
 
 async function startServer() {
   // Load environment variables FIRST
@@ -49,10 +49,10 @@ async function startServer() {
   app.use(cookieParser());
 
   // Import routes AFTER loading environment variables using dynamic imports
-  const homeRoutes = (await import('./routes/home')).default;
-  const loginRoutes = (await import('./routes/login')).default;
-  const authRoutes = (await import('./routes/auth')).default;
-  const aboutRoutes = (await import('./routes/about')).default;
+  const homeRoutes = (await import('./routes/home.js')).default;
+  const loginRoutes = (await import('./routes/login.js')).default;
+  const authRoutes = (await import('./routes/auth.js')).default;
+  const aboutRoutes = (await import('./routes/about.js')).default;
 
   app.use('/api/home', homeRoutes);
   app.use('/api/login', loginRoutes);

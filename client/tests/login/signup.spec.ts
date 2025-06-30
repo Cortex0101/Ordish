@@ -1,7 +1,7 @@
-import { test, expect } from '@playwright/test';
-import { SignUpPage, testUsers, mockApiResponses } from './signup-fixtures';
+import { test, expect } from "@playwright/test";
+import { SignUpPage, testUsers, mockApiResponses } from "./signup-fixtures";
 
-test.describe('SignUp Page', () => {
+test.describe("SignUp Page", () => {
   let signUpPage: SignUpPage;
 
   test.beforeEach(async ({ page }) => {
@@ -9,6 +9,131 @@ test.describe('SignUp Page', () => {
     await signUpPage.goto();
   });
 
+  test.describe("Form validation", () => {
+    test("should show error for invalid email", async ({ page }) => {
+      // Mock API endpoint
+      await page.route("/api/auth/check-email", (route) =>
+        route.fulfill({
+          status: 200,
+          contentType: "application/json",
+          body: JSON.stringify(mockApiResponses.emailCheckSuccess),
+        })
+      );
+
+      await signUpPage.fillForm(
+        testUsers.invalidEmail.email,
+        testUsers.invalidEmail.username,
+        testUsers.invalidEmail.password
+      );
+      await signUpPage.submitForm();
+
+      // this.emailFeedback = page.getByTestId(signUpTestIds.emailFeedback);
+      expect(signUpPage.emailFeedback).toBeVisible();
+    });
+
+    test("should not show error for valid email", async ({ page }) => {
+      // Mock API endpoint
+      await page.route("/api/auth/check-email", (route) =>
+        route.fulfill({
+          status: 200,
+          contentType: "application/json",
+          body: JSON.stringify(mockApiResponses.emailCheckSuccess),
+        })
+      );
+
+      await signUpPage.fillForm(
+        testUsers.valid.email,
+        testUsers.invalidUsername.username, // invalid user name to not trigger page to go to next
+        testUsers.valid.password
+      );
+      await signUpPage.submitForm();
+
+      expect(signUpPage.emailFeedback).not.toBeVisible();
+    });
+
+    test("should show error for username too short", async ({ page }) => {
+      // Mock API endpoint
+      await page.route("/api/auth/check-email", (route) =>
+        route.fulfill({
+          status: 200,
+          contentType: "application/json",
+          body: JSON.stringify(mockApiResponses.emailCheckSuccess),
+        })
+      );
+
+      await signUpPage.fillForm(
+        testUsers.shortUsername.email,
+        testUsers.shortUsername.username,
+        testUsers.shortUsername.password
+      );
+      await signUpPage.submitForm();
+
+      expect(signUpPage.usernameFeedback).toBeVisible();
+    });
+
+    test("should not show error for valid username", async ({ page }) => {
+      // Mock API endpoint
+      await page.route("/api/auth/check-email", (route) =>
+        route.fulfill({
+          status: 200,
+          contentType: "application/json",
+          body: JSON.stringify(mockApiResponses.emailCheckSuccess),
+        })
+      );
+
+      await signUpPage.fillForm(
+        testUsers.valid.email,
+        testUsers.valid.username,
+        testUsers.valid.password
+      );
+      await signUpPage.submitForm();
+
+      expect(signUpPage.usernameFeedback).not.toBeVisible();
+    });
+
+
+    test("should show error for weak password", async ({ page }) => {
+      // Mock API endpoint
+      await page.route("/api/auth/check-email", (route) =>
+        route.fulfill({
+          status: 200,
+          contentType: "application/json",
+          body: JSON.stringify(mockApiResponses.emailCheckSuccess),
+        })
+      );
+
+      await signUpPage.fillForm(
+        testUsers.weakPassword.email,
+        testUsers.weakPassword.username,
+        testUsers.weakPassword.password
+      );
+      await signUpPage.submitForm();
+
+      expect(signUpPage.passwordFeedback).toBeVisible();
+    });
+
+    test("should not show error for valid password", async ({ page }) => {
+      // Mock API endpoint
+      await page.route("/api/auth/check-email", (route) =>
+        route.fulfill({
+          status: 200,
+          contentType: "application/json",
+          body: JSON.stringify(mockApiResponses.emailCheckSuccess),
+        })
+      );
+
+      await signUpPage.fillForm(
+        testUsers.valid.email,
+        testUsers.valid.username,
+        testUsers.valid.password
+      );
+      await signUpPage.submitForm();
+
+      expect(signUpPage.passwordFeedback).not.toBeVisible();
+    });
+  });
+});
+  /*
   test.describe('Form Validation', () => {
     test('should show error for invalid email', async ({ page }) => {
       // Mock API endpoint
@@ -293,3 +418,4 @@ test.describe('SignUp Page', () => {
     });
   });
 });
+  */

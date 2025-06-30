@@ -1,10 +1,9 @@
 import { Router } from 'express';
-import validator from 'validator';
 
 // import passport from 'passport'; // Commented out until OAuth is configured
-import { AuthService } from '../services/authService';
-import { authMiddleware, AuthRequest } from '../middleware/auth';
-import { User } from '../models/User';
+import { AuthService } from '../services/authService.js';
+import { authMiddleware, AuthRequest } from '../middleware/auth.js';
+import { User } from '../models/User.js';
 
 const router = Router();
 

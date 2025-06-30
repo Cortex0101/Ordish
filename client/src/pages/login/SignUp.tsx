@@ -7,6 +7,7 @@ import {
   Row,
   Alert,
   Spinner,
+  InputGroup,
 } from "react-bootstrap";
 import validator from "validator";
 import { useTranslation } from "react-i18next";
@@ -30,20 +31,22 @@ function SignUp() {
   const [email, setEmail] = useState("");
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  const [passwordType, setPasswordType] = useState('password');
-  const [passwordIcon, setPasswordIcon] = useState<'eye' | 'eye-slash'>('eye-slash');
+  const [passwordType, setPasswordType] = useState("password");
+  const [passwordIcon, setPasswordIcon] = useState<"eye" | "eye-slash">(
+    "eye-slash"
+  );
 
   const [shouldLiveValidate, setShouldLiveValidate] = useState(false); // only live update after attempted submit
 
   // UI state
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  
+
   // Field validation state
   const [fieldErrors, setFieldErrors] = useState({
     email: "",
     username: "",
-    password: ""
+    password: "",
   });
   const [emailExists, setEmailExists] = useState(false);
 
@@ -67,13 +70,15 @@ function SignUp() {
   };
 
   const validatePassword = (passwordValue: string) => {
-    if (!validator.isStrongPassword(passwordValue, {
-      minLength: 8,
-      minLowercase: 1,
-      minUppercase: 1,
-      minNumbers: 1,
-      minSymbols: 0,
-    })) {
+    if (
+      !validator.isStrongPassword(passwordValue, {
+        minLength: 8,
+        minLowercase: 1,
+        minUppercase: 1,
+        minNumbers: 1,
+        minSymbols: 0,
+      })
+    ) {
       return t("password-too-weak");
     }
     return "";
@@ -86,9 +91,9 @@ function SignUp() {
     setEmailExists(false);
 
     if (!shouldLiveValidate) return;
-    setFieldErrors(prev => ({
+    setFieldErrors((prev) => ({
       ...prev,
-      email: validateEmail(value)
+      email: validateEmail(value),
     }));
   };
 
@@ -97,9 +102,9 @@ function SignUp() {
     setUserName(value);
 
     if (!shouldLiveValidate) return;
-    setFieldErrors(prev => ({
+    setFieldErrors((prev) => ({
       ...prev,
-      username: validateUsername(value)
+      username: validateUsername(value),
     }));
   };
 
@@ -108,9 +113,9 @@ function SignUp() {
     setPassword(value);
 
     if (!shouldLiveValidate) return;
-    setFieldErrors(prev => ({
+    setFieldErrors((prev) => ({
       ...prev,
-      password: validatePassword(value)
+      password: validatePassword(value),
     }));
   };
 
@@ -122,7 +127,7 @@ function SignUp() {
     setFieldErrors({
       email: emailError,
       username: usernameError,
-      password: passwordError
+      password: passwordError,
     });
 
     return !emailError && !usernameError && !passwordError;
@@ -156,9 +161,9 @@ function SignUp() {
 
       if (data.exists) {
         setEmailExists(true);
-        setFieldErrors(prev => ({
+        setFieldErrors((prev) => ({
           ...prev,
-          email: t("email-exists")
+          email: t("email-exists"),
         }));
         setLoading(false);
         return;
@@ -227,12 +232,19 @@ function SignUp() {
                   required
                   isInvalid={!!fieldErrors.email}
                 />
-                <Form.Control.Feedback type="invalid" data-testid={signUpTestIds.emailFeedback}>
+                <Form.Control.Feedback
+                  type="invalid"
+                  data-testid={signUpTestIds.emailFeedback}
+                >
                   {fieldErrors.email}
                   {emailExists && (
                     <>
                       {" "}
-                      <a href="/login" className="text-decoration-underline" data-testid={signUpTestIds.emailExistsLink}>
+                      <a
+                        href="/login"
+                        className="text-decoration-underline"
+                        data-testid={signUpTestIds.emailExistsLink}
+                      >
                         {t("email-exists-signin")}
                       </a>
                     </>
@@ -259,57 +271,69 @@ function SignUp() {
                   required
                   isInvalid={!!fieldErrors.username}
                 />
-                <Form.Control.Feedback type="invalid" data-testid={signUpTestIds.usernameFeedback}>
+                <Form.Control.Feedback
+                  type="invalid"
+                  data-testid={signUpTestIds.usernameFeedback}
+                >
                   {fieldErrors.username}
                 </Form.Control.Feedback>
               </Form.Group>
             </Row>
             <Row className="mb-3">
-                <Form.Group
+              <Form.Group
                 as={Col}
                 controlId="formPassword"
                 data-testid={signUpTestIds.passwordGroup}
-                >
+              >
                 <Form.Label data-testid={signUpTestIds.passwordLabel}>
                   {t("password")}
                 </Form.Label>
-                <div className="position-relative">
+                <InputGroup hasValidation>
                   <Form.Control
-                  type={passwordType}
-                  placeholder={t("password-placeholder")}
-                  value={password}
-                  onChange={handlePasswordChange}
-                  disabled={isFormLoading}
-                  required
-                  data-testid={signUpTestIds.passwordInput}
-                  isInvalid={!!fieldErrors.password}
+                    type={passwordType}
+                    placeholder={t("password-placeholder")}
+                    value={password}
+                    onChange={handlePasswordChange}
+                    disabled={isFormLoading}
+                    required
+                    data-testid={signUpTestIds.passwordInput}
+                    isInvalid={!!fieldErrors.password}
                   />
-                  <span
-                  className="position-absolute top-50 end-0 translate-middle-y me-3"
-                  style={{ cursor: "pointer", zIndex: 2 }}
-                  onClick={() => {
-                    setPasswordType(passwordType === "password" ? "text" : "password");
-                    setPasswordIcon(passwordIcon === "eye-slash" ? "eye" : "eye-slash");
-                  }}
-                  data-testid={signUpTestIds.passwordToggleIcon}
+                  <InputGroup.Text
+                    className="bg-transparent border-start-0"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => {
+                      setPasswordType(
+                        passwordType === "password" ? "text" : "password"
+                      );
+                      setPasswordIcon(
+                        passwordIcon === "eye-slash" ? "eye" : "eye-slash"
+                      );
+                    }}
+                    data-testid={signUpTestIds.passwordToggleIcon}
                   >
-                  {passwordIcon === "eye-slash" ? (
-                    <EyeSlash size={20} />
-                  ) : (
-                    <Eye size={20} />
-                  )}
-                  </span>
-                </div>
-                <Form.Control.Feedback type="invalid" data-testid={signUpTestIds.passwordFeedback}>
-                  {fieldErrors.password}
-                </Form.Control.Feedback>
-                <Form.Text
-                  className="text-muted"
-                  data-testid={signUpTestIds.passwordHelpText}
-                >
-                  {t("password-requirements")}
-                </Form.Text>
-                </Form.Group>
+                    {passwordIcon === "eye-slash" ? (
+                      <EyeSlash size={20} />
+                    ) : (
+                      <Eye size={20} />
+                    )}
+                  </InputGroup.Text>
+                  <Form.Control.Feedback
+                    type="invalid"
+                    data-testid={signUpTestIds.passwordFeedback}
+                  >
+                    {fieldErrors.password}
+                  </Form.Control.Feedback>
+                </InputGroup>
+                {!fieldErrors.password && (
+                  <Form.Text
+                    className="text-muted"
+                    data-testid={signUpTestIds.passwordHelpText}
+                  >
+                    {t("password-requirements")}
+                  </Form.Text>
+                )}
+              </Form.Group>
             </Row>
             <Row className="mb-3">
               <Col
@@ -323,7 +347,9 @@ function SignUp() {
                   disabled={
                     isFormLoading ||
                     (shouldLiveValidate &&
-                      (!!fieldErrors.email || !!fieldErrors.username || !!fieldErrors.password))
+                      (!!fieldErrors.email ||
+                        !!fieldErrors.username ||
+                        !!fieldErrors.password))
                   }
                   data-testid={signUpTestIds.submitButton}
                 >

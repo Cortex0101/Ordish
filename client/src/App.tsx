@@ -1,24 +1,39 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Suspense, lazy } from 'react';
 import { AuthProvider } from './contexts/AuthContext';
-import Home from './pages/home/Home';
-import About from './pages/about/About';
-import SignUp from './pages/login/SignUp';
-import Login from './pages/login/Login';
-import Profile from './pages/profile/Profile';
 import Header from './components/Header/Header';
+import { Spinner, Container } from 'react-bootstrap';
+
+// Lazy load pages for better performance
+const Home = lazy(() => import('./pages/home/Home'));
+const About = lazy(() => import('./pages/about/About'));
+const SignUp = lazy(() => import('./pages/login/SignUp'));
+const Login = lazy(() => import('./pages/login/Login'));
+const Profile = lazy(() => import('./pages/profile/Profile'));
+
+// Loading component
+const LoadingSpinner = () => (
+  <Container className="d-flex justify-content-center align-items-center" style={{ minHeight: '50vh' }}>
+    <Spinner animation="border" role="status">
+      <span className="visually-hidden">Loading...</span>
+    </Spinner>
+  </Container>
+);
 
 function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
         <Header />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/profile" element={<Profile />} />
-        </Routes>
+        <Suspense fallback={<LoadingSpinner />}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/profile" element={<Profile />} />
+          </Routes>
+        </Suspense>
       </BrowserRouter>
     </AuthProvider>
   );
