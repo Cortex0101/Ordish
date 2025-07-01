@@ -84,11 +84,13 @@ async function startServer() {
   const loginRoutes = (await import('./routes/login.js')).default;
   const authRoutes = (await import('./routes/auth.js')).default;
   const aboutRoutes = (await import('./routes/about.js')).default;
+  const spellingBeeRoutes = (await import('./routes/spellingBee.js')).default;
 
   app.use('/api/home', homeRoutes);
   app.use('/api/login', loginRoutes);
   app.use('/api/auth', authRoutes);
   app.use('/api/about', aboutRoutes);
+  app.use('/api/spelling-bee', spellingBeeRoutes);
 
 app.use((err: Error, req: Request, res: Response, _next: any) => {
   log.apiError('Unhandled application error', err, req);

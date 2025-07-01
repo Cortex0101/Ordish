@@ -11,6 +11,9 @@ const SignUp = lazy(() => import('./pages/login/SignUp'));
 const Login = lazy(() => import('./pages/login/Login'));
 const Profile = lazy(() => import('./pages/profile/Profile'));
 
+// Games
+const SpellingBee = lazy(() => import('./pages/spelling-bee/SpellingBee'));
+
 // Loading component
 const LoadingSpinner = () => (
   <Container className="d-flex justify-content-center align-items-center" style={{ minHeight: '50vh' }}>
@@ -32,6 +35,9 @@ function App() {
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<Login />} />
             <Route path="/profile" element={<Profile />} />
+
+            {/* Games */}
+            <Route path="/spelling-bee" element={<SpellingBee />} />
           </Routes>
         </Suspense>
       </BrowserRouter>

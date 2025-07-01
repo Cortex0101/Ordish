@@ -74,7 +74,7 @@ const OffcanvasMenu = ({
             </Nav.Link>
             <Nav.Link 
               className="nav-section-link ps-3 py-2"
-              onClick={() => handleNavigation('/')}
+              onClick={() => handleNavigation('/spelling-bee')}
               data-testid={headerTestIds.navSpellingBee}
             >
               {t('spellingBee')}
