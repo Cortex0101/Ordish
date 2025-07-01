@@ -1,62 +1,152 @@
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
-import { getPool } from '../db.js';
-import { User } from '../models/User.js';
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import { getPool } from "../db.js";
+import { User } from "../models/User.js";
+import validator from "validator";
 
 export class AuthService {
-  static async createUser(email: string, username: string, password: string): Promise<User> {
+  static async getUserByEmail(email: string): Promise<User | null> {
+    const pool = getPool();
+    const [rows] = (await pool.execute("SELECT * FROM users WHERE email = ?", [
+      email,
+    ])) as any;
+    return rows.length > 0 ? rows[0] : null;
+  }
+
+  static async getUserByUsername(
+    username: string
+  ): Promise<User | null> {
+    const pool = getPool();
+    const [rows] = (await pool.execute(
+      "SELECT * FROM users WHERE username = ?",
+      [username]
+    )) as any;
+    return rows.length > 0 ? rows[0] : null;
+  }
+
+  static async getUserById(id: number): Promise<User | null> {
+    const pool = getPool();
+    const [rows] = (await pool.execute("SELECT * FROM users WHERE id = ?", [
+      id,
+    ])) as any;
+    return rows.length > 0 ? rows[0] : null;
+  }
+
+  static verifyPasswordStrength(password: string): boolean {
+    return (
+      validator.isStrongPassword(password, {
+        minLength: 8,
+        minLowercase: 1,
+        minUppercase: 1,
+        minNumbers: 0,
+        minSymbols: 0,
+      })
+    );
+  }
+
+  static async verifyInformationIsValidForRegistration(
+    email: string,
+    username: string,
+    password: string
+  ): Promise<void> {
+    if (!email || !validator.isEmail(email)) {
+      throw new Error("Invalid email format");
+    }
+
+    if (!username || !validator.isAlphanumeric(username)) {
+      throw new Error("Username must be alphanumeric");
+    }
+    else if (username.length < 3 || username.length > 20) {
+      throw new Error("Username must be between 3 and 20 characters long");
+    }
+
+    if (!this.verifyPasswordStrength(password)) {
+      throw new Error(
+        "Password must be at least 8 characters long, with at least one lowercase and one uppercase letter"
+      );
+    }
+
+    const existingUser = await this.getUserByEmail(email);
+    if (existingUser) {
+      throw new Error("Email is already registered");
+    }
+
+    const existingUsername = await this.getUserByUsername(username);
+    if (existingUsername) {
+      throw new Error("Username is already taken");
+    }
+
+    return Promise.resolve();
+  }
+    
+  static async createUser(
+    email: string,
+    username: string,
+    password: string
+  ): Promise<User> {
     const passwordHash = await bcrypt.hash(password, 12);
     const pool = getPool();
-    
+
+    // Verify information before inserting
+    await this.verifyInformationIsValidForRegistration(email, username, password);
+
     const [result] = await pool.execute(
-      'INSERT INTO users (email, username, password_hash) VALUES (?, ?, ?)',
+      "INSERT INTO users (email, username, password_hash) VALUES (?, ?, ?)",
       [email, username, passwordHash]
     );
-    
+
     const userId = (result as any).insertId;
-    
+
     // Create default preferences
     await pool.execute(
-      'INSERT INTO user_preferences (user_id, theme, language) VALUES (?, ?, ?)',
-      [userId, 'auto', 'en']
+      "INSERT INTO user_preferences (user_id, theme, language) VALUES (?, ?, ?)",
+      [userId, "auto", "en"]
     );
-    
+
     const user = await this.getUserById(userId);
     if (!user) {
-      throw new Error('User creation failed');
+      throw new Error("User creation failed");
     }
     return user;
   }
 
-  static async verifyPassword(email: string, password: string): Promise<User | null> {
+  static async verifyPassword(
+    email: string,
+    password: string
+  ): Promise<User | null> {
     const pool = getPool();
-    const [result] = await pool.execute(
-      'SELECT id, email, username, password_hash, email_verified FROM users WHERE email = ?',
+    const [result] = (await pool.execute(
+      "SELECT id, email, username, password_hash, email_verified FROM users WHERE email = ?",
       [email]
-    ) as any;
-    
+    )) as any;
+
     if (result.length === 0) return null;
-    
+
     const user = result[0];
     const isValid = await bcrypt.compare(password, user.password_hash);
-    
+
     if (!isValid) return null;
-    
+
     // Remove password hash from return value
     const { password_hash, ...userWithoutPassword } = user;
     return userWithoutPassword;
   }
 
-  static async createSession(userId: number, sessionData: any): Promise<string> {
-    const sessionId = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+  static async createSession(
+    userId: number,
+    sessionData: any
+  ): Promise<string> {
+    const sessionId =
+      Math.random().toString(36).substring(2, 15) +
+      Math.random().toString(36).substring(2, 15);
     const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 7 days
     const pool = getPool();
-    
+
     await pool.execute(
-      'INSERT INTO user_sessions (id, user_id, data, expires_at) VALUES (?, ?, ?, ?)',
+      "INSERT INTO user_sessions (id, user_id, data, expires_at) VALUES (?, ?, ?, ?)",
       [sessionId, userId, JSON.stringify(sessionData), expiresAt]
     );
-    
+
     return sessionId;
   }
 
@@ -65,39 +155,8 @@ export class AuthService {
       id: user.id,
       email: user.email,
     };
-    
-    return jwt.sign(payload, process.env.JWT_SECRET!, { expiresIn: '7d' });
-  }
 
-  static async getUserByEmail(email: string): Promise<User | null> {
-    const pool = getPool();
-    const [rows] = await pool.execute('SELECT * FROM users WHERE email = ?', [email]) as any;
-    return rows.length > 0 ? rows[0] : null;
-  }
-
-  static async getUserById(id: number): Promise<User | null> {
-    const pool = getPool();
-    const [rows] = await pool.execute('SELECT * FROM users WHERE id = ?', [id]) as any;
-    return rows.length > 0 ? rows[0] : null;
-  }
-
-  static async getUserPreferences(userId: number): Promise<any> {
-    const pool = getPool();
-    const [rows] = await pool.execute('SELECT * FROM user_preferences WHERE user_id = ?', [userId]) as any;
-    return rows.length > 0 ? rows[0] : null;
-  }
-
-  static async updateUserPreferences(userId: number, preferences: any): Promise<void> {
-    const pool = getPool();
-    const { theme, language, timezone, notifications_enabled } = preferences;
-    
-    // Use REPLACE to update or insert preferences
-    if (theme || language || timezone || notifications_enabled !== undefined) {
-      await pool.execute(
-        'REPLACE INTO user_preferences (user_id, theme, language, timezone, notifications_enabled) VALUES (?, ?, ?, ?, ?)',
-        [userId, theme || 'auto', language || 'en', timezone || 'UTC', notifications_enabled !== undefined ? notifications_enabled : true]
-      );
-    }
+    return jwt.sign(payload, process.env.JWT_SECRET!, { expiresIn: "7d" });
   }
 
   static verifyJWT(token: string): any {
@@ -108,9 +167,34 @@ export class AuthService {
     }
   }
 
-  static async checkEmailExists(email: string): Promise<boolean> {
+  static async getUserPreferences(userId: number): Promise<any> {
     const pool = getPool();
-    const [rows] = await pool.execute('SELECT COUNT(*) as count FROM users WHERE email = ?', [email]) as any;
-    return rows[0].count > 0;
+    const [rows] = (await pool.execute(
+      "SELECT * FROM user_preferences WHERE user_id = ?",
+      [userId]
+    )) as any;
+    return rows.length > 0 ? rows[0] : null;
+  }
+
+  static async updateUserPreferences(
+    userId: number,
+    preferences: any
+  ): Promise<void> {
+    const pool = getPool();
+    const { theme, language, timezone, notifications_enabled } = preferences;
+
+    // Use REPLACE to update or insert preferences
+    if (theme || language || timezone || notifications_enabled !== undefined) {
+      await pool.execute(
+        "REPLACE INTO user_preferences (user_id, theme, language, timezone, notifications_enabled) VALUES (?, ?, ?, ?, ?)",
+        [
+          userId,
+          theme || "auto",
+          language || "en",
+          timezone || "UTC",
+          notifications_enabled !== undefined ? notifications_enabled : true,
+        ]
+      );
+    }
   }
 }

@@ -42,13 +42,6 @@ router.post('/register', async (req, res) => {
   try {
     const { email, username, password } = req.body;
     
-    // Check if user exists
-    const existingUser = await AuthService.getUserByEmail(email);
-    if (existingUser) {
-      res.status(400).json({ error: 'User already exists' });
-      return;
-    }
-    
     const user = await AuthService.createUser(email, username, password);
     const token = AuthService.generateJWT(user);
     const preferences = await AuthService.getUserPreferences(user.id);
