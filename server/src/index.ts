@@ -1,13 +1,15 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import session from 'express-session';
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { waitForDatabase } from './utils/databaseHealth.js';
 import { initializeDatabase } from './db.js';
-import { log } from './utils/logger.js';
+import { log, initializeFileLogging } from './utils/logger.js';
 import { httpLogger, errorLogger } from './middleware/httpLogger.js';
+import passport, { initializePassport } from './config/passport.js';
 
 async function startServer() {
   // Load environment variables FIRST
@@ -15,12 +17,18 @@ async function startServer() {
   const envFile = process.env.NODE_ENV === 'production' ? '.env.production' : '.env.development';
   dotenv.config({ path: envFile });
 
+  // Initialize file logging AFTER environment variables are loaded
+  initializeFileLogging();
+
   log.info('Server startup initiated', {
     NODE_ENV: process.env.NODE_ENV,
     DB_HOST: process.env.DB_HOST,
     DB_NAME: process.env.DB_NAME,
     PORT: process.env.PORT || 3001
   });
+
+  // Initialize Passport configuration AFTER environment variables are loaded
+  initializePassport();
 
   // Initialize database pool AFTER environment variables are loaded
   initializeDatabase();
@@ -52,6 +60,21 @@ async function startServer() {
   }));
   app.use(express.json());
   app.use(cookieParser());
+  
+  // Session middleware for OAuth
+  app.use(session({
+    secret: process.env.SESSION_SECRET || 'fallback-secret-key',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: 24 * 60 * 60 * 1000 // 24 hours
+    }
+  }));
+  
+  // Initialize Passport
+  app.use(passport.initialize());
+  app.use(passport.session());
   
   // Add HTTP logging middleware
   app.use(httpLogger);

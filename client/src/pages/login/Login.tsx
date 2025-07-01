@@ -79,11 +79,14 @@ function SignUp() {
     }
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const handleSocialLogin = (_provider: "google" | "facebook" | "apple") => {
-    // TODO: OAuth not configured yet
-    setError(t("social-login-not-configured"));
-    // window.location.href = `/api/auth/${provider}`;
+  const handleSocialLogin = (provider: "google" | "facebook" | "apple") => {
+    if (provider === "google") {
+      // Redirect to Google OAuth endpoint
+      window.location.href = "/api/auth/google";
+    } else {
+      // TODO: Other OAuth providers not configured yet
+      setError(t("social-login-not-configured"));
+    }
   };
 
   const isFormLoading = loading || authLoading;

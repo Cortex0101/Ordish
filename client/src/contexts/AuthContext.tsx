@@ -89,6 +89,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   // Check if user is logged in on app start
   useEffect(() => {
+    // Handle OAuth success/failure
+    const urlParams = new URLSearchParams(window.location.search);
+    const oauthSuccess = urlParams.get('oauth_success');
+    const oauthError = urlParams.get('error');
+    
+    if (oauthSuccess === 'true') {
+      // OAuth was successful, refresh auth status
+      console.log('OAuth login successful');
+      // Clean up URL parameters
+      window.history.replaceState({}, document.title, window.location.pathname);
+    } else if (oauthError) {
+      // OAuth failed
+      console.error('OAuth error:', oauthError);
+      // Clean up URL parameters
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+    
     checkAuthStatus();
   }, [checkAuthStatus]);
 

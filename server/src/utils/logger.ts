@@ -1,6 +1,15 @@
 import winston from 'winston';
 import DailyRotateFile from 'winston-daily-rotate-file';
 import path from 'path';
+import fs from 'fs';
+
+// Define log directory
+const logDir = path.join(process.cwd(), 'logs');
+
+// Ensure logs directory exists
+if (!fs.existsSync(logDir)) {
+  fs.mkdirSync(logDir, { recursive: true });
+}
 
 // Define log levels and colors
 const levels = {
@@ -56,9 +65,6 @@ const fileFormat = winston.format.combine(
   winston.format.prettyPrint()
 );
 
-// Define log directory
-const logDir = 'logs';
-
 // Create transports array
 const transports: winston.transport[] = [
   // Console transport for development
@@ -68,11 +74,21 @@ const transports: winston.transport[] = [
   }),
 ];
 
-// Add file transports only in production or when LOG_TO_FILE is set
-if (process.env.NODE_ENV === 'production' || process.env.LOG_TO_FILE === 'true') {
-  // Daily rotate file for all logs
-  transports.push(
-    new DailyRotateFile({
+// Function to initialize file transports after environment variables are loaded
+export function initializeFileLogging() {
+  // Check if file transports are already added
+  const hasFileTransports = transports.some(t => t instanceof DailyRotateFile);
+  if (hasFileTransports) {
+    return; // Already initialized
+  }
+
+  // Add file transports only in production or when LOG_TO_FILE is set
+  if (process.env.NODE_ENV === 'production' || process.env.LOG_TO_FILE === 'true') {
+    console.log('🔧 Adding file transports to Winston logger');
+    console.log('Log directory:', logDir);
+    
+    // Daily rotate file for all logs
+    const allLogsTransport = new DailyRotateFile({
       filename: path.join(logDir, 'application-%DATE%.log'),
       datePattern: 'YYYY-MM-DD',
       zippedArchive: true,
@@ -80,12 +96,10 @@ if (process.env.NODE_ENV === 'production' || process.env.LOG_TO_FILE === 'true')
       maxFiles: '14d',
       format: fileFormat,
       level: 'debug',
-    })
-  );
+    });
 
-  // Daily rotate file for error logs only
-  transports.push(
-    new DailyRotateFile({
+    // Daily rotate file for error logs only
+    const errorLogsTransport = new DailyRotateFile({
       filename: path.join(logDir, 'error-%DATE%.log'),
       datePattern: 'YYYY-MM-DD',
       zippedArchive: true,
@@ -93,12 +107,10 @@ if (process.env.NODE_ENV === 'production' || process.env.LOG_TO_FILE === 'true')
       maxFiles: '30d',
       format: fileFormat,
       level: 'error',
-    })
-  );
+    });
 
-  // Daily rotate file for HTTP requests
-  transports.push(
-    new DailyRotateFile({
+    // Daily rotate file for HTTP requests
+    const httpLogsTransport = new DailyRotateFile({
       filename: path.join(logDir, 'http-%DATE%.log'),
       datePattern: 'YYYY-MM-DD',
       zippedArchive: true,
@@ -106,8 +118,24 @@ if (process.env.NODE_ENV === 'production' || process.env.LOG_TO_FILE === 'true')
       maxFiles: '7d',
       format: fileFormat,
       level: 'http',
-    })
-  );
+    });
+
+    // Add transports to logger
+    logger.add(allLogsTransport);
+    logger.add(errorLogsTransport);
+    logger.add(httpLogsTransport);
+    
+    console.log('✅ File transports added. Total transports:', logger.transports.length);
+    
+    // Log a test message to verify file logging
+    logger.info('File logging initialized', {
+      NODE_ENV: process.env.NODE_ENV,
+      LOG_TO_FILE: process.env.LOG_TO_FILE,
+      logDirectory: logDir
+    });
+  } else {
+    console.log('📝 File logging disabled. Only console logging enabled.');
+  }
 }
 
 // Create logger instance
@@ -115,6 +143,7 @@ const logger = winston.createLogger({
   level: process.env.NODE_ENV === 'production' ? 'info' : 'debug',
   levels,
   transports,
+  exitOnError: false, // Don't exit on handled exceptions
   // Handle uncaught exceptions and rejections
   exceptionHandlers: process.env.NODE_ENV === 'production' ? [
     new DailyRotateFile({
@@ -125,7 +154,15 @@ const logger = winston.createLogger({
       maxFiles: '30d',
       format: fileFormat,
     })
-  ] : [],
+  ] : [
+    // In development, also log exceptions to console
+    new winston.transports.Console({
+      format: winston.format.combine(
+        winston.format.colorize(),
+        winston.format.simple()
+      )
+    })
+  ],
   rejectionHandlers: process.env.NODE_ENV === 'production' ? [
     new DailyRotateFile({
       filename: path.join(logDir, 'rejections-%DATE%.log'),
@@ -135,8 +172,20 @@ const logger = winston.createLogger({
       maxFiles: '30d',
       format: fileFormat,
     })
-  ] : [],
+  ] : [
+    // In development, also log rejections to console
+    new winston.transports.Console({
+      format: winston.format.combine(
+        winston.format.colorize(),
+        winston.format.simple()
+      )
+    })
+  ],
 });
+
+console.log('🚀 Winston logger created with', transports.length, 'transports');
+console.log('📊 Logger level:', logger.level);
+console.log('🎯 Transports:', transports.map(t => t.constructor.name));
 
 // Enhanced logging methods with context
 class Logger {
@@ -281,6 +330,14 @@ class Logger {
 
 // Export singleton instance
 export const log = Logger.getInstance();
+
+// Test log entry to verify file logging is working
+log.info('Logger initialized successfully', {
+  NODE_ENV: process.env.NODE_ENV,
+  LOG_TO_FILE: process.env.LOG_TO_FILE,
+  transportsCount: transports.length,
+  logDirectory: logDir
+});
 
 // Export winston logger for direct access if needed
 export { logger as winstonLogger };

@@ -319,4 +319,71 @@ export class AuthService {
       log.business('User preferences updated', { userId, preferences });
     }
   }
+
+  static async createGoogleUser(
+    email: string,
+    username: string,
+    googleData: {
+      googleId: string;
+      displayName: string;
+      profilePicture: string;
+    }
+  ): Promise<User> {
+    log.info('Creating new Google OAuth user', { 
+      email: email.substring(0, 3) + '***', 
+      username: username.substring(0, 3) + '***',
+      googleId: googleData.googleId
+    });
+
+    const pool = getPool();
+
+    try {
+      const startTime = Date.now();
+      const [result] = await pool.execute(
+        "INSERT INTO users (email, username, google_id, display_name, profile_picture, email_verified) VALUES (?, ?, ?, ?, ?, ?)",
+        [email, username, googleData.googleId, googleData.displayName, googleData.profilePicture, 1] // Google emails are pre-verified
+      );
+      const userCreationDuration = Date.now() - startTime;
+
+      log.dbQuery(
+        "INSERT INTO users (email, username, google_id, display_name, profile_picture, email_verified) VALUES (?, ?, ?, ?, ?, ?)",
+        [email, '***', googleData.googleId, googleData.displayName.substring(0, 10) + '***', '[URL]', 1],
+        userCreationDuration
+      );
+
+      const userId = (result as any).insertId;
+
+      // Create default preferences
+      const prefStartTime = Date.now();
+      await pool.execute(
+        "INSERT INTO user_preferences (user_id, theme, language) VALUES (?, ?, ?)",
+        [userId, "auto", "en"]
+      );
+      const prefDuration = Date.now() - prefStartTime;
+
+      log.dbQuery(
+        "INSERT INTO user_preferences (user_id, theme, language) VALUES (?, ?, ?)",
+        [userId, "auto", "en"],
+        prefDuration
+      );
+
+      const user = await this.getUserById(userId);
+      if (!user) {
+        throw new Error("Google user creation failed");
+      }
+
+      log.business('Google OAuth user created successfully', { 
+        userId: user.id, 
+        email: email.substring(0, 3) + '***' 
+      });
+
+      return user;
+    } catch (error) {
+      log.dbError('Failed to create Google OAuth user', error as Error, 
+        "INSERT INTO users (email, username, google_id, display_name, profile_picture, email_verified) VALUES (?, ?, ?, ?, ?, ?)",
+        [email, username, googleData.googleId, googleData.displayName, '[URL]', 1]
+      );
+      throw error;
+    }
+  }
 }

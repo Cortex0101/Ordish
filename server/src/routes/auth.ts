@@ -1,6 +1,5 @@
 import { Router } from 'express';
-
-// import passport from 'passport'; // Commented out until OAuth is configured
+import passport from '../config/passport.js';
 import { AuthService } from '../services/authService.js';
 import { authMiddleware, AuthRequest } from '../middleware/auth.js';
 import { User } from '../models/User.js';
@@ -220,26 +219,54 @@ router.post('/login', async (req, res) => {
   }
 });
 
-// Google OAuth - Commented out until Passport strategies are configured
-// router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+// Google OAuth routes
+router.get('/google', passport.authenticate('google', {
+  scope: ['profile', 'email']
+}));
 
-// router.get('/google/callback', 
-//   passport.authenticate('google', { session: false }),
-//   async (req, res) => {
-//     const user = req.user as User;
-//     const token = AuthService.generateToken(user);
-    
-//     res.cookie('auth_token', token, {
-//       httpOnly: true,
-//       secure: process.env.NODE_ENV === 'production',
-//       sameSite: 'strict',
-//       maxAge: 7 * 24 * 60 * 60 * 1000
-//     });
-    
-//     // Redirect to frontend with success
-//     res.redirect(`${process.env.CLIENT_URL}?auth=success`);
-//   }
-// );
+router.get('/google/callback', 
+  passport.authenticate('google', { failureRedirect: '/login?error=oauth_failed' }),
+  async (req, res) => {
+    try {
+      const user = req.user as User;
+      log.business('Google OAuth callback successful', { 
+        userId: user.id,
+        email: user.email?.substring(0, 3) + '***'
+      });
+      
+      // Generate JWT token for the authenticated user
+      const token = AuthService.generateJWT(user);
+      
+      // Set secure cookie
+      res.cookie('auth_token', token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict',
+        maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+      });
+      
+      // Redirect to frontend success page
+      const redirectUrl = process.env.CLIENT_URL || 'http://localhost:5173';
+      res.redirect(`${redirectUrl}/?oauth_success=true`);
+    } catch (error) {
+      log.error('Google OAuth callback error', error as Error);
+      const redirectUrl = process.env.CLIENT_URL || 'http://localhost:5173';
+      res.redirect(`${redirectUrl}/login?error=oauth_callback_failed`);
+    }
+  }
+);
+
+// OAuth failure handler
+router.get('/oauth/failure', (req, res) => {
+  log.warn('OAuth failure accessed', { 
+    ip: req.ip,
+    userAgent: req.get('User-Agent'),
+    query: req.query 
+  });
+  
+  const redirectUrl = process.env.CLIENT_URL || 'http://localhost:5173';
+  res.redirect(`${redirectUrl}/login?error=oauth_failed`);
+});
 
 // Logout
 router.post('/logout', (_req, res) => {
