@@ -42,55 +42,75 @@ export function initializePassport() {
           return done(new Error('No email provided by Google'), false);
         }
 
-        // Check if user already exists
-        let user = await AuthService.getUserByEmail(email);
+        // Check if user already exists by Google ID first
+        let user = await AuthService.getUserByGoogleId(profile.id);
         
         if (user) {
-          // User exists, log them in
-          log.business('Google OAuth login successful', { 
+          // User exists with this Google account, log them in
+          log.business('Google OAuth login successful (existing Google account)', { 
             userId: user.id,
             email: email.substring(0, 3) + '***' 
           });
           
           return done(null, user);
-        } else {
-          // User doesn't exist, create new account
-          // Generate a username from display name or email
-          let username = displayName?.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
-          if (!username || username.length < 3) {
-            username = email.split('@')[0].replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
-          }
+        }
+
+        // Check if user exists by email (might be a regular account)
+        user = await AuthService.getUserByEmail(email);
+        
+        if (user) {
+          // User exists with this email but no Google account linked
+          // For now, we'll treat this as a separate account
+          // In the future, you might want to implement account linking
+          log.warn('User exists with same email but no Google account linked', {
+            email: email.substring(0, 3) + '***',
+            userId: user.id
+          });
           
-          // Ensure username is unique
-          let finalUsername = username;
-          let counter = 1;
-          while (await AuthService.getUserByUsername(finalUsername)) {
-            finalUsername = `${username}${counter}`;
-            counter++;
-          }
+          // You could either:
+          // 1. Link the accounts (add social_account record)
+          // 2. Reject the OAuth (current approach)
+          // 3. Create a new account with modified email
+          
+          return done(new Error('Account with this email already exists. Please log in with your password.'), false);
+        }
 
-          try {
-            // Create user without password (OAuth account)
-            user = await AuthService.createGoogleUser(email, finalUsername, {
-              googleId: profile.id,
-              displayName: displayName || '',
-              profilePicture: profile.photos?.[0]?.value || ''
-            });
+        // User doesn't exist, create new account
+        // Generate a username from display name or email
+        let username = displayName?.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+        if (!username || username.length < 3) {
+          username = email.split('@')[0].replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+        }
+        
+        // Ensure username is unique
+        let finalUsername = username;
+        let counter = 1;
+        while (await AuthService.getUserByUsername(finalUsername)) {
+          finalUsername = `${username}${counter}`;
+          counter++;
+        }
 
-            log.business('Google OAuth registration successful', { 
-              userId: user.id,
-              email: email.substring(0, 3) + '***',
-              username: finalUsername.substring(0, 3) + '***'
-            });
+        try {
+          // Create user without password (OAuth account)
+          user = await AuthService.createGoogleUser(email, finalUsername, {
+            googleId: profile.id,
+            displayName: displayName || '',
+            profilePicture: profile.photos?.[0]?.value || ''
+          });
 
-            return done(null, user);
-          } catch (error) {
-            log.error('Failed to create Google OAuth user', error as Error, {
-              email: email.substring(0, 3) + '***',
-              profileId: profile.id
-            });
-            return done(error as Error, false);
-          }
+          log.business('Google OAuth registration successful', { 
+            userId: user.id,
+            email: email.substring(0, 3) + '***',
+            username: finalUsername.substring(0, 3) + '***'
+          });
+
+          return done(null, user);
+        } catch (error) {
+          log.error('Failed to create Google OAuth user', error as Error, {
+            email: email.substring(0, 3) + '***',
+            profileId: profile.id
+          });
+          return done(error as Error, false);
         }
       } catch (error) {
         log.error('Google OAuth strategy error', error as Error, {

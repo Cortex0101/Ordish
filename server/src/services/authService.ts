@@ -320,6 +320,57 @@ export class AuthService {
     }
   }
 
+  static async getUserByGoogleId(googleId: string): Promise<User | null> {
+    log.info('Finding user by Google ID', { googleId });
+    
+    const pool = getPool();
+    const startTime = Date.now();
+
+    try {
+      const [rows] = await pool.execute(
+        `SELECT u.* FROM users u 
+         INNER JOIN social_accounts sa ON u.id = sa.user_id 
+         WHERE sa.provider = 'google' AND sa.provider_id = ?`,
+        [googleId]
+      );
+      const queryDuration = Date.now() - startTime;
+
+      log.dbQuery(
+        "SELECT u.* FROM users u INNER JOIN social_accounts sa ON u.id = sa.user_id WHERE sa.provider = 'google' AND sa.provider_id = ?",
+        [googleId],
+        queryDuration
+      );
+
+      const userRows = rows as any[];
+      if (userRows.length > 0) {
+        const user: User = {
+          id: userRows[0].id,
+          email: userRows[0].email,
+          username: userRows[0].username,
+          avatar_url: userRows[0].avatar_url,
+          email_verified: userRows[0].email_verified === 1,
+          created_at: userRows[0].created_at,
+          updated_at: userRows[0].updated_at
+        };
+
+        log.info('User found by Google ID', { 
+          userId: user.id, 
+          email: user.email.substring(0, 3) + '***' 
+        });
+        return user;
+      } else {
+        log.info('No user found for Google ID', { googleId });
+        return null;
+      }
+    } catch (error) {
+      log.dbError('Failed to find user by Google ID', error as Error, 
+        "SELECT u.* FROM users u INNER JOIN social_accounts sa ON u.id = sa.user_id WHERE sa.provider = 'google' AND sa.provider_id = ?",
+        [googleId]
+      );
+      throw error;
+    }
+  }
+
   static async createGoogleUser(
     email: string,
     username: string,
@@ -338,20 +389,46 @@ export class AuthService {
     const pool = getPool();
 
     try {
-      const startTime = Date.now();
-      const [result] = await pool.execute(
-        "INSERT INTO users (email, username, google_id, display_name, profile_picture, email_verified) VALUES (?, ?, ?, ?, ?, ?)",
-        [email, username, googleData.googleId, googleData.displayName, googleData.profilePicture, 1] // Google emails are pre-verified
+      // Start transaction to ensure both user and social_account are created together
+      await pool.execute('START TRANSACTION');
+
+      // First, create the user record (without OAuth-specific fields)
+      const userStartTime = Date.now();
+      const [userResult] = await pool.execute(
+        "INSERT INTO users (email, username, email_verified) VALUES (?, ?, ?)",
+        [email, username, 1] // Google emails are pre-verified
       );
-      const userCreationDuration = Date.now() - startTime;
+      const userCreationDuration = Date.now() - userStartTime;
 
       log.dbQuery(
-        "INSERT INTO users (email, username, google_id, display_name, profile_picture, email_verified) VALUES (?, ?, ?, ?, ?, ?)",
-        [email, '***', googleData.googleId, googleData.displayName.substring(0, 10) + '***', '[URL]', 1],
+        "INSERT INTO users (email, username, email_verified) VALUES (?, ?, ?)",
+        [email, '***', 1],
         userCreationDuration
       );
 
-      const userId = (result as any).insertId;
+      const userId = (userResult as any).insertId;
+
+      // Create the social account record with OAuth provider data
+      const socialStartTime = Date.now();
+      const providerData = {
+        displayName: googleData.displayName,
+        profilePicture: googleData.profilePicture
+      };
+
+      await pool.execute(
+        "INSERT INTO social_accounts (user_id, provider, provider_id, provider_email, provider_data) VALUES (?, ?, ?, ?, ?)",
+        [userId, 'google', googleData.googleId, email, JSON.stringify(providerData)]
+      );
+      const socialDuration = Date.now() - socialStartTime;
+
+      log.dbQuery(
+        "INSERT INTO social_accounts (user_id, provider, provider_id, provider_email, provider_data) VALUES (?, ?, ?, ?, ?)",
+        [userId, 'google', googleData.googleId, email, JSON.stringify({
+          displayName: googleData.displayName.substring(0, 10) + '***',
+          profilePicture: '[URL]'
+        })],
+        socialDuration
+      );
 
       // Create default preferences
       const prefStartTime = Date.now();
@@ -367,6 +444,9 @@ export class AuthService {
         prefDuration
       );
 
+      // Commit the transaction
+      await pool.execute('COMMIT');
+
       const user = await this.getUserById(userId);
       if (!user) {
         throw new Error("Google user creation failed");
@@ -379,9 +459,12 @@ export class AuthService {
 
       return user;
     } catch (error) {
+      // Rollback on any error
+      await pool.execute('ROLLBACK');
+      
       log.dbError('Failed to create Google OAuth user', error as Error, 
-        "INSERT INTO users (email, username, google_id, display_name, profile_picture, email_verified) VALUES (?, ?, ?, ?, ?, ?)",
-        [email, username, googleData.googleId, googleData.displayName, '[URL]', 1]
+        "Transaction for Google user creation",
+        [email, username, googleData.googleId]
       );
       throw error;
     }
