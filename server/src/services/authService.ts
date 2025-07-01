@@ -3,32 +3,48 @@ import jwt from "jsonwebtoken";
 import { getPool } from "../db.js";
 import { User } from "../models/User.js";
 import validator from "validator";
+import { log } from "../utils/logger.js";
 
 export class AuthService {
   static async getUserByEmail(email: string): Promise<User | null> {
+    const startTime = Date.now();
     const pool = getPool();
     const [rows] = (await pool.execute("SELECT * FROM users WHERE email = ?", [
       email,
     ])) as any;
+    const duration = Date.now() - startTime;
+    
+    log.dbQuery("SELECT * FROM users WHERE email = ?", [email], duration);
+    
     return rows.length > 0 ? rows[0] : null;
   }
 
   static async getUserByUsername(
     username: string
   ): Promise<User | null> {
+    const startTime = Date.now();
     const pool = getPool();
     const [rows] = (await pool.execute(
       "SELECT * FROM users WHERE username = ?",
       [username]
     )) as any;
+    const duration = Date.now() - startTime;
+    
+    log.dbQuery("SELECT * FROM users WHERE username = ?", [username], duration);
+    
     return rows.length > 0 ? rows[0] : null;
   }
 
   static async getUserById(id: number): Promise<User | null> {
+    const startTime = Date.now();
     const pool = getPool();
     const [rows] = (await pool.execute("SELECT * FROM users WHERE id = ?", [
       id,
     ])) as any;
+    const duration = Date.now() - startTime;
+    
+    log.dbQuery("SELECT * FROM users WHERE id = ?", [id], duration);
+    
     return rows.length > 0 ? rows[0] : null;
   }
 
@@ -82,48 +98,111 @@ export class AuthService {
     username: string,
     password: string
   ): Promise<User> {
+    log.info('Creating new user', { 
+      email: email.substring(0, 3) + '***', 
+      username: username.substring(0, 3) + '***' 
+    });
+
     const passwordHash = await bcrypt.hash(password, 12);
     const pool = getPool();
 
     // Verify information before inserting, will throw an error if invalid
     await this.verifyInformationIsValidForRegistration(email, username, password);
 
-    const [result] = await pool.execute(
-      "INSERT INTO users (email, username, password_hash) VALUES (?, ?, ?)",
-      [email, username, passwordHash]
-    );
+    try {
+      const startTime = Date.now();
+      const [result] = await pool.execute(
+        "INSERT INTO users (email, username, password_hash) VALUES (?, ?, ?)",
+        [email, username, passwordHash]
+      );
+      const userCreationDuration = Date.now() - startTime;
 
-    const userId = (result as any).insertId;
+      log.dbQuery(
+        "INSERT INTO users (email, username, password_hash) VALUES (?, ?, ?)",
+        [email, '***', '***'],
+        userCreationDuration
+      );
 
-    // Create default preferences
-    await pool.execute(
-      "INSERT INTO user_preferences (user_id, theme, language) VALUES (?, ?, ?)",
-      [userId, "auto", "en"]
-    );
+      const userId = (result as any).insertId;
 
-    const user = await this.getUserById(userId);
-    if (!user) {
-      throw new Error("User creation failed");
+      // Create default preferences
+      const prefStartTime = Date.now();
+      await pool.execute(
+        "INSERT INTO user_preferences (user_id, theme, language) VALUES (?, ?, ?)",
+        [userId, "auto", "en"]
+      );
+      const prefDuration = Date.now() - prefStartTime;
+
+      log.dbQuery(
+        "INSERT INTO user_preferences (user_id, theme, language) VALUES (?, ?, ?)",
+        [userId, "auto", "en"],
+        prefDuration
+      );
+
+      const user = await this.getUserById(userId);
+      if (!user) {
+        throw new Error("User creation failed");
+      }
+
+      log.business('User created successfully', { 
+        userId: user.id, 
+        email: email.substring(0, 3) + '***' 
+      });
+
+      return user;
+    } catch (error) {
+      log.dbError('Failed to create user', error as Error, 
+        "INSERT INTO users (email, username, password_hash) VALUES (?, ?, ?)",
+        [email, username, '***']
+      );
+      throw error;
     }
-    return user;
   }
 
   static async verifyPassword(
     email: string,
     password: string
   ): Promise<User | null> {
+    log.info('Password verification attempt', { 
+      email: email.substring(0, 3) + '***' 
+    });
+    
+    const startTime = Date.now();
     const pool = getPool();
     const [result] = (await pool.execute(
       "SELECT id, email, username, password_hash, email_verified FROM users WHERE email = ?",
       [email]
     )) as any;
+    const duration = Date.now() - startTime;
 
-    if (result.length === 0) return null;
+    log.dbQuery(
+      "SELECT id, email, username, password_hash, email_verified FROM users WHERE email = ?",
+      [email],
+      duration
+    );
+
+    if (result.length === 0) {
+      log.warn('Password verification failed - user not found', { 
+        email: email.substring(0, 3) + '***' 
+      });
+      return null;
+    }
 
     const user = result[0];
     const isValid = await bcrypt.compare(password, user.password_hash);
 
-    if (!isValid) return null;
+    if (!isValid) {
+      log.warn('Password verification failed - invalid password', { 
+        email: email.substring(0, 3) + '***',
+        userId: user.id 
+      });
+      return null;
+    }
+
+    log.info('Password verification successful', { 
+      userId: user.id,
+      email: email.substring(0, 3) + '***' 
+    });
 
     // Remove password hash from return value
     const { password_hash, ...userWithoutPassword } = user;
@@ -138,39 +217,69 @@ export class AuthService {
       Math.random().toString(36).substring(2, 15) +
       Math.random().toString(36).substring(2, 15);
     const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 7 days
+    
+    log.debug('Creating user session', { userId, sessionId });
+    
+    const startTime = Date.now();
     const pool = getPool();
 
     await pool.execute(
       "INSERT INTO user_sessions (id, user_id, data, expires_at) VALUES (?, ?, ?, ?)",
       [sessionId, userId, JSON.stringify(sessionData), expiresAt]
     );
+    const duration = Date.now() - startTime;
+
+    log.dbQuery(
+      "INSERT INTO user_sessions (id, user_id, data, expires_at) VALUES (?, ?, ?, ?)",
+      [sessionId, userId, '[sessionData]', expiresAt],
+      duration
+    );
+
+    log.business('User session created', { userId, sessionId });
 
     return sessionId;
   }
 
   static generateJWT(user: User): string {
+    log.debug('Generating JWT token', { userId: user.id });
+    
     const payload = {
       id: user.id,
       email: user.email,
     };
 
-    return jwt.sign(payload, process.env.JWT_SECRET!, { expiresIn: "7d" });
+    const token = jwt.sign(payload, process.env.JWT_SECRET!, { expiresIn: "7d" });
+    
+    log.business('JWT token generated', { userId: user.id });
+    
+    return token;
   }
 
   static verifyJWT(token: string): any {
     try {
-      return jwt.verify(token, process.env.JWT_SECRET!);
+      const decoded = jwt.verify(token, process.env.JWT_SECRET!);
+      log.debug('JWT token verified successfully', { userId: (decoded as any).id });
+      return decoded;
     } catch (error) {
+      log.warn('JWT token verification failed', { 
+        error: (error as Error).message,
+        tokenPreview: token.substring(0, 20) + '...' 
+      });
       return null;
     }
   }
 
   static async getUserPreferences(userId: number): Promise<any> {
+    const startTime = Date.now();
     const pool = getPool();
     const [rows] = (await pool.execute(
       "SELECT * FROM user_preferences WHERE user_id = ?",
       [userId]
     )) as any;
+    const duration = Date.now() - startTime;
+    
+    log.dbQuery("SELECT * FROM user_preferences WHERE user_id = ?", [userId], duration);
+    
     return rows.length > 0 ? rows[0] : null;
   }
 
@@ -178,6 +287,12 @@ export class AuthService {
     userId: number,
     preferences: any
   ): Promise<void> {
+    log.info('Updating user preferences', { 
+      userId, 
+      preferences: Object.keys(preferences) 
+    });
+    
+    const startTime = Date.now();
     const pool = getPool();
     const { theme, language, timezone, notifications_enabled } = preferences;
 
@@ -193,6 +308,15 @@ export class AuthService {
           notifications_enabled !== undefined ? notifications_enabled : true,
         ]
       );
+      const duration = Date.now() - startTime;
+
+      log.dbQuery(
+        "REPLACE INTO user_preferences (user_id, theme, language, timezone, notifications_enabled) VALUES (?, ?, ?, ?, ?)",
+        [userId, theme || "auto", language || "en", timezone || "UTC", notifications_enabled !== undefined ? notifications_enabled : true],
+        duration
+      );
+
+      log.business('User preferences updated', { userId, preferences });
     }
   }
 }

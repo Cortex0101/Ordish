@@ -1,4 +1,5 @@
 import { getPool } from '../db.js';
+import { log } from './logger.js';
 
 /**
  * Check if all required tables exist in the database

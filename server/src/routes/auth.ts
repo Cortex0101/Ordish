@@ -4,6 +4,7 @@ import { Router } from 'express';
 import { AuthService } from '../services/authService.js';
 import { authMiddleware, AuthRequest } from '../middleware/auth.js';
 import { User } from '../models/User.js';
+import { log } from '../utils/logger.js';
 
 const router = Router();
 
@@ -15,10 +16,12 @@ router.post('/check-email', async (req, res) => {
     const { email } = req.body;
     
     if (!email) {
+      log.warn('Email check attempt without email', { ip: req.ip, userAgent: req.get('User-Agent') });
       res.status(400).json({ error: 'Email is required' });
       return;
     }
     
+    log.debug('Checking email existence', { email: email.substring(0, 3) + '***' });
     const user = await AuthService.getUserByEmail(email);
     const exists = !!user; // true if user exists false if 'exists' is null
     
@@ -26,13 +29,23 @@ router.post('/check-email', async (req, res) => {
     const requiresPassword = exists && user.password_hash;
     const hasSocialAccounts = exists && !user.password_hash;
     
+    log.info('Email check completed', { 
+      emailExists: exists, 
+      requiresPassword, 
+      hasSocialAccounts,
+      maskedEmail: email.substring(0, 3) + '***'
+    });
+    
     res.json({
       exists,
       requiresPassword,
       hasSocialAccounts
     });
   } catch (error) {
-    console.error('Check email error:', error);
+    log.error('Check email error', error as Error, { 
+      email: req.body?.email?.substring(0, 3) + '***',
+      ip: req.ip 
+    });
     res.status(500).json({ error: 'Failed to check email' });
   }
 });
@@ -44,6 +57,12 @@ router.post('/register', async (req, res) => {
     
     // Validate input data first
     if (!email || !username || !password) {
+      log.warn('Registration attempt with missing fields', { 
+        hasEmail: !!email, 
+        hasUsername: !!username, 
+        hasPassword: !!password,
+        ip: req.ip 
+      });
       res.status(400).json({ 
         error: 'validation.missing-fields',
         details: {
@@ -54,6 +73,13 @@ router.post('/register', async (req, res) => {
       });
       return;
     }
+
+    log.info('User registration attempt', { 
+      email: email.substring(0, 3) + '***',
+      username: username.substring(0, 3) + '***',
+      ip: req.ip,
+      userAgent: req.get('User-Agent')
+    });
 
     const user = await AuthService.createUser(email, username, password);
     const token = AuthService.generateJWT(user);
@@ -67,13 +93,23 @@ router.post('/register', async (req, res) => {
       maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
     });
     
+    log.business('User registered successfully', {
+      userId: user.id,
+      email: email.substring(0, 3) + '***',
+      username: username.substring(0, 3) + '***'
+    });
+    
     res.json({
       user: { ...user, password_hash: undefined },
       preferences,
       token
     });
   } catch (error) {
-    console.error('Registration error:', error);
+    log.error('Registration error', error as Error, { 
+      email: req.body?.email?.substring(0, 3) + '***',
+      username: req.body?.username?.substring(0, 3) + '***',
+      ip: req.ip 
+    });
     
     // Handle specific validation errors from AuthService
     const errorMessage = (error as Error).message;
@@ -132,17 +168,27 @@ router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
     
+    log.info('Login attempt', { 
+      email: email?.substring(0, 3) + '***',
+      ip: req.ip,
+      userAgent: req.get('User-Agent')
+    });
+    
     const user = await AuthService.getUserByEmail(email);
     if (!user || !user.password_hash) {
+      log.authAttempt(email, false, req.ip, req.get('User-Agent'));
       res.status(401).json({ error: 'Invalid credentials' });
       return;
     }
     
     const isValidPassword = await AuthService.verifyPassword(user.email, password);
     if (!isValidPassword) {
+      log.authAttempt(email, false, req.ip, req.get('User-Agent'));
       res.status(401).json({ error: 'Invalid credentials' });
       return;
     }
+
+    log.authAttempt(email, true, req.ip, req.get('User-Agent'));
     
     const token = AuthService.generateJWT(user);
     const preferences = await AuthService.getUserPreferences(user.id);
@@ -155,13 +201,21 @@ router.post('/login', async (req, res) => {
       maxAge: 7 * 24 * 60 * 60 * 1000
     });
     
+    log.business('User logged in successfully', {
+      userId: user.id,
+      email: email.substring(0, 3) + '***'
+    });
+    
     res.json({
       user: { ...user, password_hash: undefined },
       preferences,
       token
     });
   } catch (error) {
-    console.error('Login error:', error);
+    log.error('Login error', error as Error, { 
+      email: req.body?.email?.substring(0, 3) + '***',
+      ip: req.ip 
+    });
     res.status(500).json({ error: 'Login failed' });
   }
 });

@@ -1,4 +1,5 @@
 import * as mysql from 'mysql2/promise';
+import { log } from './utils/logger.js';
 
 let pool: mysql.Pool;
 
@@ -11,7 +12,7 @@ export function initializeDatabase() {
     return pool;
   }
 
-  console.log('🔌 Initializing database connection with:', {
+  log.info('Initializing database connection', {
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     database: process.env.DB_NAME,
@@ -31,6 +32,7 @@ export function initializeDatabase() {
     }
   });
 
+  log.info('Database pool created successfully');
   return pool;
 }
 
@@ -39,6 +41,7 @@ export function initializeDatabase() {
  */
 export function getPool(): mysql.Pool {
   if (!pool) {
+    log.error('Attempted to get database pool before initialization');
     throw new Error('Database not initialized. Call initializeDatabase() first.');
   }
   return pool;
