@@ -50,30 +50,28 @@ export class AuthService {
     password: string
   ): Promise<void> {
     if (!email || !validator.isEmail(email)) {
-      throw new Error("Invalid email format");
+      throw new Error("auth.validation.email-invalid");
     }
 
     if (!username || !validator.isAlphanumeric(username)) {
-      throw new Error("Username must be alphanumeric");
+      throw new Error("auth.validation.username-invalid-chars");
     }
     else if (username.length < 3 || username.length > 20) {
-      throw new Error("Username must be between 3 and 20 characters long");
+      throw new Error("auth.validation.username-length");
     }
 
     if (!this.verifyPasswordStrength(password)) {
-      throw new Error(
-        "Password must be at least 8 characters long, with at least one lowercase and one uppercase letter"
-      );
+      throw new Error("auth.validation.password-weak");
     }
 
     const existingUser = await this.getUserByEmail(email);
     if (existingUser) {
-      throw new Error("Email is already registered");
+      throw new Error("auth.validation.email-exists");
     }
 
     const existingUsername = await this.getUserByUsername(username);
     if (existingUsername) {
-      throw new Error("Username is already taken");
+      throw new Error("auth.validation.username-exists");
     }
 
     return Promise.resolve();
@@ -87,7 +85,7 @@ export class AuthService {
     const passwordHash = await bcrypt.hash(password, 12);
     const pool = getPool();
 
-    // Verify information before inserting
+    // Verify information before inserting, will throw an error if invalid
     await this.verifyInformationIsValidForRegistration(email, username, password);
 
     const [result] = await pool.execute(

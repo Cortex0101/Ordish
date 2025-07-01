@@ -36,6 +36,8 @@
     "email-exists": "This email is already registered.",
     "email-exists-signin": "Sign in instead",
     "username-too-short": "Username must be at least 3 characters long",
-    "username-invalid-chars": "Username can only contain letters, numbers, and underscores",
+    "username-invalid-chars": "Username can only contain letters and numbers",
+    "username-exists": "This username is already taken",
+    "username-choose-different": "Please choose a different username",
     "password-too-weak": "Password must contain at least 8 characters, including uppercase, lowercase, and numbers"
 }

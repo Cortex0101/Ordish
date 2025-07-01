@@ -14,6 +14,13 @@ interface UserPreferences {
   timezone: string;
 }
 
+interface AuthError extends Error {
+  field?: string;
+  messageKey?: string;
+  suggestionKey?: string;
+  details?: Record<string, string | null>;
+}
+
 interface AuthContextType {
   user: User | null;
   preferences: UserPreferences | null;
@@ -123,7 +130,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     if (!response.ok) {
       const error = await response.json();
-      throw new Error(error.error);
+      // Create a detailed error with additional properties
+      const errorWithDetails = new Error(error.message || error.error || 'Registration failed') as AuthError;
+      errorWithDetails.field = error.field;
+      errorWithDetails.messageKey = error.messageKey;
+      errorWithDetails.suggestionKey = error.suggestionKey;
+      errorWithDetails.details = error.details;
+      throw errorWithDetails;
     }
 
     const data = await response.json();

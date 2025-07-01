@@ -42,6 +42,19 @@ router.post('/register', async (req, res) => {
   try {
     const { email, username, password } = req.body;
     
+    // Validate input data first
+    if (!email || !username || !password) {
+      res.status(400).json({ 
+        error: 'validation.missing-fields',
+        details: {
+          email: !email ? 'validation.email-required' : null,
+          username: !username ? 'validation.username-required' : null,
+          password: !password ? 'validation.password-required' : null
+        }
+      });
+      return;
+    }
+
     const user = await AuthService.createUser(email, username, password);
     const token = AuthService.generateJWT(user);
     const preferences = await AuthService.getUserPreferences(user.id);
@@ -61,7 +74,56 @@ router.post('/register', async (req, res) => {
     });
   } catch (error) {
     console.error('Registration error:', error);
-    res.status(500).json({ error: 'Registration failed' });
+    
+    // Handle specific validation errors from AuthService
+    const errorMessage = (error as Error).message;
+    
+    // Map AuthService error keys to response structure
+    if (errorMessage.includes('auth.validation.email-invalid')) {
+      res.status(400).json({ 
+        error: 'validation.failed',
+        field: 'email',
+        messageKey: 'email-invalid'
+      });
+    } else if (errorMessage.includes('auth.validation.username-invalid-chars')) {
+      res.status(400).json({ 
+        error: 'validation.failed',
+        field: 'username',
+        messageKey: 'username-invalid-chars'
+      });
+    } else if (errorMessage.includes('auth.validation.username-length')) {
+      res.status(400).json({ 
+        error: 'validation.failed',
+        field: 'username',
+        messageKey: 'username-too-short'
+      });
+    } else if (errorMessage.includes('auth.validation.password-weak')) {
+      res.status(400).json({ 
+        error: 'validation.failed',
+        field: 'password',
+        messageKey: 'password-too-weak'
+      });
+    } else if (errorMessage.includes('auth.validation.email-exists')) {
+      res.status(409).json({ 
+        error: 'validation.failed',
+        field: 'email',
+        messageKey: 'email-exists',
+        suggestionKey: 'email-exists-signin'
+      });
+    } else if (errorMessage.includes('auth.validation.username-exists')) {
+      res.status(409).json({ 
+        error: 'validation.failed',
+        field: 'username',
+        messageKey: 'username-exists',
+        suggestionKey: 'username-choose-different'
+      });
+    } else {
+      // Generic server error
+      res.status(500).json({ 
+        error: 'server.registration-failed',
+        messageKey: 'register-error'
+      });
+    }
   }
 });
 

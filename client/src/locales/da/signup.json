@@ -29,6 +29,8 @@
     "email-exists": "Denne e-mail er allerede registreret.",
     "email-exists-signin": "Log ind i stedet",
     "username-too-short": "Brugernavn skal være mindst 3 tegn langt",
-    "username-invalid-chars": "Brugernavn kan kun indeholde bogstaver, tal og understreger",
+    "username-invalid-chars": "Brugernavn kan kun indeholde bogstaver og tal",
+    "username-exists": "Dette brugernavn er allerede taget",
+    "username-choose-different": "Vælg venligst et andet brugernavn",
     "password-too-weak": "Adgangskode skal indeholde mindst 8 tegn, inklusive store og små bogstaver samt tal"
 }

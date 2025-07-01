@@ -23,6 +23,13 @@ interface EmailCheckResponse {
   hasSocialAccounts: boolean;
 }
 
+interface RegistrationError extends Error {
+  field?: string;
+  messageKey?: string;
+  suggestionKey?: string;
+  details?: Record<string, string | null>;
+}
+
 function SignUp() {
   const { t } = useTranslation("signup");
   const { login, register, loading: authLoading } = useAuth();
@@ -62,9 +69,12 @@ function SignUp() {
     if (usernameValue.trim().length < 3) {
       return t("username-too-short");
     }
-    // Check for valid characters (letters, numbers, underscores)
-    if (!/^[a-zA-Z0-9_]+$/.test(usernameValue.trim())) {
+    // Check for valid characters (letters and numbers only, matching server validation)
+    if (!/^[a-zA-Z0-9]+$/.test(usernameValue.trim())) {
       return t("username-invalid-chars");
+    }
+    if (usernameValue.trim().length > 20) {
+      return t("username-too-short"); // We can reuse this or create a new key for "too long"
     }
     return "";
   };
@@ -170,11 +180,34 @@ function SignUp() {
       }
 
       // Proceed with registration
-      await register(email.trim(), userName.trim(), password);
-      // Automatically log in the user after registration
-      await login(email.trim(), password);
-      // Redirect to home or dashboard
-      window.location.href = "/";
+      try {
+        await register(email.trim(), userName.trim(), password);
+        // Automatically log in the user after registration
+        await login(email.trim(), password);
+        // Redirect to home or dashboard
+        window.location.href = "/";
+      } catch (registrationError: unknown) {
+        const error = registrationError as RegistrationError;
+        // Handle specific field errors from backend validation using i18n keys
+        if (error.field && error.messageKey) {
+          const translatedMessage = t(error.messageKey);
+          setFieldErrors(prev => ({
+            ...prev,
+            [error.field!]: translatedMessage
+          }));
+          
+          // Special handling for email already exists
+          if (error.field === 'email' && error.messageKey === 'email-exists') {
+            setEmailExists(true);
+          }
+        } else {
+          // Generic error - use messageKey if available, otherwise fallback
+          const errorMessage = error.messageKey ? t(error.messageKey) : error.message || t("register-error");
+          setError(errorMessage);
+        }
+        setLoading(false);
+        return;
+      }
     } catch {
       setError(t("email-check-error"));
     } finally {
