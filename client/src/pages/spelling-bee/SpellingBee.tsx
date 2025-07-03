@@ -1,72 +1,51 @@
-import React from "react";
+import React, { useState } from "react";
 import {
-    Col,
-  Container,
-  Row
+  Container
 } from "react-bootstrap";
 
 // import { useTranslation } from "react-i18next"; // TODO: Import when implementing game content
 import "./SpellingBee.scss"; // Assuming you have a SpellingBee.scss for styles
 
-/*
-        <Col className="game-container" xs={12} md={6}>
-          W
-        </Col>
-
-        <Col className="progress-box" md={6}>
-          t
-        </Col>
-        <Col className="wordlist-box" md={6}>
-          x
-        </Col>
-*/
-
+import ProgressBar from "./ProgressBar";
 
 const SpellingBee: React.FC = () => {
   // const { t } = useTranslation("spellingBee"); // TODO: Use when implementing game content
+  const [currentScore, setCurrentScore] = useState(3);
+
+  const handleScoreChange = () => {
+    // Demo: cycle through different scores to show progression
+    const scores = [0, 3, 10, 25, 48, 60, 85, 120];
+    const currentIndex = scores.indexOf(currentScore);
+    const nextIndex = (currentIndex + 1) % scores.length;
+    setCurrentScore(scores[nextIndex]);
+  };
 
   return (
     <Container fluid className="spelling-bee-container">
-      {/* Mobile Layout: Stack vertically */}
-      <div className="d-md-none">
-        <Row className="mb-3">
-          <Col xs={12} className="progress-box mobile-progress">
-            Progress Box - 100% width, 20% height on mobile
-          </Col>
-        </Row>
-        <Row className="mb-3">
-          <Col xs={12} className="wordlist-box mobile-wordlist">
-            Word List - 100% width, 20% height on mobile
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={12} className="game-container mobile-game">
-            Game Container - 100% width, 60% height on mobile
-          </Col>
-        </Row>
-      </div>
-
-      {/* Desktop Layout: Game left, Progress/Wordlist right */}
-      <Row className="d-none d-md-flex spelling-bee-desktop">
-        {/* Game Container - Left 50% */}
-        <Col md={6} className="game-container desktop-game">
-          Game Container - 50% width, 100% height on desktop
-        </Col>
+      <div className="spelling-bee-grid">
+        {/* Progress Box */}
+        <div className="progress-box">
+          <ProgressBar 
+            currentScore={currentScore}
+            maxScore={120}
+            onRankClick={handleScoreChange}
+          />
+        </div>
         
-        {/* Right side - Progress and Wordlist */}
-        <Col md={6} className="right-panel">
-          <Row className="h-100">
-            {/* Progress Box - Top 20% of right side */}
-            <Col xs={12} className="progress-box desktop-progress">
-              Progress Box - 50% width, 20% height on desktop
-            </Col>
-            {/* Word List - Bottom 80% of right side */}
-            <Col xs={12} className="wordlist-box desktop-wordlist">
-              Word List - 50% width, 80% height on desktop
-            </Col>
-          </Row>
-        </Col>
-      </Row>
+        {/* Word List */}
+        <div className="wordlist-box">
+          Word List - Responsive positioning
+          <br />
+          <small>Click progress bar to demo different scores</small>
+        </div>
+        
+        {/* Game Container */}
+        <div className="game-container">
+          Game Container - Responsive positioning
+          <br />
+          <small>Current Score: {currentScore}/120</small>
+        </div>
+      </div>
     </Container>
   );
 };
