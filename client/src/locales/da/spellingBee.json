@@ -7,5 +7,14 @@
     "rank-lebel-nice": "Flot",
     "rank-lebel-great": "Imponerende",
     "rank-lebel-amazing": "Fantastisk",
-    "rank-lebel-queen-bee": "Dronningebie"
+    "rank-lebel-queen-bee": "Dronningebie",
+
+    "_comment": "modal variables:",
+    "modal-title": "Rangordninger",
+    "modal-description": "Rangordninger er baseret på en procentdel af mulige point i et puslespil.",
+    "modal-rank-header": "Rang",
+    "modal-minimum-score-header": "Mindste score",
+    "modal-points-to-next": "{{points}} point til {{nextRank}}",
+    "modal-points-to-genius": "{{points}} til Dronningebie",
+    "modal-max-rank-achieved": "Maksimal rang opnået!"
 }
