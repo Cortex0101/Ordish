@@ -22,5 +22,5 @@
     "wordlist-title": "You have found",
     "wordlist-count": "{{found}} of {{total}} words",
     "wordlist-empty": "No words found yet. Start guessing!",
-    "wordlist-length-label": "{{count}} {{length}}-letter word{{count, plural, =1 {} other{s}}}"
+    "wordlist-length-label": "{{count}} {{length}}-letter words"
 }

@@ -4,6 +4,9 @@ import { Collapse, Button } from "react-bootstrap";
 import "./WordList.scss";
 import WordListTestIds from "./WordList.testIds";
 
+// import arrows-angle-expand from bootstrap icons
+import { ArrowsAngleExpand, ArrowsAngleContract } from "react-bootstrap-icons";
+
 interface WordListProps {
   words?: string[];
   maxScore?: number;
@@ -55,6 +58,7 @@ const WordList: React.FC<WordListProps> = ({
       <div 
         className="word-list-header"
         data-testid={WordListTestIds.header}
+        onClick={toggleExpanded}
       >
         <div className="word-list-title">
           <h5 data-testid={WordListTestIds.title}>{t("wordlist-title")}</h5>
@@ -75,10 +79,11 @@ const WordList: React.FC<WordListProps> = ({
           aria-controls="word-list-content"
           data-testid={WordListTestIds.toggle}
         >
-          <i 
-            className={`bi bi-chevron-${isExpanded ? 'up' : 'down'}`}
-            data-testid={WordListTestIds.toggleIcon}
-          ></i>
+            {isExpanded ? (
+                <ArrowsAngleContract size={24} />
+            ) : (
+                <ArrowsAngleExpand size={24} />
+            )}
         </Button>
       </div>
 

@@ -9,7 +9,7 @@
     
     // Mobile Layout: Stack vertically (Progress -> Wordlist -> Game)
     grid-template-columns: 1fr;
-    grid-template-rows: 5vh 5vh 1fr; // Progress, Wordlist, Game (remaining space)
+    grid-template-rows: auto auto 1fr; // Progress auto, Wordlist auto, Game (remaining space)
     grid-template-areas:
       "progress"
       "wordlist"
@@ -18,7 +18,7 @@
     // Desktop Layout: Game left, Progress/Wordlist right
     @media (min-width: 768px) {
       grid-template-columns: 1fr 1fr; // 50% each column
-      grid-template-rows: 5% 1fr; // Progress fixed height, Wordlist takes remaining
+      grid-template-rows: auto 1fr; // Progress auto height, Wordlist takes remaining
       grid-template-areas:
         "game progress"
         "game wordlist";
@@ -46,8 +46,6 @@
     border-radius: 8px;
     //background: var(--bs-body-bg);
     display: flex;
-    align-items: center;
-    justify-content: center;
     text-align: center;
     font-weight: 500;
     overflow: hidden; // Prevent content overflow
@@ -55,16 +53,20 @@
 
   // Individual box styling
   .progress-box {
+    align-items: center;
+    justify-content: center;
     //background: linear-gradient(135deg, #e3f2fd, #bbdefb);
     //border-color: #2196f3;
   }
 
   .wordlist-box {
-    background: linear-gradient(135deg, #f3e5f5, #e1bee7);
-    border-color: #9c27b0;
+    // Remove background to let WordList component handle its own styling
+    background: none;
   }
 
   .game-container {
+    align-items: center;
+    justify-content: center;
     background: linear-gradient(135deg, #fff3e0, #ffcc80);
     border-color: #ff9800;
   }
@@ -81,19 +83,8 @@
 
   // Dark theme support
   [data-bs-theme="dark"] & {
-    .progress-box,
-    .wordlist-box,
-    .game-container {
-      //border-color: #495057;
-      //color: var(--bs-body-color);
-    }
-
-    .progress-box {
-      //background: linear-gradient(135deg, #1e3a8a, #3b82f6);
-    }
-
     .wordlist-box {
-      background: linear-gradient(135deg, #581c87, #a855f7);
+      background: none; // Let WordList handle its own dark theme
     }
 
     .game-container {
