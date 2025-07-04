@@ -10,11 +10,11 @@ import ProgressBar from "./ProgressBar";
 
 const SpellingBee: React.FC = () => {
   // const { t } = useTranslation("spellingBee"); // TODO: Use when implementing game content
-  const [currentScore, setCurrentScore] = useState(3);
+  const [currentScore, setCurrentScore] = useState(0);
 
   const handleScoreChange = () => {
     // Demo: cycle through different scores to show progression
-    const scores = [0, 3, 10, 25, 48, 60, 85, 120];
+    const scores = [0, 2, 5, 9, 15, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120];
     const currentIndex = scores.indexOf(currentScore);
     const nextIndex = (currentIndex + 1) % scores.length;
     setCurrentScore(scores[nextIndex]);

@@ -1,7 +1,6 @@
 // Spelling Bee Layout Styles using CSS Grid
 .spelling-bee-container {
   height: 100vh;
-  padding: 1rem;
 
   .spelling-bee-grid {
     display: grid;
@@ -10,7 +9,7 @@
     
     // Mobile Layout: Stack vertically (Progress -> Wordlist -> Game)
     grid-template-columns: 1fr;
-    grid-template-rows: 20vh 20vh 1fr; // Progress, Wordlist, Game (remaining space)
+    grid-template-rows: 5vh 5vh 1fr; // Progress, Wordlist, Game (remaining space)
     grid-template-areas:
       "progress"
       "wordlist"
@@ -19,7 +18,7 @@
     // Desktop Layout: Game left, Progress/Wordlist right
     @media (min-width: 768px) {
       grid-template-columns: 1fr 1fr; // 50% each column
-      grid-template-rows: 20% 1fr; // Progress fixed height, Wordlist takes remaining
+      grid-template-rows: 5% 1fr; // Progress fixed height, Wordlist takes remaining
       grid-template-areas:
         "game progress"
         "game wordlist";
@@ -43,10 +42,9 @@
   .progress-box,
   .wordlist-box,
   .game-container {
-    border: 2px solid #ddd;
+    //border: 2px solid #ddd;
     border-radius: 8px;
-    padding: 1rem;
-    background: var(--bs-body-bg);
+    //background: var(--bs-body-bg);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -57,8 +55,8 @@
 
   // Individual box styling
   .progress-box {
-    background: linear-gradient(135deg, #e3f2fd, #bbdefb);
-    border-color: #2196f3;
+    //background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+    //border-color: #2196f3;
   }
 
   .wordlist-box {
@@ -86,12 +84,12 @@
     .progress-box,
     .wordlist-box,
     .game-container {
-      border-color: #495057;
-      color: var(--bs-body-color);
+      //border-color: #495057;
+      //color: var(--bs-body-color);
     }
 
     .progress-box {
-      background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+      //background: linear-gradient(135deg, #1e3a8a, #3b82f6);
     }
 
     .wordlist-box {
