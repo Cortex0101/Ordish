@@ -16,5 +16,11 @@
     "modal-minimum-score-header": "Minimum score",
     "modal-points-to-next": "{{points}} points to {{nextRank}}",
     "modal-points-to-genius": "{{points}} to Queen Bee",
-    "modal-max-rank-achieved": "Maximum rank achieved!"
+    "modal-max-rank-achieved": "Maximum rank achieved!",
+
+    "_comment2": "wordlist variables:",
+    "wordlist-title": "You have found",
+    "wordlist-count": "{{found}} of {{total}} words",
+    "wordlist-empty": "No words found yet. Start guessing!",
+    "wordlist-length-label": "{{count}} {{length}}-letter word{{count, plural, =1 {} other{s}}}"
 }

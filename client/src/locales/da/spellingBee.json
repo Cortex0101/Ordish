@@ -16,5 +16,11 @@
     "modal-minimum-score-header": "Mindste score",
     "modal-points-to-next": "{{points}} point til {{nextRank}}",
     "modal-points-to-genius": "{{points}} til Dronningebie",
-    "modal-max-rank-achieved": "Maksimal rang opnået!"
+    "modal-max-rank-achieved": "Maksimal rang opnået!",
+
+    "_comment2": "wordlist variables:",
+    "wordlist-title": "Du har fundet",
+    "wordlist-count": "{{found}} af {{total}} ord",
+    "wordlist-empty": "Ingen ord fundet endnu. Begynd at gætte!",
+    "wordlist-length-label": "{{count}} {{length}}-bogstavs ord"
 }

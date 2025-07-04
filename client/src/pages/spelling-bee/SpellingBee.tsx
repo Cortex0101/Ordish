@@ -7,10 +7,22 @@ import {
 import "./SpellingBee.scss"; // Assuming you have a SpellingBee.scss for styles
 
 import ProgressBar from "./ProgressBar";
+import WordList from "./WordList";
 
 const SpellingBee: React.FC = () => {
   // const { t } = useTranslation("spellingBee"); // TODO: Use when implementing game content
   const [currentScore, setCurrentScore] = useState(0);
+
+  // Demo words for testing - would come from game state in real implementation
+  const demoWords = [
+    "cat", "dog", "bird", "fish", "mouse",
+    "table", "chair", "house", "phone", "water",
+    "elephant", "computer", "keyboard", "monitor", "printer",
+    "beautiful", "wonderful", "fantastic", "incredible", "amazing"
+  ];
+
+  // Show more words as score increases (for demo purposes)
+  const wordsToShow = demoWords.slice(0, Math.floor(currentScore / 6) + 1);
 
   const handleScoreChange = () => {
     // Demo: cycle through different scores to show progression
@@ -34,9 +46,10 @@ const SpellingBee: React.FC = () => {
         
         {/* Word List */}
         <div className="wordlist-box">
-          Word List - Responsive positioning
-          <br />
-          <small>Click progress bar to demo different scores</small>
+          <WordList 
+            words={wordsToShow}
+            maxScore={120}
+          />
         </div>
         
         {/* Game Container */}

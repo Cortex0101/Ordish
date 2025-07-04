@@ -1,0 +1,170 @@
+// WordList component styles
+.word-list-container {
+  background: var(--bs-body-bg);
+  border: 1px solid var(--bs-border-color);
+  border-radius: 0.375rem;
+  padding: 1rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.word-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--bs-border-color-translucent);
+  padding-bottom: 0.75rem;
+  margin-bottom: 0.75rem;
+  
+  .word-list-title {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    
+    h5 {
+      margin: 0;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+    
+    .word-count {
+      font-size: 0.875rem;
+      color: var(--bs-secondary);
+    }
+  }
+  
+  .word-list-toggle {
+    border: none;
+    padding: 0.25rem;
+    color: var(--bs-primary);
+    text-decoration: none;
+    
+    &:hover {
+      color: var(--bs-primary);
+      text-decoration: none;
+    }
+    
+    &:focus {
+      box-shadow: 0 0 0 0.2rem rgba(var(--bs-primary-rgb), 0.25);
+    }
+    
+    i {
+      font-size: 1.2rem;
+    }
+  }
+}
+
+.word-list-content-wrapper {
+  flex: 1;
+  overflow: hidden;
+}
+
+.word-list-content {
+  max-height: 100%;
+  overflow-y: auto;
+  
+  @media (max-width: 767.98px) {
+    max-height: 60vh;
+  }
+}
+
+.word-list-empty {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: var(--bs-secondary);
+  
+  p {
+    margin: 0;
+    font-style: italic;
+  }
+}
+
+.word-length-group {
+  margin-bottom: 1.5rem;
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.word-length-header {
+  margin-bottom: 0.75rem;
+  
+  .word-length-label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--bs-emphasis-color);
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+  }
+}
+
+.words-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  
+  .word-item {
+    background: var(--bs-secondary-bg);
+    border: 1px solid var(--bs-border-color);
+    border-radius: 0.25rem;
+    padding: 0.375rem 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--bs-emphasis-color);
+    transition: all 0.15s ease-in-out;
+    
+    &:hover {
+      background: var(--bs-tertiary-bg);
+      border-color: var(--bs-border-color-translucent);
+    }
+  }
+}
+
+// Dark theme adjustments
+[data-bs-theme="dark"] {
+  .word-list-container {
+    background: var(--bs-dark);
+    border-color: var(--bs-border-color);
+  }
+  
+  .word-item {
+    background: var(--bs-secondary-bg);
+    border-color: var(--bs-border-color);
+    color: var(--bs-body-color);
+    
+    &:hover {
+      background: var(--bs-tertiary-bg);
+    }
+  }
+}
+
+// Mobile responsive adjustments
+@media (max-width: 575.98px) {
+  .word-list-container {
+    padding: 0.75rem;
+  }
+  
+  .word-list-header {
+    .word-list-title h5 {
+      font-size: 1rem;
+    }
+  }
+  
+  .words-grid {
+    gap: 0.375rem;
+    
+    .word-item {
+      padding: 0.25rem 0.5rem;
+      font-size: 0.8rem;
+    }
+  }
+}
+
+// Ensure collapsed content doesn't show on medium+ screens
+@media (min-width: 768px) {
+  .word-list-toggle {
+    display: none !important;
+  }
+}
