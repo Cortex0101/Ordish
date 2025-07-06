@@ -6,7 +6,7 @@
     display: grid;
     height: calc(100vh - 2rem); // Account for container padding
     gap: 0.5rem;
-    
+
     // Mobile Layout: Stack vertically (Progress -> Wordlist -> Game)
     grid-template-columns: 1fr;
     grid-template-rows: auto auto 1fr; // Progress auto, Wordlist auto, Game (remaining space)
@@ -69,13 +69,208 @@
     justify-content: center;
     background: linear-gradient(135deg, #fff3e0, #ffcc80);
     border-color: #ff9800;
+    padding: 1rem;
+  }
+
+  // Hive game layout styling
+  .hive-stack {
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 400px;
+
+    .hive-input {
+      width: 100%;
+      max-width: 300px;
+      padding: 0.75rem 1rem;
+      font-size: 1.2rem;
+      text-align: center;
+      border: 2px solid #ddd;
+      border-radius: 0.5rem;
+      background: white;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      
+      &:focus {
+        outline: none;
+        border-color: #f7da21;
+        box-shadow: 0 0 0 3px rgba(247, 218, 33, 0.2);
+      }
+    }
+
+    .hive-content {
+      position: relative;
+      width: 300px;
+      height: 300px;
+      margin: 0 auto;
+      
+      // CSS Variables for adaptive hexagonal layout
+      --cell-size: 80px;
+      --hex-radius: calc(var(--cell-size) * 0.75); // Distance from center to outer cells
+    }
+
+    .hive-actions {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: center;
+
+      .hive-action-button {
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+        font-weight: 600;
+        border: none;
+        border-radius: 0.5rem;
+        background: #f7da21;
+        color: #000;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:hover {
+          background: #e6c61f;
+          transform: translateY(-1px);
+        }
+
+        &:active {
+          transform: translateY(0);
+        }
+      }
+    }
+  }
+
+  // Hexagonal hive cell layout with adaptive positioning
+  .hive-cell {
+    position: absolute;
+    width: var(--cell-size);
+    height: var(--cell-size);
+    cursor: pointer;
+    transition: transform 0.2s ease;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+
+    &.center {
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+
+      .cell-fill {
+        fill: #f7da21; // Yellow center cell
+      }
+
+      &:hover {
+        transform: translate(-50%, -50%) scale(1.05);
+      }
+    }
+
+    // Position outer cells in hexagonal pattern around center
+    // Using trigonometric calculations for precise positioning
+    &.outer {
+      z-index: 1;
+
+      .cell-fill {
+        fill: #e8e8e8; // Light gray outer cells
+      }
+
+      &:hover {
+        transform: translate(-50%, -50%) scale(1.05);
+      }
+
+      // Position cells around the center in a perfect hexagon
+      // Each cell is positioned at 60-degree intervals around the center
+      &:nth-child(2) { // Top (90 degrees / π/2 radians)
+        top: calc(50% - var(--hex-radius));
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      &:nth-child(3) { // Top-right (30 degrees / π/6 radians)
+        // cos(30°) ≈ 0.866, sin(30°) = 0.5
+        top: calc(50% - var(--hex-radius) * 0.5);
+        left: calc(50% + var(--hex-radius) * 0.866);
+        transform: translate(-50%, -50%);
+      }
+
+      &:nth-child(4) { // Bottom-right (330 degrees / -π/6 radians)
+        // cos(-30°) ≈ 0.866, sin(-30°) = -0.5
+        top: calc(50% + var(--hex-radius) * 0.5);
+        left: calc(50% + var(--hex-radius) * 0.866);
+        transform: translate(-50%, -50%);
+      }
+
+      &:nth-child(5) { // Bottom (270 degrees / -π/2 radians)
+        top: calc(50% + var(--hex-radius));
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      &:nth-child(6) { // Bottom-left (210 degrees / -5π/6 radians)
+        // cos(210°) ≈ -0.866, sin(210°) = -0.5
+        top: calc(50% + var(--hex-radius) * 0.5);
+        left: calc(50% - var(--hex-radius) * 0.866);
+        transform: translate(-50%, -50%);
+      }
+
+      &:nth-child(7) { // Top-left (150 degrees / 5π/6 radians)
+        // cos(150°) ≈ -0.866, sin(150°) = 0.5
+        top: calc(50% - var(--hex-radius) * 0.5);
+        left: calc(50% - var(--hex-radius) * 0.866);
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    .cell-letter {
+      font-size: 2rem;
+      font-weight: 700;
+      text-anchor: middle;
+      dominant-baseline: middle;
+      fill: #000;
+      user-select: none;
+    }
+
+    .cell-fill {
+      stroke: #333;
+      stroke-width: 3;
+      transition: fill 0.2s ease;
+    }
+  }
+
+  // Mobile responsive adjustments for hive
+  @media (max-width: 767.98px) {
+    .hive-stack {
+      gap: 1rem;
+      
+      .hive-input {
+        font-size: 1rem;
+        padding: 0.6rem 0.8rem;
+      }
+
+      .hive-content {
+        width: 260px;
+        height: 260px;
+        
+        // Update CSS variables for mobile
+        --cell-size: 65px;
+        --hex-radius: calc(var(--cell-size) * 0.75);
+      }
+
+      .hive-cell {
+        .cell-letter {
+          font-size: 1.6rem;
+        }
+      }
+
+      .hive-actions .hive-action-button {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
+      }
+    }
   }
 
   // Remove default Bootstrap container padding on mobile
   @media (max-width: 767.98px) {
     padding-left: 0.5rem;
     padding-right: 0.5rem;
-    
+
     .spelling-bee-grid {
       height: calc(100vh - 1rem); // Account for reduced padding
     }
@@ -89,6 +284,43 @@
 
     .game-container {
       background: linear-gradient(135deg, #92400e, #f59e0b);
+    }
+
+    .hive-input {
+      background: #2d2d2d !important;
+      border-color: #555 !important;
+      color: #fff !important;
+
+      &:focus {
+        border-color: #f7da21 !important;
+      }
+    }
+
+    .hive-cell {
+      .cell-fill {
+        stroke: #fff;
+      }
+
+      .cell-letter {
+        fill: #000; // Keep letters black for contrast
+      }
+
+      &.center .cell-fill {
+        fill: #f7da21; // Keep yellow center
+      }
+
+      &.outer .cell-fill {
+        fill: #4a4a4a; // Darker gray for outer cells
+      }
+    }
+
+    .hive-action-button {
+      background: #f7da21 !important;
+      color: #000 !important;
+
+      &:hover {
+        background: #e6c61f !important;
+      }
     }
   }
 }
@@ -110,14 +342,14 @@
     .wordlist-box {
       font-size: 1rem;
     }
-    
+
     .game-container {
       font-size: 1.1rem;
     }
   }
 }
 
-// Animation for smooth transitions (optional)
+// Animation for smooth transitions
 .spelling-bee-container .spelling-bee-grid > * {
   transition: all 0.3s ease;
 }
