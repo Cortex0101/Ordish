@@ -1,0 +1,219 @@
+$shuffleTransitionTime: 0.3s; // This should match shuffleTransitionTime in Hive.js
+$hive-width: 70%;
+
+:root {
+    --text: #000;
+    --bg-tile-sb: #e7e7e7;
+    --bg-sb: #f7da21;
+    --text-constant: #000;
+}
+
+[data-bs-theme="dark"] {
+    --text: #fff;
+    --bg-tile-sb: #3a3a3c;
+    --bg-sb: #d4bc1c;
+    --text-constant: #fff;
+}
+
+// Remove all default styles for the hive input, and make the inputs selected color yellow
+.hive-input {
+    all: unset;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    cursor: pointer;
+
+    &:focus {
+        outline: none;
+        box-shadow: none;
+    }
+}
+
+.hive-stack {
+    max-width: 350px;
+    justify-content: center;
+}
+
+@media screen and (max-width: 600px) {
+    .hive-stack {
+        justify-content: start;
+    }
+}
+
+@mixin hive-cell() {
+    .cell-fill {
+        cursor: pointer;
+        fill: var(--bg-tile-sb);
+        transition: all 100ms;
+
+        &.push-active {
+            fill: var(--bg-tile-sb);
+        }
+    }
+}
+
+.hive {
+    position: relative;
+    width: 80%;
+    margin: 10px auto;
+    aspect-ratio: 1 / 1;
+    padding-bottom: 100px;
+
+    .cell-letter {
+        fill: var(--text);
+        font-weight: 700;
+        font-size: 1.875em;
+        text-anchor: middle;
+        text-transform: uppercase;
+        pointer-events: none;
+    }
+
+    &.shuffling {
+        .outer>.cell-letter {
+            opacity: 0;
+        }
+    }
+
+    &.fade-out {
+        .outer>.cell-letter {
+            opacity: 0;
+            transition: opacity $shuffleTransitionTime;
+        }
+    }
+
+    &.fade-in {
+        .outer>.cell-letter {
+            opacity: 1;
+            transition: opacity $shuffleTransitionTime;
+        }
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .hive {
+        width: $hive-width;
+        margin: 4vh auto;
+
+        .cell-letter {
+            font-size: 2.5em;
+        }
+    }
+}
+
+.hive-cell {
+    position: absolute;
+    top: calc(100% / 3);
+    left: 30%;
+    width: 40%;
+    height: calc(100% / 3);
+
+    .cell-fill {
+        cursor: pointer;
+        fill: var(--bg-tile-sb);
+        stroke: var(--bg-page);
+        transition: all 100ms;
+
+        &.push-active {
+            fill: var(--bg-tile-sb);
+        }
+    }
+
+    &:first-child {
+        .cell-fill {
+            fill: var(--bg-sb);
+        }
+
+        .cell-letter {
+            fill: var(--text-constant);
+        }
+    }
+
+    >.cell-fill.push-active {
+        transform: scale3d(0.86, 0.86, 1);
+        transform-origin: center center;
+    }
+}
+
+$hexcoords: (
+    (0, 0),
+    (-75%, -50%),
+    (0, -100%),
+    (75%, -50%),
+    (75%, 50%),
+    (0, 100%),
+    (-75%, 50%)
+);
+
+@for $i from 1 to 8 {
+    .hive-cell:nth-child(#{$i}) {
+        transform: translate(nth(nth($hexcoords, $i), 1),
+                nth(nth($hexcoords, $i), 2));
+    }
+}
+
+
+.hive-actions {
+    display: flex;
+  text-align: center;
+  width: $hive-width;
+  justify-content: space-between;
+
+  .hive-action__delete {
+    order: 1;
+  }
+
+  .hive-action__shuffle {
+    order: 2;
+  }
+
+  .hive-action__submit {
+    order: 3;
+  }
+
+  &.vertical {
+    display: block;
+
+    .hive-action {
+      margin: 0 auto var(--vertical-spacing-1);
+    }
+  }
+}
+
+.hive-action {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 3em;
+  padding: 0 15px;
+  font-size: 1em;
+  color: var(--text);
+  border-radius: 3.5em;
+  letter-spacing: 0.01em;
+  user-select: none;
+
+  cursor: pointer;
+
+  &.push-active,
+  &.action-active {
+    background-color: var(--bg-tile-sb);
+  }
+
+  &__shuffle {
+    background: url('/public/assets/shuffle.svg') center no-repeat;
+    background-size: 60%;
+    height: 3em;
+    width: 3em;
+    min-width: 3em;
+
+    [data-mode='dark'].display-settings-enabled & {
+      background: url('/public/assets/shuffle-dark.svg') center
+        no-repeat;
+      background-size: 60%;
+
+      &.push-active {
+        background-color: var(--bg-tile-sb);
+      }
+    }
+  }
+}

@@ -276,7 +276,12 @@ export class SpellingBee {
             words.push(wd.word);
             totalWords++;
             const isPangram = (wd.mask & puzzleMask) === puzzleMask;
-            if (isPangram) pangramCount++;
+            if (isPangram) {
+              pangramCount++;
+              console.log(
+                `Pangram found: ${wd.word} (${wd.mask.toString(2)})`
+              );
+            }
 
             const pts = wd.baseScore + (isPangram ? 7 : 0);
             totalPoints += pts;
