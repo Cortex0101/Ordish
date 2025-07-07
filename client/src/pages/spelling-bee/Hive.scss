@@ -6,6 +6,7 @@ $hive-width: 70%;
     --bg-tile-sb: #e7e7e7;
     --bg-sb: #f7da21;
     --text-constant: #000;
+    --bg-page: #f7f7f7;
 }
 
 [data-bs-theme="dark"] {
@@ -13,6 +14,7 @@ $hive-width: 70%;
     --bg-tile-sb: #3a3a3c;
     --bg-sb: #d4bc1c;
     --text-constant: #fff;
+    --bg-page: rgb(24, 26, 27)
 }
 
 // Remove all default styles for the hive input, and make the inputs selected color yellow
@@ -22,6 +24,8 @@ $hive-width: 70%;
     top: 0;
     left: 0;
     z-index: 1;
+    font-size: 2em;
+    text-transform: uppercase;
     cursor: pointer;
 
     &:focus {
@@ -197,23 +201,5 @@ $hexcoords: (
   &.push-active,
   &.action-active {
     background-color: var(--bg-tile-sb);
-  }
-
-  &__shuffle {
-    background: url('/public/assets/shuffle.svg') center no-repeat;
-    background-size: 60%;
-    height: 3em;
-    width: 3em;
-    min-width: 3em;
-
-    [data-mode='dark'].display-settings-enabled & {
-      background: url('/public/assets/shuffle-dark.svg') center
-        no-repeat;
-      background-size: 60%;
-
-      &.push-active {
-        background-color: var(--bg-tile-sb);
-      }
-    }
   }
 }
