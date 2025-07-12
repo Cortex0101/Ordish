@@ -2,12 +2,12 @@ import React, { useState, useCallback } from "react";
 
 import { Container, Row, Col } from "react-bootstrap";
 
-import "./Keyboard.scss";
+import "./Board.scss";
 
-const Keyboard: React.FC = () => {
+const Board: React.FC = () => {
     return (
         <></> 
     );
 }
 
-export default Keyboard
+export default Board

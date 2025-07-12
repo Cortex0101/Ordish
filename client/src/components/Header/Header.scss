@@ -122,6 +122,43 @@
   }
 }
 
+// Wordle route conditional buttons
+.navbar {
+  .wordle-buttons {
+    .btn {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.875rem;
+      transition: all 0.15s ease-in-out;
+      
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        transform: translateY(-1px);
+      }
+      
+      &:active {
+        transform: translateY(0);
+      }
+    }
+  }
+}
+
+// Responsive adjustments for the conditional buttons
+@media (max-width: 576px) {
+  .navbar .wordle-buttons {
+    gap: 0.25rem !important;
+    
+    .btn {
+      width: 28px;
+      height: 28px;
+      font-size: 0.75rem;
+    }
+  }
+}
+
 // Dark theme enhancements
 [data-bs-theme="dark"] {
   .offcanvas {

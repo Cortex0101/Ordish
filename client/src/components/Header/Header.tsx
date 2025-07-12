@@ -206,11 +206,13 @@ const OffcanvasMenu = ({
 const NavigationBar = ({ 
   showOffcanvas, 
   onToggleOffcanvas,
-  headerRef
+  headerRef,
+  currentPath
 }: { 
   showOffcanvas: boolean; 
   onToggleOffcanvas: () => void;
   headerRef: React.RefObject<HTMLElement | null>;
+  currentPath?: string;
 }) => {
   const { user, loading } = useAuth();
   const navigate = useNavigate();
@@ -277,6 +279,39 @@ const NavigationBar = ({
           </span>
         </Navbar.Brand>
 
+        {/* Conditional buttons for Wordle route */}
+        {currentPath === '/wordle' && (
+          <div className="d-flex gap-2 position-absolute end-0 me-5 wordle-buttons">
+            <Button
+              variant="outline-light"
+              size="sm"
+              onClick={() => {/* TODO: Implement statistics */}}
+              className="border-0"
+              title="Statistics"
+            >
+              📊
+            </Button>
+            <Button
+              variant="outline-light"
+              size="sm"
+              onClick={() => {/* TODO: Implement leaderboards */}}
+              className="border-0"
+              title="Leaderboards"
+            >
+              🏆
+            </Button>
+            <Button
+              variant="outline-light"
+              size="sm"
+              onClick={() => {/* TODO: Implement help */}}
+              className="border-0"
+              title="Help"
+            >
+              ❓
+            </Button>
+          </div>
+        )}
+
         {/* Right: Auth Button */}
         <Button
           variant={"outline-secondary"}
@@ -301,7 +336,11 @@ const NavigationBar = ({
   );
 };
 
-const Header = () => {
+interface HeaderProps {
+  currentPath?: string;
+}
+
+const Header = ({ currentPath }: HeaderProps) => {
   const [showOffcanvas, setShowOffcanvas] = useState(false);
   const [headerHeight, setHeaderHeight] = useState(0);
   const headerRef = useRef<HTMLElement>(null);
@@ -340,6 +379,7 @@ const Header = () => {
         showOffcanvas={showOffcanvas}
         onToggleOffcanvas={handleToggleOffcanvas}
         headerRef={headerRef}
+        currentPath={currentPath}
       />
       <OffcanvasMenu 
         show={showOffcanvas} 
