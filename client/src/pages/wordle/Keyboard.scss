@@ -1,0 +1,247 @@
+// Variables for easy customization
+$keyboard-container-padding: 0;
+$keyboard-container-margin-top: 1rem;
+$keyboard-container-max-width: 500px;
+
+$keyboard-row-margin-bottom: 0.5rem;
+$keyboard-col-padding: 0;
+
+// Key dimensions
+$key-min-width-desktop: 43px;
+$key-height-desktop: 58px;
+$key-margin-desktop: 2px;
+$key-font-size-desktop: 1.25rem;
+
+$key-min-width-tablet: 32px;
+$key-height-tablet: 48px;
+$key-margin-tablet: 2px;
+$key-font-size-tablet: 1.125rem;
+
+$key-min-width-mobile: 28px;
+$key-height-mobile: 42px;
+$key-margin-mobile: 1px;
+$key-font-size-mobile: 1rem;
+
+// Special key dimensions
+$special-key-min-width-desktop: 65px;
+$special-key-font-size-desktop: 0.625rem;
+
+$special-key-min-width-tablet: 50px;
+$special-key-font-size-tablet: 0.5rem;
+
+$special-key-min-width-mobile: 42px;
+$special-key-font-size-mobile: 0.4rem;
+
+// Key colors
+$key-border-radius: 4px;
+$key-font-weight: bold;
+$key-transition: all 0.1s ease-in-out;
+
+// State colors
+$key-unused-bg: #d3d6da;
+$key-unused-color: #1a1a1b;
+$key-unused-hover-bg: #c3c6ca;
+
+$key-correct-bg: #6aaa64;
+$key-correct-color: white;
+$key-correct-hover-bg: #5a9a54;
+
+$key-present-bg: #c9b458;
+$key-present-color: white;
+$key-present-hover-bg: #b9a448;
+
+$key-absent-bg: #787c7e;
+$key-absent-color: white;
+$key-absent-hover-bg: #686c6e;
+
+// Dark mode colors
+$key-unused-dark-bg: #565758;
+$key-unused-dark-color: #ffffff;
+$key-unused-dark-hover-bg: #464748;
+
+// Other properties
+$key-disabled-opacity: 0.6;
+$key-focus-outline: 2px solid $key-correct-bg;
+$key-focus-outline-offset: 2px;
+$key-scale-active: 0.95;
+
+// Responsive breakpoints
+$tablet-breakpoint: 768px;
+$mobile-breakpoint: 480px;
+$container-padding-tablet: 0.5rem;
+
+// Keyboard container styling
+.keyboard-container {
+  padding: $keyboard-container-padding;
+  margin-top: $keyboard-container-margin-top;
+  max-width: $keyboard-container-max-width;
+  user-select: none;
+
+  .keyboard-row {
+    margin-bottom: $keyboard-row-margin-bottom;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    .col {
+      padding: $keyboard-col-padding;
+    }
+  }
+}
+
+// Key styling
+.keyboard-key {
+  border: none;
+  border-radius: $key-border-radius;
+  font-family: inherit;
+  font-weight: $key-font-weight;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: $key-transition;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  // Default state (unused)
+  &.unused {
+    background-color: $key-unused-bg;
+    color: $key-unused-color;
+    
+    &:hover:not(:disabled) {
+      background-color: $key-unused-hover-bg;
+    }
+  }
+
+  // Letter states
+  &.correct {
+    background-color: $key-correct-bg;
+    color: $key-correct-color;
+    
+    &:hover:not(:disabled) {
+      background-color: $key-correct-hover-bg;
+    }
+  }
+
+  &.present {
+    background-color: $key-present-bg;
+    color: $key-present-color;
+    
+    &:hover:not(:disabled) {
+      background-color: $key-present-hover-bg;
+    }
+  }
+
+  &.absent {
+    background-color: $key-absent-bg;
+    color: $key-absent-color;
+    
+    &:hover:not(:disabled) {
+      background-color: $key-absent-hover-bg;
+    }
+  }
+
+  // Disabled state
+  &:disabled {
+    cursor: not-allowed;
+    opacity: $key-disabled-opacity;
+  }
+
+  // Active/pressed state
+  &:active:not(:disabled) {
+    transform: scale($key-scale-active);
+  }
+
+  // Focus state for accessibility
+  &:focus {
+    outline: $key-focus-outline;
+    outline-offset: $key-focus-outline-offset;
+  }
+}
+
+@media (min-width: $tablet-breakpoint) {
+  .keyboard-container {
+    max-width: 100%;
+    padding: $keyboard-container-padding;
+  }
+  
+  .keyboard-key {
+    min-width: $key-min-width-desktop;
+    height: $key-height-desktop;
+    margin: 0 $key-margin-desktop;
+    font-size: $key-font-size-desktop;
+    
+    &.special-key {
+      min-width: $special-key-min-width-desktop;
+      font-size: $special-key-font-size-desktop;
+    }
+  }
+}
+
+// Responsive design for smaller screens
+@media (max-width: $tablet-breakpoint) {
+  .keyboard-container {
+    max-width: 100%;
+    padding: 0 $container-padding-tablet;
+  }
+  
+  .keyboard-key {
+    min-width: $key-min-width-tablet;
+    height: $key-height-tablet;
+    margin: 0 $key-margin-tablet;
+    font-size: $key-font-size-tablet;
+    
+    &.special-key {
+      min-width: $special-key-min-width-tablet;
+      font-size: $special-key-font-size-tablet;
+    }
+  }
+}
+
+@media (max-width: $mobile-breakpoint) {
+  .keyboard-key {
+    min-width: $key-min-width-mobile;
+    height: $key-height-mobile;
+    margin: 0 $key-margin-mobile;
+    font-size: $key-font-size-mobile;
+    
+    &.special-key {
+      min-width: $special-key-min-width-mobile;
+      font-size: $special-key-font-size-mobile;
+    }
+  }
+}
+
+// Dark mode support (if needed)
+@media (prefers-color-scheme: dark) {
+  .keyboard-key {
+    &.unused {
+      background-color: $key-unused-dark-bg;
+      color: $key-unused-dark-color;
+      
+      &:hover:not(:disabled) {
+        background-color: $key-unused-dark-hover-bg;
+      }
+    }
+  }
+}
+
+// Animation for key press feedback
+.keyboard-key {
+  &:active:not(:disabled) {
+    animation: keyPress 0.1s ease-in-out;
+  }
+}
+
+@keyframes keyPress {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale($key-scale-active);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
