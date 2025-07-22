@@ -1,10 +1,8 @@
 // Variables for easy customization
-$keyboard-container-padding: 0;
 $keyboard-container-margin-top: 0;
 $keyboard-container-max-width: 500px;
 
 $keyboard-row-margin-bottom: 0.5rem;
-$keyboard-col-padding: 0;
 
 // Key dimensions
 $key-min-width-desktop: 43px;
@@ -12,13 +10,13 @@ $key-height-desktop: 58px;
 $key-margin-desktop: 2px;
 $key-font-size-desktop: 1.25rem;
 
-$key-min-width-tablet: 32px;
-$key-height-tablet: 48px;
+$key-min-width-tablet: 28px;
+$key-height-tablet: 58px;
 $key-margin-tablet: 2px;
 $key-font-size-tablet: 1.125rem;
 
-$key-min-width-mobile: 28px;
-$key-height-mobile: 42px;
+$key-min-width-mobile: 24px;
+$key-height-mobile: 58px;
 $key-margin-mobile: 1px;
 $key-font-size-mobile: 1rem;
 
@@ -68,13 +66,12 @@ $key-scale-active: 0.95;
 // Responsive breakpoints
 $tablet-breakpoint: 768px;
 $mobile-breakpoint: 480px;
-$container-padding-tablet: 0.5rem;
 
 // Keyboard container styling
 .keyboard-container {
-  padding: $keyboard-container-padding;
   margin-top: $keyboard-container-margin-top;
   max-width: $keyboard-container-max-width;
+  padding: 0.25rem 0.25rem; // Adjusted for better spacing
   user-select: none;
 
   .keyboard-row {
@@ -82,10 +79,6 @@ $container-padding-tablet: 0.5rem;
     
     &:last-child {
       margin-bottom: 0;
-    }
-
-    .col {
-      padding: $keyboard-col-padding;
     }
   }
 }
@@ -163,7 +156,6 @@ $container-padding-tablet: 0.5rem;
 @media (min-width: $tablet-breakpoint) {
   .keyboard-container {
     max-width: 100%;
-    padding: $keyboard-container-padding;
   }
   
   .keyboard-key {
@@ -183,7 +175,6 @@ $container-padding-tablet: 0.5rem;
 @media (max-width: $tablet-breakpoint) {
   .keyboard-container {
     max-width: 100%;
-    padding: 0 $container-padding-tablet;
   }
   
   .keyboard-key {

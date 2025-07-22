@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import Keyboard, { type LetterStatus } from "./Keyboard";
+import Board from "./Board";
 
 import "./Wordle.scss"; // Assuming you have a Wordle.scss for styles
 
@@ -57,22 +58,12 @@ const Wordle: React.FC = () => {
 
   return (
     <div className="wordle-container">
-      {/* Game Board would go here */}
-      <div className="game-board">
-        {/* Display guesses and current guess */}
-        <div className="guesses">
-          {guesses.map((guess, index) => (
-            <div key={index} className="guess">
-              {guess.toUpperCase()}
-            </div>
-          ))}
-          {gameStatus === "playing" && (
-            <div className="current-guess">
-              {currentGuess.toUpperCase().padEnd(5, "_")}
-            </div>
-          )}
-        </div>
-      </div>
+      <Board
+        guesses={guesses}
+        currentGuess={currentGuess}
+        letterStatuses={letterStatuses}
+        gameStatus={gameStatus}
+      />
 
       {/* Keyboard */}
       <Keyboard
