@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { Container, Row, Col, Button } from "react-bootstrap";
-import { Backspace } from "react-bootstrap-icons";
+import { Backspace, ArrowReturnLeft } from "react-bootstrap-icons";
 
 import "./Keyboard.scss";
 import { keyboardTestIds } from "./Keyboard.testIds";
@@ -84,8 +84,8 @@ const Keyboard: React.FC<KeyboardProps> = ({
               : key
         }
       >
-        {key === 'BACKSPACE' ? (
-          <Backspace size={18} />
+        {key === 'BACKSPACE' || key === 'ENTER' ? (
+          key === 'BACKSPACE' ? <Backspace size={18} /> : <ArrowReturnLeft size={18} />
         ) : (
           key
         )}
