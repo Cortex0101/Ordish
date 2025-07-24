@@ -1,13 +1,48 @@
 .board-container {
+    display: flex;
     flex-grow: 1;
     overflow: hidden;
-    align-items: center;
+    align-items: stretch;
     justify-content: center;
 }
 
 .board {
     display: flex;
+    overflow: hidden;
+    margin: auto;
     flex-direction: column;
-    max-width: 340px;
-    margin: 0 auto;
+    flex: 1;
+}
+
+.board-rows {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.board-row {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    justify-content: center;
+}
+
+.letter {
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    width: min(calc(100vw / 5), 65px); // Ensure each row is responsive
+    aspect-ratio: 1 / 1; // Maintain square aspect ratio
+
+    user-select: none;
+    text-transform: uppercase;
+    border: 2px solid #ddd;
+    display: inline-flex;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 22px;
+    color: #333;
+    border-radius: 16%;
+    transition: transform .2s ease, border-color .1s, box-shadow .05s;
+    background-color: #fff;
 }

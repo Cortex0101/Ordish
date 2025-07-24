@@ -6,7 +6,7 @@ import "./Board.scss";
 
 interface BoardProps {
   guesses: string[];
-  currentGuess: string;
+  currentGuess: number;
   letterStatuses: Record<string, "correct" | "present" | "absent" | "unused">;
   gameStatus: "playing" | "won" | "lost";
 }
@@ -21,6 +21,25 @@ const Board: React.FC<BoardProps> = ({
     <div className="board-container">
       <div className="board">
         {/* Display guesses and current guess */}
+        <div className="board-rows">
+          {Array.from({ length: 6 }).map((_, rowIndex) => (
+            <div key={rowIndex} className="board-row">
+              {guesses[rowIndex] !== '*' ? (
+                guesses[rowIndex].split("").map((letter, index) => (
+                  <div
+                    key={index}
+                    className={`letter ${letterStatuses[letter] || "unused"}`}
+                  >
+                    {letter.toUpperCase()}
+                  </div>
+                ))
+              ) : (
+                <div className="letter empty"></div>
+              )}
+            </div>
+          ))}
+
+        {/* 
         <div className="guesses">
           {guesses.map((guess, index) => (
             <div key={index} className="guess">
@@ -33,7 +52,10 @@ const Board: React.FC<BoardProps> = ({
             </div>
           )}
         </div>
+
+        */}
       </div>
+    </div>
     </div>
   );
 };

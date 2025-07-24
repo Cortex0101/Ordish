@@ -6,8 +6,15 @@ import Board from "./Board";
 import "./Wordle.scss"; // Assuming you have a Wordle.scss for styles
 
 const Wordle: React.FC = () => {
-  const [currentGuess, setCurrentGuess] = useState<string>("");
-  const [guesses, setGuesses] = useState<string[]>([]);
+  const [currentGuess, setCurrentGuess] = useState<number>(0); // Initialize current guess as an empty string
+  const [guesses, setGuesses] = useState<string[]>([
+    '*****',
+    '*****',
+    '*****',
+    '*****',
+    '*****',
+    '*****',
+  ]);
   const [letterStatuses, setLetterStatuses] = useState<
     Record<string, LetterStatus>
   >({});
@@ -18,16 +25,21 @@ const Wordle: React.FC = () => {
   const handleKeyPress = useCallback(
     (key: string) => {
       if (gameStatus !== "playing") return;
-      if (currentGuess.length >= 5) return;
+      if (guesses[currentGuess].length >= 5) return;
 
-      setCurrentGuess((prev) => prev + key.toLowerCase());
+      setGuesses((prev) => {
+        const newGuess = prev[currentGuess] + key.toLowerCase();
+        const updatedGuesses = [...prev];
+        updatedGuesses[currentGuess] = newGuess;
+        return updatedGuesses;
+      });
     },
-    [currentGuess, gameStatus]
+    [currentGuess, gameStatus, guesses]
   );
 
   const handleEnter = useCallback(() => {
     if (gameStatus !== "playing") return;
-    if (currentGuess.length !== 5) return;
+    if (guesses[currentGuess].length !== 5) return;
 
     // Here you would implement the game logic:
     // 1. Check if the word is valid
@@ -36,24 +48,24 @@ const Wordle: React.FC = () => {
     // 4. Add to guesses
     // 5. Check for win/loss conditions
 
-    setGuesses((prev) => [...prev, currentGuess]);
-    setCurrentGuess("");
+    setGuesses((prev) => [...prev, guesses[currentGuess]]);
+    setCurrentGuess(0);
 
     // Mock letter status update - replace with actual game logic
     const newStatuses = { ...letterStatuses };
-    for (const letter of currentGuess) {
+    for (const letter of guesses[currentGuess]) {
       if (!newStatuses[letter]) {
         // This is a simplified example - implement actual word comparison logic
         newStatuses[letter] = "absent"; // or 'present' or 'correct'
       }
     }
     setLetterStatuses(newStatuses);
-  }, [currentGuess, gameStatus, letterStatuses]);
+  }, [currentGuess, gameStatus, guesses, letterStatuses]);
 
   const handleBackspace = useCallback(() => {
     if (gameStatus !== "playing") return;
 
-    setCurrentGuess((prev) => prev.slice(0, -1));
+    setCurrentGuess((prev) => prev - 1);
   }, [gameStatus]);
 
   return (
