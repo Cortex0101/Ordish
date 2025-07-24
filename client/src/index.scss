@@ -12,11 +12,16 @@ body {
   height: 100vh;
 }
 
+#root {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  flex: 1;
 }
 
 :root,

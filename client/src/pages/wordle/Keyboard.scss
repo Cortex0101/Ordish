@@ -76,7 +76,7 @@ $mobile-breakpoint: 480px;
 
   .keyboard-row {
     margin-bottom: $keyboard-row-margin-bottom;
-    
+
     &:last-child {
       margin-bottom: 0;
     }
@@ -101,7 +101,7 @@ $mobile-breakpoint: 480px;
   &.unused {
     background-color: $key-unused-bg;
     color: $key-unused-color;
-    
+
     &:hover:not(:disabled) {
       background-color: $key-unused-hover-bg;
     }
@@ -111,7 +111,7 @@ $mobile-breakpoint: 480px;
   &.correct {
     background-color: $key-correct-bg;
     color: $key-correct-color;
-    
+
     &:hover:not(:disabled) {
       background-color: $key-correct-hover-bg;
     }
@@ -120,7 +120,7 @@ $mobile-breakpoint: 480px;
   &.present {
     background-color: $key-present-bg;
     color: $key-present-color;
-    
+
     &:hover:not(:disabled) {
       background-color: $key-present-hover-bg;
     }
@@ -129,7 +129,7 @@ $mobile-breakpoint: 480px;
   &.absent {
     background-color: $key-absent-bg;
     color: $key-absent-color;
-    
+
     &:hover:not(:disabled) {
       background-color: $key-absent-hover-bg;
     }
@@ -157,13 +157,13 @@ $mobile-breakpoint: 480px;
   .keyboard-container {
     max-width: 100%;
   }
-  
+
   .keyboard-key {
     min-width: $key-min-width-desktop;
     height: $key-height-desktop;
     margin: 0 $key-margin-desktop;
     font-size: $key-font-size-desktop;
-    
+
     &.special-key {
       min-width: $special-key-min-width-desktop;
       font-size: $special-key-font-size-desktop;
@@ -176,13 +176,13 @@ $mobile-breakpoint: 480px;
   .keyboard-container {
     max-width: 100%;
   }
-  
+
   .keyboard-key {
     min-width: $key-min-width-tablet;
     height: $key-height-tablet;
     margin: 0 $key-margin-tablet;
     font-size: $key-font-size-tablet;
-    
+
     &.special-key {
       min-width: $special-key-min-width-tablet;
       font-size: $special-key-font-size-tablet;
@@ -196,7 +196,7 @@ $mobile-breakpoint: 480px;
     height: $key-height-mobile;
     margin: 0 $key-margin-mobile;
     font-size: $key-font-size-mobile;
-    
+
     &.special-key {
       min-width: $special-key-min-width-mobile;
       font-size: $special-key-font-size-mobile;
@@ -210,7 +210,7 @@ $mobile-breakpoint: 480px;
     &.unused {
       background-color: $key-unused-dark-bg;
       color: $key-unused-dark-color;
-      
+
       &:hover:not(:disabled) {
         background-color: $key-unused-dark-hover-bg;
       }
@@ -229,9 +229,11 @@ $mobile-breakpoint: 480px;
   0% {
     transform: scale(1);
   }
+
   50% {
     transform: scale($key-scale-active);
   }
+
   100% {
     transform: scale(1);
   }
