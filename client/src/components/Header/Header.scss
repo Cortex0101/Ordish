@@ -124,6 +124,9 @@
 
 // Wordle route conditional buttons
 .navbar {
+  flex-shrink: 0;
+  width: 100vw;
+
   .wordle-buttons {
     .btn {
       width: 32px;

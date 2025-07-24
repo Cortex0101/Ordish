@@ -6,10 +6,17 @@
 // $secondary: #6c757d;
 
 // Custom global styles
+body {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+}
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
+  flex: 1;
 }
 
 :root,
