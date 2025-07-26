@@ -1,45 +1,40 @@
 import React, { useState, useCallback } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import Keyboard, { type LetterStatus } from "./Keyboard";
-import Board from "./Board";
+import Board, { type TileStatus } from "./Board";
 
 import "./Wordle.scss"; // Assuming you have a Wordle.scss for styles
 
 const Wordle: React.FC = () => {
-  const [currentGuess, setCurrentGuess] = useState<number>(0); // Initialize current guess as an empty string
-  const [guesses, setGuesses] = useState<string[]>([
-    '*****',
-    '*****',
-    '*****',
-    '*****',
-    '*****',
-    '*****',
-  ]);
+  const [currentGuessString, setCurrentGuessString] = useState<string>(""); // Current guess as string
+  const [currentRow, setCurrentRow] = useState<number>(0); // Current row index
+  const [guesses, setGuesses] = useState<string[]>([]); // Completed guesses
   const [letterStatuses, setLetterStatuses] = useState<
     Record<string, LetterStatus>
   >({});
+  const [tileStatuses, setTileStatuses] = useState<TileStatus[][]>([]); // 2D array for tile statuses
   const [gameStatus] = useState<"playing" | "won" | "lost">("playing");
+  const [isAnimating, setIsAnimating] = useState<boolean>(false);
+  const [invalidGuess, setInvalidGuess] = useState<boolean>(false);
+  const [showCorrectGuess, setShowCorrectGuess] = useState<boolean>(false);
 
   // TODO: Implement game status logic (win/loss conditions)
 
   const handleKeyPress = useCallback(
     (key: string) => {
       if (gameStatus !== "playing") return;
-      if (guesses[currentGuess].length >= 5) return;
+      if (currentGuessString.length >= 5) return;
 
-      setGuesses((prev) => {
-        const newGuess = prev[currentGuess] + key.toLowerCase();
-        const updatedGuesses = [...prev];
-        updatedGuesses[currentGuess] = newGuess;
-        return updatedGuesses;
-      });
+      setCurrentGuessString(prev => prev + key.toLowerCase());
     },
-    [currentGuess, gameStatus, guesses]
+    [currentGuessString, gameStatus]
   );
 
   const handleEnter = useCallback(() => {
     if (gameStatus !== "playing") return;
-    if (guesses[currentGuess].length !== 5) return;
+    if (currentGuessString.length !== 5) return;
+
+    setIsAnimating(true);
 
     // Here you would implement the game logic:
     // 1. Check if the word is valid
@@ -48,33 +43,50 @@ const Wordle: React.FC = () => {
     // 4. Add to guesses
     // 5. Check for win/loss conditions
 
-    setGuesses((prev) => [...prev, guesses[currentGuess]]);
-    setCurrentGuess(0);
+    // Add current guess to completed guesses
+    setGuesses(prev => [...prev, currentGuessString]);
+    
+    // Create tile statuses for this guess (mock implementation)
+    const newTileRow: TileStatus[] = currentGuessString.split('').map(() => 'absent' as TileStatus);
+    setTileStatuses(prev => [...prev, newTileRow]);
 
     // Mock letter status update - replace with actual game logic
     const newStatuses = { ...letterStatuses };
-    for (const letter of guesses[currentGuess]) {
+    for (const letter of currentGuessString) {
       if (!newStatuses[letter]) {
         // This is a simplified example - implement actual word comparison logic
         newStatuses[letter] = "absent"; // or 'present' or 'correct'
       }
     }
     setLetterStatuses(newStatuses);
-  }, [currentGuess, gameStatus, guesses, letterStatuses]);
+
+    // Reset current guess and move to next row
+    setCurrentGuessString("");
+    setCurrentRow(prev => prev + 1);
+    
+    // Stop animation after delay
+    setTimeout(() => setIsAnimating(false), 500);
+  }, [currentGuessString, gameStatus, letterStatuses]);
 
   const handleBackspace = useCallback(() => {
     if (gameStatus !== "playing") return;
+    if (currentGuessString.length === 0) return;
 
-    setCurrentGuess((prev) => prev - 1);
-  }, [gameStatus]);
+    setCurrentGuessString(prev => prev.slice(0, -1));
+  }, [gameStatus, currentGuessString]);
 
   return (
     <div className="wordle-container">
       <Board
         guesses={guesses}
-        currentGuess={currentGuess}
-        letterStatuses={letterStatuses}
-        gameStatus={gameStatus}
+        currentGuess={currentGuessString}
+        currentRow={currentRow}
+        maxGuesses={6}
+        wordLength={5}
+        tileStatuses={tileStatuses}
+        isAnimating={isAnimating}
+        invalidGuess={invalidGuess}
+        showCorrectGuess={showCorrectGuess}
       />
 
       {/* Keyboard */}

@@ -1,48 +1,216 @@
+$max-board-width: min(560px, calc(100vw - 2rem));
+$available-height: calc(100vh - 200px); // Subtract header + keyboard space
+$tile-size-by-width: calc(($max-board-width - 20px) / 5); // 5 tiles + gaps
+$tile-size-by-height: calc(($available-height - 25px) / 6); // 6 rows + gaps
+$tile-size: min($tile-size-by-width, $tile-size-by-height);
+$tile-size: max($tile-size, 40px); // Ensure minimum viable tile size
+$board-width: calc(5 * $tile-size + 20px);
+$board-height: calc(6 * $tile-size + 25px);
+
+// Board container - responsive and fills available space
 .board-container {
     display: flex;
-    flex-grow: 1;
-    overflow: hidden;
-    align-items: stretch;
-    justify-content: center;
-}
-
-.board {
-    display: flex;
-    overflow: hidden;
-    margin: auto;
-    flex-direction: column;
     flex: 1;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    max-width: 100%;
+    user-select: none;
 }
 
-.board-rows {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
+// Board grid container
+.board-grid {
+    display: grid;
+    grid-template-rows: repeat(6, $tile-size);
+    gap: 5px;
+    width: $board-width;
+    height: $board-height;
+    max-width: 560px;
 }
 
+// Individual board row
 .board-row {
-    display: flex;
-    flex-direction: row;
-    flex: 1;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(5, $tile-size);
+    gap: 5px;
+    width: 100%;
+    height: $tile-size;
 }
 
-.letter {
-    justify-content: center;
+// Individual board tile - always square
+.board-tile {
+    position: relative;
+    width: $tile-size;
+    height: $tile-size;
+    border: 2px solid #d3d6da;
+    border-radius: 0;
     display: flex;
     align-items: center;
-    width: min(calc(100vw / 5), 65px); // Ensure each row is responsive
-    aspect-ratio: 1 / 1; // Maintain square aspect ratio
-
-    user-select: none;
-    text-transform: uppercase;
-    border: 2px solid #ddd;
-    display: inline-flex;
     justify-content: center;
-    font-weight: 700;
-    font-size: 22px;
-    color: #333;
-    border-radius: 16%;
-    transition: transform .2s ease, border-color .1s, box-shadow .05s;
-    background-color: #fff;
+    font-size: calc($tile-size * 0.5);
+    font-weight: bold;
+    line-height: 1;
+    text-transform: uppercase;
+    transition: all 0.1s ease-in-out;
+    cursor: pointer;
+    background-color: transparent;
+    box-sizing: border-box;
+
+    &:hover {
+        transform: scale(1.02);
+    }
+
+    // Tile states
+    &.tile-empty {
+        background-color: transparent;
+        border-color: #d3d6da;
+        color: #1a1a1b;
+    }
+
+    &.tile-filled {
+        background-color: transparent;
+        border-color: #878a8c;
+        color: #1a1a1b;
+        animation: pop 0.1s ease-in-out;
+    }
+
+    &.tile-submitted {
+        background-color: transparent;
+        border-color: #878a8c;
+        color: #1a1a1b;
+    }
+
+    // Tile status colors (revealed after submission)
+    &.tile-correct {
+        background-color: #6aaa64;
+        border-color: #6aaa64;
+        color: white;
+    }
+
+    &.tile-present {
+        background-color: #c9b458;
+        border-color: #c9b458;
+        color: white;
+    }
+
+    &.tile-absent {
+        background-color: #787c7e;
+        border-color: #787c7e;
+        color: white;
+    }
+
+    // Current tile indicator
+    &.current {
+        border-color: #565758;
+        border-width: 3px;
+    }
+
+    // Animations
+    &.revealing {
+        animation: reveal 0.6s ease-in-out;
+    }
+
+    &.shake {
+        animation: shake 0.6s ease-in-out;
+    }
+
+    &.bounce {
+        animation: bounce 0.6s ease-in-out;
+    }
+
+    .tile-letter {
+        position: relative;
+        z-index: 1;
+    }
+}
+
+// Responsive breakpoints for fine-tuning
+@media (max-width: 768px) {
+    .board-container {
+        padding: 0.75rem;
+        --available-height: calc(100vh - 180px); // Smaller header/keyboard on mobile
+    }
+}
+
+@media (max-width: 480px) {
+    .board-container {
+        padding: 0.5rem;
+        --available-height: calc(100vh - 160px); // Even smaller on mobile
+        --max-board-width: calc(100vw - 1rem);
+        
+        .board-tile {
+            &:hover {
+                transform: none; // Disable hover on mobile
+            }
+        }
+    }
+}
+
+// iPhone SE (375px width) specific adjustments
+@media (max-width: 375px) {
+    .board-container {
+        --available-height: calc(100vh - 140px);
+        --max-board-width: calc(100vw - 0.5rem);
+    }
+}
+
+// Animations
+@keyframes pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+@keyframes reveal {
+    0% { transform: rotateX(0); }
+    50% { transform: rotateX(90deg); }
+    100% { transform: rotateX(0); }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+@keyframes bounce {
+    0%, 20%, 53%, 80%, 100% { transform: translateY(0); }
+    40%, 43% { transform: translateY(-15px); }
+    70% { transform: translateY(-7px); }
+    90% { transform: translateY(-3px); }
+}
+
+// Row-specific bounce animations (for staggered effect)
+.board-row.bounce {
+    .board-tile {
+        &:nth-child(1) { animation-delay: 0ms; }
+        &:nth-child(2) { animation-delay: 100ms; }
+        &:nth-child(3) { animation-delay: 200ms; }
+        &:nth-child(4) { animation-delay: 300ms; }
+        &:nth-child(5) { animation-delay: 400ms; }
+    }
+}
+
+// Dark mode support
+@media (prefers-color-scheme: dark) {
+    .board-tile {
+        &.tile-empty,
+        &.tile-filled,
+        &.tile-submitted {
+            border-color: #565758;
+            color: #ffffff;
+        }
+    }
+}
+
+// Reduced motion support
+@media (prefers-reduced-motion: reduce) {
+    .board-tile {
+        animation: none !important;
+        transition: none !important;
+        
+        &:hover {
+            transform: none;
+        }
+    }
 }
