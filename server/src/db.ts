@@ -20,16 +20,14 @@ export function initializeDatabase() {
 
   pool = mysql.createPool({
     host: process.env.DB_HOST as string,
+    port: parseInt(process.env.DB_PORT || '3306'),
     user: process.env.DB_USER as string,
     password: process.env.DB_PASSWORD as string,
     database: process.env.DB_NAME as string,
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0,
-    charset: 'utf8mb4',
-    authPlugins: {
-      mysql_native_password: () => require('mysql2/lib/auth_plugins').mysql_native_password
-    }
+    charset: 'utf8mb4'
   });
 
   log.info('Database pool created successfully');

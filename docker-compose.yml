@@ -10,7 +10,7 @@ services:
       MARIADB_PASSWORD: devpassword
       MARIADB_DEFAULT_AUTHENTICATION_PLUGIN: mysql_native_password
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
       - mariadb_data:/var/lib/mysql
       - ./server/database/init.sql:/docker-entrypoint-initdb.d/init.sql
