@@ -358,7 +358,7 @@ The application supports multiple authentication methods:
 
 ### OAuth Authentication
 - **Google** - Sign in with Google account
-- **Facebook** - Sign in with Facebook account  
+- **Facebook** - Sign in with Facebook account
 - **Apple** - Sign in with Apple ID
 
 For OAuth setup instructions, see [GOOGLE_OAUTH_SETUP.md](GOOGLE_OAUTH_SETUP.md)
