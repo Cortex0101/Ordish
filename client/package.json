@@ -13,6 +13,7 @@
     "test:debug": "playwright test --debug",
     "test:headed": "playwright test --headed",
     "test:auth": "playwright test tests/auth",
+    "test:spelling-bee": "playwright test tests/spelling-bee",
     "test:report": "playwright show-report"
   },
   "dependencies": {

@@ -1,0 +1,102 @@
+// Spelling Bee Layout Styles using CSS Grid
+.spelling-bee-container {
+  height: 100vh;
+
+  .spelling-bee-grid {
+    display: grid;
+    height: calc(100vh - 2rem); // Account for container padding
+    gap: 0.5rem;
+
+    // Mobile Layout: Stack vertically (Progress -> Wordlist -> Game)
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto 1fr; // Progress auto, Wordlist auto, Game (remaining space)
+    grid-template-areas:
+      "progress"
+      "wordlist"
+      "game";
+
+    // Desktop Layout: Game left, Progress/Wordlist right
+    @media (min-width: 768px) {
+      grid-template-columns: 1fr 1fr; // 50% each column
+      grid-template-rows: auto 1fr; // Progress auto height, Wordlist takes remaining
+      grid-template-areas:
+        "game progress"
+        "game wordlist";
+    }
+  }
+
+  // Grid area assignments
+  .progress-box {
+    grid-area: progress;
+  }
+
+  .wordlist-box {
+    grid-area: wordlist;
+  }
+
+  .game-container {
+    grid-area: game;
+  }
+
+  // Common styles for all boxes
+  .progress-box,
+  .wordlist-box,
+  .game-container {
+    //border: 2px solid #ddd;
+    border-radius: 8px;
+    //background: var(--bs-body-bg);
+    display: flex;
+    text-align: center;
+    font-weight: 500;
+    overflow: hidden; // Prevent content overflow
+  }
+
+  // Individual box styling
+  .progress-box {
+    align-items: center;
+    justify-content: center;
+    //background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+    //border-color: #2196f3;
+  }
+
+  .wordlist-box {
+    // Remove background to let WordList component handle its own styling
+    background: none;
+  }
+
+  .game-container {
+    align-items: center;
+    justify-content: center;
+    border-color: #ff9800;
+    padding: 1rem;
+  }
+  }
+
+// Responsive font adjustments
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .spelling-bee-container {
+    .progress-box,
+    .wordlist-box,
+    .game-container {
+      font-size: 0.9rem;
+    }
+  }
+}
+
+@media (min-width: 992px) {
+  .spelling-bee-container {
+    .progress-box,
+    .wordlist-box {
+      font-size: 1rem;
+    }
+
+    .game-container {
+      font-size: 1.1rem;
+    }
+  }
+}
+
+// Animation for smooth transitions
+.spelling-bee-container .spelling-bee-grid > * {
+  transition: all 0.3s ease;
+}

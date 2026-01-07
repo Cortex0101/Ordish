@@ -1,0 +1,26 @@
+{
+    "rank-lebel-beginer": "Begynder",
+    "rank-lebel-good-start": "God start",
+    "rank-lebel-moving-up": "Bevæger sig opad",
+    "rank-lebel-good": "God",
+    "rank-lebel-solid": "Solid",
+    "rank-lebel-nice": "Flot",
+    "rank-lebel-great": "Imponerende",
+    "rank-lebel-amazing": "Fantastisk",
+    "rank-lebel-queen-bee": "Dronningebie",
+
+    "_comment": "modal variables:",
+    "modal-title": "Rangordninger",
+    "modal-description": "Rangordninger er baseret på en procentdel af mulige point i et puslespil.",
+    "modal-rank-header": "Rang",
+    "modal-minimum-score-header": "Mindste score",
+    "modal-points-to-next": "{{points}} point til {{nextRank}}",
+    "modal-points-to-genius": "{{points}} til Dronningebie",
+    "modal-max-rank-achieved": "Maksimal rang opnået!",
+
+    "_comment2": "wordlist variables:",
+    "wordlist-title": "Du har fundet",
+    "wordlist-count": "{{found}} af {{total}} ord",
+    "wordlist-empty": "Ingen ord fundet endnu. Begynd at gætte!",
+    "wordlist-length-label": "{{count}} {{length}}-bogstavs ord"
+}

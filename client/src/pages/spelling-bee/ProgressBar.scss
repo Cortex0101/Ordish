@@ -1,0 +1,375 @@
+// NYT Spelling Bee Progress Bar Styles
+:root {
+  --progress-text-color: #000;
+  --progress-bg-color: #f7f7f7;
+  --progress-completed-color: #f7da21;
+  --progress-incomplete-color: #ddd;
+  --progress-marker-bg: #fff;
+  --progress-border-color: #000;
+  --extra-light-gray: #f0f0f0;
+  --vertical-spacing-0-5: 0.25rem;
+  --horizontal-spacing-0-5: 0.25rem;
+  --horizontal-spacing-1-5: 0.375rem;
+  --horizontal-spacing-2: 0.5rem;
+  --text-sb-progress: #000;
+  --bg-sb: #f7da21;
+  --text-constant: #000;
+}
+
+[data-bs-theme="dark"] {
+  --progress-text-color: #fff;
+  --progress-bg-color: #121213;
+  --progress-completed-color: #f7da21;
+  --progress-incomplete-color: #3a3a3c;
+  --progress-marker-bg: #121213;
+  --progress-border-color: #fff;
+  --extra-light-gray: #3a3a3c;
+  --vertical-spacing-0-5: 0.25rem;
+  --horizontal-spacing-0-5: 0.25rem;
+  --horizontal-spacing-1-5: 0.375rem;
+  --horizontal-spacing-2: 0.5rem;
+  --text-sb-progress: #fff;
+  --bg-sb: #d4bc1c;
+  --text-constant: #fff;
+}
+
+$dot-size: 9px;
+$marker-size: 1.875em;
+$progress-transition-time: 200ms;
+
+.sb-progress {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 0.5rem 0.75rem;
+  color: var(--progress-text-color);
+  width: 100%;
+  flex-grow: 1;
+
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.sb-progress-rank {
+  min-width: 5em;
+  font-weight: 700;
+  font-size: 1rem;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  line-height: 1.2;
+  flex-shrink: 0; // Prevent shrinking
+
+  
+}
+
+.rank-letter-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.outgoing {
+  position: absolute;
+  top: 0;
+  left: 0;
+  animation: 
+    slide-up-fade 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.incoming-letter {
+  opacity: 0;
+  transform: translateY(1em);
+  animation: 
+    slide-down-fade 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 100ms forwards;
+}
+
+.sb-progress-bar {
+  margin-left: 0.75rem;
+  flex-grow: 1;
+  position: relative;
+  min-width: calc(100% - 6em);
+  display: flex;
+  align-items: center;
+  height: $marker-size;
+}
+
+.sb-progress-line {
+  position: relative;
+  height: 1px;
+  background: var(--progress-incomplete-color);
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.sb-progress-dots {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+
+.sb-progress-dot {
+  display: block;
+  width: 0;
+  position: relative;
+
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: -#{$dot-size * 0.5};
+    top: -#{$dot-size * 0.5};
+    width: $dot-size;
+    height: $dot-size;
+    border-radius: 50%;
+    background-color: var(--progress-incomplete-color);
+    transition: background-color $progress-transition-time ease;
+    border: 1px solid var(--progress-border-color);
+  }
+
+  &:last-child::after {
+    border-radius: 0;
+    transform: rotate(45deg);
+  }
+
+  &.completed::after {
+    background-color: var(--progress-completed-color);
+  }
+}
+
+.sb-progress-marker {
+  width: $marker-size;
+  height: $marker-size;
+  position: absolute;
+  left: 0;
+  transition: left 200ms ease;
+  transform: translate(-50%, 0);
+  z-index: 2;
+
+  .sb-progress-value {
+    color: var(--progress-text-color);
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+    background: var(--progress-marker-bg);
+    font-size: 0.75em;
+    font-weight: 600;
+    letter-spacing: -0.03125em;
+    border: 2px solid var(--progress-border-color);
+    min-width: $marker-size;
+  }
+
+  &.final .sb-progress-value {
+    border-radius: 0;
+    transform: rotate(45deg);
+  }
+}
+
+// Animations
+@keyframes slide-up-fade {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-1.2em);
+  }
+}
+
+@keyframes slide-down-fade {
+  0% {
+    opacity: 0;
+    transform: translateY(1em);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+    visibility: visible;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+
+.sb-modal-ranks__list {
+  font-size: 1em;
+  width: 100%;
+
+  tr {
+    height: 2.25em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  tr.sb-modal-ranks__current {
+    height: 3em;
+    color: var(--text-constant);
+    background-color: var(--bg-sb);
+    border-radius: 1.5em;
+    padding: calc(var(--vertical-spacing-0-5) * 1.5) 0;
+  }
+
+  tr.sb-modal-ranks__achieved {
+    color: var(--lighter-gray);
+  }
+}
+
+.sb-modal-ranks__cutoff-scoreboard {
+  min-height: 15em;
+  max-height: 40vh;
+  overflow: hidden;
+
+  &::before {
+    height: 25px;
+  }
+
+  &::after {
+    height: 50px;
+  }
+}
+
+.sb-modal-ranks__cutoff-scoreboard-table {
+  width: 100%;
+  max-width: 20em;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.sb-modal-ranks__col-headers {
+  font-weight: 600;
+  font-size: 0.75em;
+}
+
+.sb-modal-ranks__rank-title {
+  padding-left: var(--horizontal-spacing-1);
+  display: flex;
+  flex-direction: column;
+
+  .current-rank {
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+
+    .rank-icon {
+      width: 30px;
+      height: 14px;
+      margin-left: var(--horizontal-spacing-0-5);
+      margin-bottom: var(--vertical-spacing-0-5);
+      background-size: contain;
+      background-repeat: no-repeat;
+
+      &.genius {
+        background-image: url('/public/assets/sb-stats-genius.svg');
+      }
+
+      &.qb {
+        background-image: url('/public/assets/sb-stats-queen-bee.svg');
+      }
+    }
+  }
+
+  .sub-text {
+    font-size: 0.75em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.sb-modal-ranks__spacer {
+  flex: 1;
+}
+
+.pz-desktop {
+  .sb-modal-ranks__spacer.hr {
+    border-bottom: 1px solid var(--extra-light-gray);
+    margin: 0 var(--horizontal-spacing-2);
+  }
+}
+
+.sb-modal-ranks__rank-points {
+  padding-right: calc(var(--horizontal-spacing-1-5) * 1.5);
+}
+
+.sb-modal-ranks__rank-marker {
+  height: 100%;
+  width: 24px;
+  margin-left: var(--horizontal-spacing-1-5);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .dot,
+  .square {
+    height: 9px;
+    width: 9px;
+    background-color: var(--text-sb-progress);
+    position: absolute;
+    left: calc(50% - 4.5px);
+    top: calc(50% - 4.5px);
+  }
+
+  .dot {
+    border-radius: 9px;
+  }
+
+  .line {
+    height: 100%;
+    border-left: 2px solid var(--text-sb-progress);
+
+    position: absolute;
+    left: calc(50% - 1px);
+
+    &.top {
+      height: 50%;
+      top: 50%;
+    }
+
+    &.bottom {
+      height: 50%;
+      bottom: 50%;
+    }
+  }
+
+  .achieved {
+    background-color: var(--bg-sb);
+    border-color: var(--bg-sb);
+  }
+
+  .current-score {
+    z-index: 1;
+    font-weight: 700;
+  }
+}
+
+.sb-modal-ranks__forum-link {
+  padding-top: calc(var(--vertical-spacing-0-5) * 2.5);
+}

@@ -1,0 +1,8 @@
+.wordle-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    align-items: stretch;
+    overflow: hidden; // Prevent overflow
+    max-width: 100vw;
+}

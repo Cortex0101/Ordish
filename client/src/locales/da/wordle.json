@@ -1,0 +1,23 @@
+{
+  "title": "Wordle",
+  "description": "Gæt det 5-bogstavs ord på 6 forsøg",
+  "keyboard": {
+    "enter": "Enter",
+    "backspace": "Tilbage"
+  },
+  "game": {
+    "playing": "Spiller",
+    "won": "Du Vandt!",
+    "lost": "Spil Slut",
+    "invalidWord": "Ikke et gyldigt ord",
+    "tooShort": "Ord for kort",
+    "alreadyGuessed": "Allerede gættet"
+  },
+  "stats": {
+    "title": "Statistikker",
+    "gamesPlayed": "Spil Spillet",
+    "winPercentage": "Vind %",
+    "currentStreak": "Nuværende Række",
+    "maxStreak": "Maks Række"
+  }
+}

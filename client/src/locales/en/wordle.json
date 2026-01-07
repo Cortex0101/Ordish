@@ -1,0 +1,23 @@
+{
+  "title": "Wordle",
+  "description": "Guess the 5-letter word in 6 tries",
+  "keyboard": {
+    "enter": "Enter",
+    "backspace": "Backspace"
+  },
+  "game": {
+    "playing": "Playing",
+    "won": "You Won!",
+    "lost": "Game Over",
+    "invalidWord": "Not a valid word",
+    "tooShort": "Word too short",
+    "alreadyGuessed": "Already guessed"
+  },
+  "stats": {
+    "title": "Statistics",
+    "gamesPlayed": "Games Played",
+    "winPercentage": "Win %",
+    "currentStreak": "Current Streak",
+    "maxStreak": "Max Streak"
+  }
+}

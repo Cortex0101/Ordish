@@ -1,0 +1,26 @@
+{
+    "rank-lebel-beginer": "Beginner",
+    "rank-lebel-good-start": "Good Start",
+    "rank-lebel-moving-up": "Moving Up",
+    "rank-lebel-good": "Good",
+    "rank-lebel-solid": "Solid",
+    "rank-lebel-nice": "Nice",
+    "rank-lebel-great": "Great",
+    "rank-lebel-amazing": "Amazing",
+    "rank-lebel-queen-bee": "Queen Bee",
+
+    "_comment": "modal variables:",
+    "modal-title": "Rankings",
+    "modal-description": "Ranks are based on a percentage of possible points in a puzzle.",
+    "modal-rank-header": "Rank",
+    "modal-minimum-score-header": "Minimum score",
+    "modal-points-to-next": "{{points}} points to {{nextRank}}",
+    "modal-points-to-genius": "{{points}} to Queen Bee",
+    "modal-max-rank-achieved": "Maximum rank achieved!",
+
+    "_comment2": "wordlist variables:",
+    "wordlist-title": "You have found",
+    "wordlist-count": "{{found}} of {{total}} words",
+    "wordlist-empty": "No words found yet. Start guessing!",
+    "wordlist-length-label": "{{count}} {{length}}-letter words"
+}
