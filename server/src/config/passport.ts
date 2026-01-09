@@ -55,11 +55,11 @@ export function initializePassport() {
           return done(null, user);
         }
 
-        // Check if user exists by email (might be a regular account)
+        // Check if user exists by email (might be a regular account or anonymous with site-id)
         user = await AuthService.getUserByEmail(email);
         
-        if (user) {
-          // User exists with this email but no Google account linked
+        if (user && !user.is_anonymous) {
+          // User exists with this email as a registered account (not anonymous)
           // For now, we'll treat this as a separate account
           // In the future, you might want to implement account linking
           log.warn('User exists with same email but no Google account linked', {
@@ -75,7 +75,7 @@ export function initializePassport() {
           return done(new Error('Account with this email already exists. Please log in with your password.'), false);
         }
 
-        // User doesn't exist, create new account
+        // User doesn't exist, or user exists as anonymous - create new account or migrate
         // Generate a username from display name or email
         let username = displayName?.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
         if (!username || username.length < 3) {
@@ -91,22 +91,47 @@ export function initializePassport() {
         }
 
         try {
-          // Create user without password (OAuth account)
-          user = await AuthService.createGoogleUser(email, finalUsername, {
-            googleId: profile.id,
-            displayName: displayName || '',
-            profilePicture: profile.photos?.[0]?.value || ''
-          });
+          // If user exists as anonymous, migrate them to Google OAuth
+          if (user && user.is_anonymous) {
+            log.info('Migrating anonymous user to Google OAuth', {
+              userId: user.id,
+              siteId: user.site_id
+            });
 
-          log.business('Google OAuth registration successful', { 
-            userId: user.id,
-            email: email.substring(0, 3) + '***',
-            username: finalUsername.substring(0, 3) + '***'
-          });
+            user = await AuthService.migrateAnonymousUserToGoogle(
+              user.site_id!,
+              email,
+              finalUsername,
+              {
+                googleId: profile.id,
+                displayName: displayName || '',
+                profilePicture: profile.photos?.[0]?.value || ''
+              }
+            );
+
+            log.business('Anonymous user migrated to Google OAuth', { 
+              userId: user.id,
+              email: email.substring(0, 3) + '***',
+              username: finalUsername.substring(0, 3) + '***'
+            });
+          } else {
+            // Create a completely new Google user
+            user = await AuthService.createGoogleUser(email, finalUsername, {
+              googleId: profile.id,
+              displayName: displayName || '',
+              profilePicture: profile.photos?.[0]?.value || ''
+            });
+
+            log.business('Google OAuth registration successful', { 
+              userId: user.id,
+              email: email.substring(0, 3) + '***',
+              username: finalUsername.substring(0, 3) + '***'
+            });
+          }
 
           return done(null, user);
         } catch (error) {
-          log.error('Failed to create Google OAuth user', error as Error, {
+          log.error('Failed to create or migrate Google OAuth user', error as Error, {
             email: email.substring(0, 3) + '***',
             profileId: profile.id
           });

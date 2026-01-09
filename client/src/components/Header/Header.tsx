@@ -157,7 +157,7 @@ const OffcanvasMenu = ({
           className="auth-section mt-auto p-3"
           data-testid={headerTestIds.authSection}
         >
-          {user ? (
+          {!user?.is_anonymous ? (
             <>
               <div className="auth-single-button">
                 <Button
@@ -218,7 +218,7 @@ const NavigationBar = ({
   const navigate = useNavigate();
 
   const handleAuthButtonClick = () => {
-    if (user) {
+    if (!user?.is_anonymous) {
       navigate("/profile");
     } else {
       navigate("/login");
@@ -320,13 +320,13 @@ const NavigationBar = ({
           onClick={handleAuthButtonClick}
           disabled={loading}
           data-testid={headerTestIds.authButton}
-          aria-label={user ? "Go to profile" : "Login"}
+          aria-label={!user?.is_anonymous ? "Go to profile" : "Login"}
         >
           { loading ?
             <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
             : null
           }
-          { user ?
+          { !user?.is_anonymous ?
             <PersonCheckFill size={20}/>
             : <PersonCircle size={20} />
           }

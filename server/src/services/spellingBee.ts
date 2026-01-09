@@ -25,4 +25,10 @@ export class SpellingBeeService {
         }
     }
   }
+
+  getWordList(): string[] {
+    return this.wordList;
+  }
+
+  
 }

@@ -4,6 +4,7 @@ import { getPool } from "../db.js";
 import { User } from "../models/User.js";
 import validator from "validator";
 import { log } from "../utils/logger.js";
+import { v4 as uuidv4 } from "uuid";
 
 export class AuthService {
   static async getUserByEmail(email: string): Promise<User | null> {
@@ -465,6 +466,255 @@ export class AuthService {
       log.dbError('Failed to create Google OAuth user', error as Error, 
         "Transaction for Google user creation",
         [email, username, googleData.googleId]
+      );
+      throw error;
+    }
+  }
+
+  static async getUserBySiteId(siteId: string): Promise<User | null> {
+    const startTime = Date.now();
+    const pool = getPool();
+    const [rows] = (await pool.execute("SELECT * FROM users WHERE site_id = ?", [
+      siteId,
+    ])) as any;
+    const duration = Date.now() - startTime;
+    
+    log.dbQuery("SELECT * FROM users WHERE site_id = ?", [siteId], duration);
+    
+    return rows.length > 0 ? rows[0] : null;
+  }
+
+  static generateSiteId(): string {
+    return uuidv4();
+  }
+
+  static async createAnonymousUser(siteId: string): Promise<User> {
+    log.info('Creating anonymous user with site-id', { siteId });
+
+    const pool = getPool();
+
+    try {
+      const startTime = Date.now();
+      const [result] = await pool.execute(
+        "INSERT INTO users (site_id, is_anonymous) VALUES (?, ?)",
+        [siteId, true]
+      );
+      const userCreationDuration = Date.now() - startTime;
+
+      log.dbQuery(
+        "INSERT INTO users (site_id, is_anonymous) VALUES (?, ?)",
+        [siteId, true],
+        userCreationDuration
+      );
+
+      const userId = (result as any).insertId;
+
+      // Create default preferences
+      const prefStartTime = Date.now();
+      await pool.execute(
+        "INSERT INTO user_preferences (user_id, theme, language) VALUES (?, ?, ?)",
+        [userId, "auto", "en"]
+      );
+      const prefDuration = Date.now() - prefStartTime;
+
+      log.dbQuery(
+        "INSERT INTO user_preferences (user_id, theme, language) VALUES (?, ?, ?)",
+        [userId, "auto", "en"],
+        prefDuration
+      );
+
+      const user = await this.getUserById(userId);
+      if (!user) {
+        throw new Error("Anonymous user creation failed");
+      }
+
+      log.business('Anonymous user created successfully', { 
+        userId: user.id, 
+        siteId 
+      });
+
+      return user;
+    } catch (error) {
+      log.dbError('Failed to create anonymous user', error as Error, 
+        "INSERT INTO users (site_id, is_anonymous) VALUES (?, ?)",
+        [siteId, true]
+      );
+      throw error;
+    }
+  }
+
+  static async getUserBySiteIdOrCreate(siteId: string): Promise<User> {
+    log.debug('Getting or creating user by site-id', { siteId });
+
+    let user = await this.getUserBySiteId(siteId);
+    if (!user) {
+      user = await this.createAnonymousUser(siteId);
+    }
+    return user;
+  }
+
+  static async migrateAnonymousUserToRegistered(
+    siteId: string,
+    email: string,
+    username: string,
+    passwordHash?: string
+  ): Promise<User> {
+    log.info('Migrating anonymous user to registered account', { 
+      siteId, 
+      email: email.substring(0, 3) + '***', 
+      username: username.substring(0, 3) + '***' 
+    });
+
+    const pool = getPool();
+
+    try {
+      await pool.execute('START TRANSACTION');
+
+      // Find the anonymous user by site_id
+      const anonymousUser = await this.getUserBySiteId(siteId);
+      if (!anonymousUser) {
+        throw new Error("Anonymous user not found for migration");
+      }
+
+      // Check if email or username already exist (for registered users)
+      const existingEmail = await this.getUserByEmail(email);
+      if (existingEmail && existingEmail.id !== anonymousUser.id) {
+        await pool.execute('ROLLBACK');
+        throw new Error("auth.validation.email-exists");
+      }
+
+      const existingUsername = await this.getUserByUsername(username);
+      if (existingUsername && existingUsername.id !== anonymousUser.id) {
+        await pool.execute('ROLLBACK');
+        throw new Error("auth.validation.username-exists");
+      }
+
+      // Update the anonymous user to become a registered user
+      const updateStartTime = Date.now();
+      await pool.execute(
+        "UPDATE users SET email = ?, username = ?, password_hash = ?, is_anonymous = FALSE, email_verified = ? WHERE id = ?",
+        [email, username, passwordHash || null, passwordHash ? false : true, anonymousUser.id]
+      );
+      const updateDuration = Date.now() - updateStartTime;
+
+      log.dbQuery(
+        "UPDATE users SET email = ?, username = ?, password_hash = ?, is_anonymous = FALSE, email_verified = ? WHERE id = ?",
+        [email, '***', '***', passwordHash ? false : true, anonymousUser.id],
+        updateDuration
+      );
+
+      await pool.execute('COMMIT');
+
+      const migratedUser = await this.getUserById(anonymousUser.id);
+      if (!migratedUser) {
+        throw new Error("User migration failed");
+      }
+
+      log.business('User migrated from anonymous to registered', { 
+        userId: migratedUser.id, 
+        siteId,
+        email: email.substring(0, 3) + '***' 
+      });
+
+      return migratedUser;
+    } catch (error) {
+      await pool.execute('ROLLBACK');
+      
+      log.dbError('Failed to migrate anonymous user', error as Error, 
+        "Transaction for user migration",
+        [siteId, email, username]
+      );
+      throw error;
+    }
+  }
+
+  static async migrateAnonymousUserToGoogle(
+    siteId: string,
+    email: string,
+    username: string,
+    googleData: {
+      googleId: string;
+      displayName: string;
+      profilePicture: string;
+    }
+  ): Promise<User> {
+    log.info('Migrating anonymous user to Google OAuth', { 
+      siteId, 
+      email: email.substring(0, 3) + '***', 
+      username: username.substring(0, 3) + '***',
+      googleId: googleData.googleId
+    });
+
+    const pool = getPool();
+
+    try {
+      await pool.execute('START TRANSACTION');
+
+      // Find the anonymous user by site_id
+      const anonymousUser = await this.getUserBySiteId(siteId);
+      if (!anonymousUser) {
+        await pool.execute('ROLLBACK');
+        throw new Error("Anonymous user not found for migration");
+      }
+
+      // Check if email or username already exist (for registered users)
+      const existingEmail = await this.getUserByEmail(email);
+      if (existingEmail && existingEmail.id !== anonymousUser.id) {
+        await pool.execute('ROLLBACK');
+        throw new Error("auth.validation.email-exists");
+      }
+
+      const existingUsername = await this.getUserByUsername(username);
+      if (existingUsername && existingUsername.id !== anonymousUser.id) {
+        await pool.execute('ROLLBACK');
+        throw new Error("auth.validation.username-exists");
+      }
+
+      // Update the anonymous user to become a Google OAuth user
+      const updateStartTime = Date.now();
+      await pool.execute(
+        "UPDATE users SET email = ?, username = ?, is_anonymous = FALSE, email_verified = TRUE, avatar_url = ? WHERE id = ?",
+        [email, username, googleData.profilePicture, anonymousUser.id]
+      );
+      const updateDuration = Date.now() - updateStartTime;
+
+      log.dbQuery(
+        "UPDATE users SET email = ?, username = ?, is_anonymous = FALSE, email_verified = TRUE, avatar_url = ? WHERE id = ?",
+        [email, '***', '[URL]', anonymousUser.id],
+        updateDuration
+      );
+
+      // Create the social account record
+      const providerData = {
+        displayName: googleData.displayName,
+        profilePicture: googleData.profilePicture
+      };
+
+      await pool.execute(
+        "INSERT INTO social_accounts (user_id, provider, provider_id, provider_email, provider_data) VALUES (?, ?, ?, ?, ?)",
+        [anonymousUser.id, 'google', googleData.googleId, email, JSON.stringify(providerData)]
+      );
+
+      await pool.execute('COMMIT');
+
+      const migratedUser = await this.getUserById(anonymousUser.id);
+      if (!migratedUser) {
+        throw new Error("User migration to Google failed");
+      }
+
+      log.business('User migrated from anonymous to Google OAuth', { 
+        userId: migratedUser.id, 
+        siteId,
+        email: email.substring(0, 3) + '***' 
+      });
+
+      return migratedUser;
+    } catch (error) {
+      await pool.execute('ROLLBACK');
+      
+      log.dbError('Failed to migrate anonymous user to Google', error as Error, 
+        "Transaction for Google user migration",
+        [siteId, email, username, googleData.googleId]
       );
       throw error;
     }

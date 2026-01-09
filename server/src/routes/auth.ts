@@ -1,7 +1,9 @@
 import { Router } from 'express';
+import { Response, NextFunction } from 'express';
 import passport from '../config/passport.js';
 import { AuthService } from '../services/authService.js';
 import { authMiddleware, AuthRequest } from '../middleware/auth.js';
+import { siteIdMiddleware, SiteIdRequest } from '../middleware/siteId.js';
 import { User } from '../models/User.js';
 import { log } from '../utils/logger.js';
 
@@ -50,9 +52,10 @@ router.post('/check-email', async (req, res) => {
 });
 
 // Email/Password Registration
-router.post('/register', async (req, res) => {
+router.post('/register', siteIdMiddleware, async (req: SiteIdRequest, res) => {
   try {
     const { email, username, password } = req.body;
+    const siteId = req.siteId;
     
     // Validate input data first
     if (!email || !username || !password) {
@@ -76,15 +79,35 @@ router.post('/register', async (req, res) => {
     log.info('User registration attempt', { 
       email: email.substring(0, 3) + '***',
       username: username.substring(0, 3) + '***',
+      siteId: siteId ? 'provided' : 'none',
       ip: req.ip,
       userAgent: req.get('User-Agent')
     });
 
-    const user = await AuthService.createUser(email, username, password);
+    let user: User;
+
+    // If user has a site-id, migrate their anonymous account
+    if (siteId) {
+      const passwordHash = await (async () => {
+        const bcrypt = await import('bcrypt');
+        return await bcrypt.default.hash(password, 12);
+      })();
+
+      user = await AuthService.migrateAnonymousUserToRegistered(
+        siteId,
+        email,
+        username,
+        passwordHash
+      );
+    } else {
+      // Otherwise, create a new registered user
+      user = await AuthService.createUser(email, username, password);
+    }
+
     const token = AuthService.generateJWT(user);
     const preferences = await AuthService.getUserPreferences(user.id);
     
-    // Set secure cookie
+    // Set secure cookie and clear site-id cookie if present
     res.cookie('auth_token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
@@ -92,10 +115,16 @@ router.post('/register', async (req, res) => {
       maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
     });
     
+    // Clear site_id cookie if it exists (user is now authenticated)
+    if (siteId) {
+      res.clearCookie('site_id');
+    }
+    
     log.business('User registered successfully', {
       userId: user.id,
       email: email.substring(0, 3) + '***',
-      username: username.substring(0, 3) + '***'
+      username: username.substring(0, 3) + '***',
+      migratedFromSiteId: !!siteId
     });
     
     res.json({
@@ -225,14 +254,21 @@ router.get('/google', passport.authenticate('google', {
 }));
 
 router.get('/google/callback', 
+  siteIdMiddleware,
   passport.authenticate('google', { failureRedirect: '/login?error=oauth_failed' }),
-  async (req, res) => {
+  async (req: SiteIdRequest, res) => {
     try {
       const user = req.user as User;
+      const siteId = req.siteId;
+      
       log.business('Google OAuth callback successful', { 
         userId: user.id,
-        email: user.email?.substring(0, 3) + '***'
+        email: user.email?.substring(0, 3) + '***',
+        hadSiteId: !!siteId
       });
+      
+      // If user had a site-id before authentication, update their record
+      // (Passport has already created or retrieved the user)
       
       // Generate JWT token for the authenticated user
       const token = AuthService.generateJWT(user);
@@ -244,6 +280,11 @@ router.get('/google/callback',
         sameSite: 'strict',
         maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
       });
+      
+      // Clear site_id cookie if it exists (user is now authenticated)
+      if (siteId) {
+        res.clearCookie('site_id');
+      }
       
       // Redirect to frontend success page
       const redirectUrl = process.env.CLIENT_URL || 'http://localhost:5173';
@@ -274,16 +315,59 @@ router.post('/logout', (_req, res) => {
   res.json({ message: 'Logged out successfully' });
 });
 
-// Get current user
-router.get('/me', authMiddleware, async (req: AuthRequest, res) => {
+// Optional auth middleware that doesn't fail if no token is present
+const optionalAuthMiddleware = async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
-    const user = req.user as User;
-    const preferences = await AuthService.getUserPreferences(user.id);
+    const token = req.cookies.auth_token || req.headers.authorization?.replace('Bearer ', '');
     
-    res.json({
-      user: { ...user, password_hash: undefined },
-      preferences
-    });
+    if (token) {
+      const decoded = AuthService.verifyJWT(token);
+      const user = await AuthService.getUserById(decoded.id);
+      
+      if (user) {
+        req.user = user;
+      }
+    }
+    
+    return next();
+  } catch (error) {
+    // Continue without setting user if token is invalid
+    return next();
+  }
+};
+
+// Get current user (authenticated or anonymous)
+router.get('/me', siteIdMiddleware, optionalAuthMiddleware, async (req: any, res) => {
+  try {
+    // Check if user is authenticated via JWT token
+    if (req.user) {
+      const preferences = await AuthService.getUserPreferences(req.user.id);
+      
+      res.json({
+        user: { ...req.user, password_hash: undefined },
+        preferences,
+        isAuthenticated: true
+      });
+      return;
+    }
+
+    // Check if user is anonymous with site-id
+    if (req.anonymousUserId) {
+      const user = await AuthService.getUserById(req.anonymousUserId);
+      if (user) {
+        const preferences = await AuthService.getUserPreferences(user.id);
+        
+        res.json({
+          user: { ...user, password_hash: undefined },
+          preferences,
+          isAuthenticated: false
+        });
+        return;
+      }
+    }
+
+    // No user found
+    res.status(401).json({ error: 'Not authenticated' });
   } catch (error) {
     res.status(500).json({ error: 'Failed to get user data' });
   }

@@ -1,10 +1,12 @@
 export interface User {
   id: number;
-  email: string;
-  username: string;
+  site_id?: string;
+  email?: string;
+  username?: string;
   password_hash?: string;
   avatar_url?: string;
   email_verified: boolean;
+  is_anonymous: boolean;
   created_at: Date;
   updated_at: Date;
 }

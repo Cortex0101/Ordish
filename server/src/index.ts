@@ -9,6 +9,7 @@ import { waitForDatabase } from './utils/databaseHealth.js';
 import { initializeDatabase } from './db.js';
 import { log, initializeFileLogging } from './utils/logger.js';
 import { httpLogger, errorLogger } from './middleware/httpLogger.js';
+import { siteIdMiddleware } from './middleware/siteId.js';
 import passport, { initializePassport } from './config/passport.js';
 
 async function startServer() {
@@ -75,6 +76,9 @@ async function startServer() {
   // Initialize Passport
   app.use(passport.initialize());
   app.use(passport.session());
+  
+  // Add site-id middleware for anonymous user tracking
+  app.use(siteIdMiddleware);
   
   // Add HTTP logging middleware
   app.use(httpLogger);
