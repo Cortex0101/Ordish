@@ -5,9 +5,11 @@ export class Puzzle {
   center: string;
   consonants: string[];
   vowels: string[];
+  validWords: string[];
   totalWords: number;
   totalPoints: number;
   pangramCount: number;
+  pangrams: string[];
   rowCounts: Record<string, Record<number, number>>;
   colTotals: Record<number, number>;
   prefixCounts: Record<string, Record<string, number>>;
@@ -16,9 +18,11 @@ export class Puzzle {
     center: string,
     consonants: string[],
     vowels: string[],
+    validWords: string[],
     totalWords: number,
     totalPoints: number,
     pangramCount: number,
+    pangrams: string[],
     rowCounts: Record<string, Record<number, number>>,
     colTotals: Record<number, number>,
     prefixCounts: Record<string, Record<string, number>>
@@ -26,19 +30,49 @@ export class Puzzle {
     this.center = center;
     this.consonants = consonants;
     this.vowels = vowels;
+    this.validWords = validWords;
     this.totalWords = totalWords;
     this.totalPoints = totalPoints;
     this.pangramCount = pangramCount;
+    this.pangrams = pangrams;
     this.rowCounts = rowCounts;
     this.colTotals = colTotals;
     this.prefixCounts = prefixCounts;
   }
 
-  printTable() {
-    const all = [
+  toModel(): SpellingBeePuzzle {
+    const allLetters = [
       this.center,
       ...[...this.consonants, ...this.vowels].sort(),
     ];
+
+    return {
+      center: this.center,
+      letters: allLetters,
+      validWords: this.validWords,
+      maxPoints: this.totalPoints,
+      pangramCount: this.pangramCount,
+      pangrams: this.pangrams,
+      hints: {
+        twoLetterCounts: this.flattenPrefixCounts(),
+        wordsByLength: this.rowCounts,
+        lengthTotals: this.colTotals,
+      },
+    };
+  }
+
+  private flattenPrefixCounts(): Record<string, number> {
+    const result: Record<string, number> = {};
+    for (const [first, seconds] of Object.entries(this.prefixCounts)) {
+      for (const [second, count] of Object.entries(seconds)) {
+        result[`${first}${second}`] = count;
+      }
+    }
+    return result;
+  }
+
+  printTable() {
+    const all = [this.center, ...[...this.consonants, ...this.vowels].sort()];
 
     // 1) Print two-letter prefixes
     for (const first of all) {
@@ -71,10 +105,7 @@ export class Puzzle {
     const table = new Table({ columns });
 
     for (const L of all) {
-      const sum = lengths.reduce(
-        (s, n) => s + (this.rowCounts[L][n] || 0),
-        0
-      );
+      const sum = lengths.reduce((s, n) => s + (this.rowCounts[L][n] || 0), 0);
       if (!sum) continue;
 
       const row: Record<string, string | number> = { "": L };
@@ -103,6 +134,20 @@ interface WordData {
   len: number;
   first: string;
   baseScore: number;
+}
+
+interface SpellingBeePuzzle {
+  center: string;
+  letters: string[];
+  validWords: string[];
+  maxPoints: number;
+  pangramCount: number;
+  pangrams: string[];
+  hints: {
+    twoLetterCounts: Record<string, number>;
+    wordsByLength: Record<string, Record<number, number>>;
+    lengthTotals: Record<number, number>;
+  };
 }
 
 export class SpellingBee {
@@ -155,7 +200,7 @@ export class SpellingBee {
         !w.includes("'") &&
         !w.includes("-") &&
         !w.includes(" ") &&
-        !w.includes(".") 
+        !w.includes(".")
       ) {
         this.WORD_LIST.push(w);
       }
@@ -221,8 +266,10 @@ export class SpellingBee {
     numVowels: number,
     minScore = 150,
     maxScore = 250,
-    limit = Infinity
+    limit = Infinity,
+    timeLimitSec = 300
   ): Puzzle[] {
+    const startTime = new Date();
     if (numConsonants + numVowels !== 7) {
       throw new Error("consonants + vowels must equal 7");
     }
@@ -240,10 +287,7 @@ export class SpellingBee {
           consMask |= 1 << this.letterIndex[c];
         }
 
-        for (const vowelCombo of this.combinations(
-          this.VOWELS,
-          numVowels
-        )) {
+        for (const vowelCombo of this.combinations(this.VOWELS, numVowels)) {
           let vowelMask = 0;
           for (const v of vowelCombo) {
             vowelMask |= 1 << this.letterIndex[v];
@@ -251,10 +295,7 @@ export class SpellingBee {
 
           const centerMask = 1 << this.letterIndex[center];
           const puzzleMask = centerMask | consMask | vowelMask;
-          const header = [
-            center,
-            ...[...consCombo, ...vowelCombo].sort(),
-          ];
+          const header = [center, ...[...consCombo, ...vowelCombo].sort()];
 
           const rowCounts: Record<string, Record<number, number>> = {};
           const colTotals: Record<number, number> = {};
@@ -269,6 +310,7 @@ export class SpellingBee {
           let words: string[] = [];
           let totalPoints = 0;
           let pangramCount = 0;
+          let pangrams: string[] = [];
 
           for (const wd of bucket) {
             if ((wd.mask & ~puzzleMask) !== 0) continue;
@@ -278,11 +320,7 @@ export class SpellingBee {
             const isPangram = (wd.mask & puzzleMask) === puzzleMask;
             if (isPangram) {
               pangramCount++;
-              /*
-              console.log(
-                `Pangram found: ${wd.word} (${wd.mask.toString(2)})`
-              );
-              */
+              pangrams.push(wd.word);
             }
 
             const pts = wd.baseScore + (isPangram ? 7 : 0);
@@ -299,8 +337,7 @@ export class SpellingBee {
             const p0 = w[0],
               p1 = w[1];
             if (header.includes(p1)) {
-              prefixCounts[p0][p1] =
-                (prefixCounts[p0][p1] || 0) + 1;
+              prefixCounts[p0][p1] = (prefixCounts[p0][p1] || 0) + 1;
             }
           }
 
@@ -314,16 +351,30 @@ export class SpellingBee {
                 center,
                 consCombo,
                 vowelCombo,
+                words,
                 totalWords,
                 totalPoints,
                 pangramCount,
+                pangrams,
                 rowCounts,
                 colTotals,
                 prefixCounts
               )
             );
-            console.log(words)
-            if (results.length >= limit) return results;
+
+            console.log(
+              `Found puzzle nr ${results.length}: letters=${center}${[
+                ...consCombo,
+                ...vowelCombo,
+              ].join("")}`
+            );
+
+            if (
+              results.length >= limit ||
+              (new Date().getTime() - startTime.getTime()) / 1000 > timeLimitSec
+            ) {
+              return results;
+            }
           }
         }
       }
@@ -336,11 +387,29 @@ export class SpellingBee {
 // Example usage:
 const sb = new SpellingBee();
 const now = new Date();
-const puzzles = sb.findValidPuzzles(4, 3, 100, 175, 1);
-console.log("Generated puzzles " + puzzles.length + " in " + (new Date().getTime() - now.getTime()) + "ms");
+const puzzles = sb.findValidPuzzles(4, 3, 100, 175, 20000, 60 * 15);
+console.log(
+  `Generated ${puzzles.length} puzzles in ${
+    new Date().getTime() - now.getTime()
+  }ms`
+);
+
 if (puzzles.length > 0) {
-  for (const puzzle of puzzles) {
-    puzzle.printTable();
-    console.log("\n====================\n");
-  }
+  // Convert to models
+  const models = puzzles.map((p) => p.toModel());
+
+  // Write to JSON file
+  const outputPath = new URL(
+    "../src/assets/json/spellingBeeGames.json",
+    import.meta.url
+  );
+  fs.writeFileSync(outputPath, JSON.stringify(models, null, 2), "utf8");
+  console.log(`Saved ${models.length} puzzles to spellingBeeGames.json`);
+
+  // Print first puzzle as example
+  console.log("\nExample puzzle:");
+  puzzles[0].printTable();
+  console.log(
+    `\nPangrams for example puzzle: ${puzzles[0].pangrams.join(", ")}`
+  );
 }

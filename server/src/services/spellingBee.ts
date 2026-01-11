@@ -1,5 +1,7 @@
 import fs from "fs";
 import { log } from "../utils/logger.js";
+import { getPool } from "../db.js";
+import { SpellingBeePuzzle } from "../models/SpellingBeeGame.js";
 
 export class SpellingBeeService {
   wordList: string[] = [];
@@ -30,5 +32,10 @@ export class SpellingBeeService {
     return this.wordList;
   }
 
-  
+  async getPuzzle(puzzleId: number): Promise<SpellingBeePuzzle> {
+    const pool = getPool();
+    // 'SELECT * FROM spelling_bee_puzzles WHERE id = $1',
+    const [rows] = (await pool.query('SELECT * FROM spelling_bee_puzzles WHERE id = ?', [puzzleId])) as any;
+    return rows[0];
+  }
 }

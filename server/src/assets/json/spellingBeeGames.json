@@ -1,0 +1,953 @@
+[
+  {
+    "center": "b",
+    "letters": [
+      "b",
+      "c",
+      "e",
+      "h",
+      "i",
+      "o",
+      "r"
+    ],
+    "validWords": [
+      "bebe",
+      "bebo",
+      "bebo",
+      "bebor",
+      "beboer",
+      "beboere",
+      "beoer",
+      "berber",
+      "berbere",
+      "beriberi",
+      "bero",
+      "bero",
+      "bero",
+      "beror",
+      "bier",
+      "bier",
+      "bier",
+      "bioer",
+      "boer",
+      "bobbe",
+      "bobber",
+      "boer",
+      "boere",
+      "bore",
+      "borer",
+      "breche",
+      "brecher",
+      "brie",
+      "brier",
+      "brioche",
+      "briocher",
+      "broer",
+      "broche",
+      "brocher",
+      "bror",
+      "ebbe",
+      "ebbe",
+      "ebber",
+      "erobre",
+      "erobr",
+      "erobrer",
+      "erobrer",
+      "erobrere",
+      "hobe",
+      "hobe",
+      "hober",
+      "hobroer",
+      "hobroere",
+      "iberer",
+      "iberere",
+      "oboer",
+      "rebe",
+      "reber",
+      "ribbe",
+      "ribber",
+      "ribbe",
+      "ribber",
+      "robe",
+      "rober"
+    ],
+    "maxPoints": 151,
+    "pangramCount": 2,
+    "pangrams": [
+      "brioche",
+      "briocher"
+    ],
+    "hints": {
+      "twoLetterCounts": {
+        "be": 14,
+        "bi": 4,
+        "bo": 7,
+        "br": 10,
+        "eb": 3,
+        "er": 5,
+        "ho": 5,
+        "ib": 2,
+        "ob": 1,
+        "re": 2,
+        "ri": 4,
+        "ro": 2
+      },
+      "wordsByLength": {
+        "b": {
+          "4": 14,
+          "5": 9,
+          "6": 5,
+          "7": 5,
+          "8": 2
+        },
+        "c": {},
+        "e": {
+          "4": 2,
+          "5": 2,
+          "6": 1,
+          "7": 2,
+          "8": 1
+        },
+        "h": {
+          "4": 2,
+          "5": 1,
+          "7": 1,
+          "8": 1
+        },
+        "i": {
+          "6": 1,
+          "7": 1
+        },
+        "o": {
+          "5": 1
+        },
+        "r": {
+          "4": 2,
+          "5": 4,
+          "6": 2
+        }
+      },
+      "lengthTotals": {
+        "4": 20,
+        "5": 17,
+        "6": 9,
+        "7": 9,
+        "8": 4
+      }
+    }
+  },
+  {
+    "center": "b",
+    "letters": [
+      "b",
+      "c",
+      "e",
+      "h",
+      "o",
+      "r",
+      "u"
+    ],
+    "validWords": [
+      "bebe",
+      "bebo",
+      "bebo",
+      "bebor",
+      "beboer",
+      "beboere",
+      "beoer",
+      "berber",
+      "berbere",
+      "bero",
+      "bero",
+      "bero",
+      "beror",
+      "boer",
+      "bobbe",
+      "bobber",
+      "boer",
+      "boere",
+      "bore",
+      "borer",
+      "breche",
+      "brecher",
+      "broer",
+      "brobue",
+      "brobuer",
+      "broche",
+      "brocher",
+      "brochure",
+      "brochurer",
+      "bror",
+      "buer",
+      "buer",
+      "buhe",
+      "buher",
+      "bure",
+      "bure",
+      "burer",
+      "burre",
+      "burrer",
+      "ebbe",
+      "ebbe",
+      "ebber",
+      "erobre",
+      "erobr",
+      "erobrer",
+      "erobrer",
+      "erobrere",
+      "hobe",
+      "hobe",
+      "hober",
+      "hobroer",
+      "hobroere",
+      "hubber",
+      "oboer",
+      "rebe",
+      "reber",
+      "robe",
+      "rober",
+      "rubbe",
+      "rubber",
+      "rubber",
+      "rubbere"
+    ],
+    "maxPoints": 159,
+    "pangramCount": 2,
+    "pangrams": [
+      "brochure",
+      "brochurer"
+    ],
+    "hints": {
+      "twoLetterCounts": {
+        "be": 13,
+        "bo": 7,
+        "br": 10,
+        "bu": 9,
+        "eb": 3,
+        "er": 5,
+        "ho": 5,
+        "hu": 1,
+        "ob": 1,
+        "re": 2,
+        "ro": 2,
+        "ru": 4
+      },
+      "wordsByLength": {
+        "b": {
+          "4": 15,
+          "5": 10,
+          "6": 7,
+          "7": 5,
+          "8": 1,
+          "9": 1
+        },
+        "c": {},
+        "e": {
+          "4": 2,
+          "5": 2,
+          "6": 1,
+          "7": 2,
+          "8": 1
+        },
+        "h": {
+          "4": 2,
+          "5": 1,
+          "6": 1,
+          "7": 1,
+          "8": 1
+        },
+        "o": {
+          "5": 1
+        },
+        "r": {
+          "4": 2,
+          "5": 3,
+          "6": 2,
+          "7": 1
+        },
+        "u": {}
+      },
+      "lengthTotals": {
+        "4": 21,
+        "5": 17,
+        "6": 11,
+        "7": 9,
+        "8": 3,
+        "9": 1
+      }
+    }
+  },
+  {
+    "center": "b",
+    "letters": [
+      "b",
+      "a",
+      "c",
+      "e",
+      "j",
+      "n",
+      "o"
+    ],
+    "validWords": [
+      "aben",
+      "bacon",
+      "baconen",
+      "banan",
+      "bananen",
+      "bane",
+      "banen",
+      "bane",
+      "bane",
+      "banje",
+      "banjen",
+      "banjo",
+      "banjoen",
+      "bebe",
+      "bebo",
+      "bebo",
+      "bejae",
+      "beja",
+      "benene",
+      "bene",
+      "beoen",
+      "boaen",
+      "bobbe",
+      "bojan",
+      "bojanen",
+      "bonen",
+      "bonbon",
+      "bonbonen",
+      "bone",
+      "bone",
+      "ebbe",
+      "ebben",
+      "ebbe",
+      "jabbene",
+      "jabbe",
+      "jobbene",
+      "jobannonce",
+      "jobannoncen",
+      "jobbe",
+      "jobbe",
+      "nabo",
+      "naboen",
+      "oboen"
+    ],
+    "maxPoints": 116,
+    "pangramCount": 2,
+    "pangrams": [
+      "jobannonce",
+      "jobannoncen"
+    ],
+    "hints": {
+      "twoLetterCounts": {
+        "ba": 12,
+        "be": 8,
+        "bo": 9,
+        "ab": 1,
+        "eb": 3,
+        "ja": 2,
+        "jo": 5,
+        "na": 2,
+        "ob": 1
+      },
+      "wordsByLength": {
+        "b": {
+          "4": 10,
+          "5": 11,
+          "6": 3,
+          "7": 4,
+          "8": 1
+        },
+        "a": {
+          "4": 1
+        },
+        "c": {},
+        "e": {
+          "4": 2,
+          "5": 1
+        },
+        "j": {
+          "5": 3,
+          "7": 2,
+          "10": 1,
+          "11": 1
+        },
+        "n": {
+          "4": 1,
+          "6": 1
+        },
+        "o": {
+          "5": 1
+        }
+      },
+      "lengthTotals": {
+        "4": 14,
+        "5": 16,
+        "6": 4,
+        "7": 6,
+        "8": 1,
+        "10": 1,
+        "11": 1
+      }
+    }
+  },
+  {
+    "center": "b",
+    "letters": [
+      "b",
+      "a",
+      "c",
+      "e",
+      "l",
+      "n",
+      "u"
+    ],
+    "validWords": [
+      "aben",
+      "alba",
+      "albaen",
+      "albue",
+      "albuen",
+      "albue",
+      "albu",
+      "albueben",
+      "albuebenene",
+      "albueben",
+      "allé",
+      "alléen",
+      "ballen",
+      "balance",
+      "balancen",
+      "balle",
+      "ballen",
+      "balle",
+      "ballen",
+      "banal",
+      "banale",
+      "banan",
+      "bananen",
+      "bane",
+      "banen",
+      "bane",
+      "bane",
+      "bebe",
+      "benene",
+      "bene",
+      "bleen",
+      "buen",
+      "bullen",
+      "bullene",
+      "bulle",
+      "bule",
+      "bulen",
+      "bule",
+      "bulle",
+      "bullen",
+      "bullen",
+      "bulne",
+      "bulne",
+      "buln",
+      "ebbe",
+      "ebben",
+      "ebbe",
+      "labben",
+      "laban",
+      "labanen",
+      "labbe",
+      "label",
+      "labelen",
+      "labelene",
+      "label",
+      "labelene",
+      "leben",
+      "lubbe",
+      "lubben",
+      "ubalance",
+      "ubalancen",
+      "ublu"
+    ],
+    "maxPoints": 173,
+    "pangramCount": 2,
+    "pangrams": [
+      "ubalance",
+      "ubalancen"
+    ],
+    "hints": {
+      "twoLetterCounts": {
+        "ba": 15,
+        "be": 3,
+        "bl": 1,
+        "bu": 13,
+        "ab": 1,
+        "al": 11,
+        "eb": 3,
+        "la": 9,
+        "le": 1,
+        "lu": 2,
+        "ub": 3
+      },
+      "wordsByLength": {
+        "b": {
+          "4": 9,
+          "5": 11,
+          "6": 8,
+          "7": 3,
+          "8": 1
+        },
+        "a": {
+          "4": 4,
+          "5": 2,
+          "6": 3,
+          "8": 2,
+          "11": 1
+        },
+        "c": {},
+        "e": {
+          "4": 2,
+          "5": 1
+        },
+        "l": {
+          "5": 6,
+          "6": 2,
+          "7": 2,
+          "8": 2
+        },
+        "n": {},
+        "u": {
+          "4": 1,
+          "8": 1,
+          "9": 1
+        }
+      },
+      "lengthTotals": {
+        "4": 16,
+        "5": 20,
+        "6": 13,
+        "7": 5,
+        "8": 6,
+        "9": 1,
+        "11": 1
+      }
+    }
+  },
+  {
+    "center": "b",
+    "letters": [
+      "b",
+      "c",
+      "e",
+      "l",
+      "o",
+      "t",
+      "u"
+    ],
+    "validWords": [
+      "bebe",
+      "bebo",
+      "bebo",
+      "beboet",
+      "betel",
+      "betle",
+      "betl",
+      "betlet",
+      "betuttet",
+      "blot",
+      "blotet",
+      "blot",
+      "blotte",
+      "blot",
+      "blote",
+      "blot",
+      "blotet",
+      "blotte",
+      "blot",
+      "blottet",
+      "boet",
+      "boet",
+      "bobbe",
+      "bobbet",
+      "boble",
+      "boble",
+      "bobl",
+      "boblet",
+      "bole",
+      "bolet",
+      "bolle",
+      "bolle",
+      "bollet",
+      "bollet",
+      "bolt",
+      "bolte",
+      "bolte",
+      "bolt",
+      "boltet",
+      "boote",
+      "boot",
+      "bootet",
+      "bouclé",
+      "boucléet",
+      "boule",
+      "buet",
+      "buet",
+      "bulle",
+      "bule",
+      "bule",
+      "bulet",
+      "bulet",
+      "bulle",
+      "bullet",
+      "butte",
+      "buttet",
+      "ebbe",
+      "ebbe",
+      "ebbet",
+      "elbo",
+      "lobbet",
+      "lobbe",
+      "lobbet",
+      "lubbe",
+      "tube",
+      "ubeboet",
+      "ublu"
+    ],
+    "maxPoints": 143,
+    "pangramCount": 1,
+    "pangrams": [
+      "boucléet"
+    ],
+    "hints": {
+      "twoLetterCounts": {
+        "be": 9,
+        "bl": 11,
+        "bo": 25,
+        "bu": 11,
+        "eb": 3,
+        "el": 1,
+        "lo": 3,
+        "lu": 1,
+        "tu": 1,
+        "ub": 2
+      },
+      "wordsByLength": {
+        "b": {
+          "4": 20,
+          "5": 18,
+          "6": 15,
+          "7": 1,
+          "8": 2
+        },
+        "c": {},
+        "e": {
+          "4": 3,
+          "5": 1
+        },
+        "l": {
+          "5": 2,
+          "6": 2
+        },
+        "o": {},
+        "t": {
+          "4": 1
+        },
+        "u": {
+          "4": 1,
+          "7": 1
+        }
+      },
+      "lengthTotals": {
+        "4": 25,
+        "5": 21,
+        "6": 17,
+        "7": 2,
+        "8": 2
+      }
+    }
+  },
+  {
+    "center": "b",
+    "letters": [
+      "b",
+      "c",
+      "e",
+      "o",
+      "p",
+      "r",
+      "u"
+    ],
+    "validWords": [
+      "bebe",
+      "bebo",
+      "bebo",
+      "bebor",
+      "beboer",
+      "beboere",
+      "bebop",
+      "beoer",
+      "berber",
+      "berbere",
+      "bero",
+      "bero",
+      "bero",
+      "beror",
+      "boer",
+      "bobbe",
+      "bobber",
+      "boer",
+      "boere",
+      "bore",
+      "borer",
+      "broer",
+      "brobue",
+      "brobuer",
+      "bror",
+      "buer",
+      "buer",
+      "bure",
+      "bure",
+      "burer",
+      "burre",
+      "burrer",
+      "coupé",
+      "coupéer",
+      "ebbe",
+      "ebbe",
+      "ebber",
+      "epopé",
+      "epopéer",
+      "erobre",
+      "erobr",
+      "erobrer",
+      "erobrer",
+      "erobrere",
+      "oboer",
+      "peber",
+      "pebre",
+      "pebere",
+      "peber",
+      "pebre",
+      "pebr",
+      "pebrer",
+      "probere",
+      "prober",
+      "proberer",
+      "pubber",
+      "puré",
+      "puréer",
+      "rebe",
+      "reber",
+      "robe",
+      "rober",
+      "rubbe",
+      "rubber",
+      "rubber",
+      "rubbere"
+    ],
+    "maxPoints": 156,
+    "pangramCount": 1,
+    "pangrams": [
+      "coupéer"
+    ],
+    "hints": {
+      "twoLetterCounts": {
+        "be": 14,
+        "bo": 7,
+        "br": 4,
+        "bu": 7,
+        "co": 2,
+        "eb": 3,
+        "ep": 2,
+        "er": 5,
+        "ob": 1,
+        "pe": 7,
+        "pr": 3,
+        "pu": 3,
+        "re": 2,
+        "ro": 2,
+        "ru": 4
+      },
+      "wordsByLength": {
+        "b": {
+          "4": 14,
+          "5": 10,
+          "6": 5,
+          "7": 3
+        },
+        "c": {
+          "5": 1,
+          "7": 1
+        },
+        "e": {
+          "4": 2,
+          "5": 3,
+          "6": 1,
+          "7": 3,
+          "8": 1
+        },
+        "o": {
+          "5": 1
+        },
+        "p": {
+          "4": 2,
+          "5": 4,
+          "6": 5,
+          "7": 1,
+          "8": 1
+        },
+        "r": {
+          "4": 2,
+          "5": 3,
+          "6": 2,
+          "7": 1
+        },
+        "u": {}
+      },
+      "lengthTotals": {
+        "4": 20,
+        "5": 22,
+        "6": 13,
+        "7": 9,
+        "8": 2
+      }
+    }
+  },
+  {
+    "center": "b",
+    "letters": [
+      "b",
+      "a",
+      "d",
+      "e",
+      "f",
+      "l",
+      "y"
+    ],
+    "validWords": [
+      "abbed",
+      "abede",
+      "afblade",
+      "afblad",
+      "afbladede",
+      "afbladede",
+      "affabel",
+      "affable",
+      "alba",
+      "allé",
+      "baby",
+      "bade",
+      "bade",
+      "badede",
+      "balde",
+      "ballade",
+      "balle",
+      "balle",
+      "bebe",
+      "bede",
+      "bede",
+      "bede",
+      "befale",
+      "befal",
+      "befalede",
+      "blad",
+      "blade",
+      "blade",
+      "blad",
+      "bladede",
+      "blaf",
+      "blaf",
+      "blaffe",
+      "blaf",
+      "blaffede",
+      "byde",
+      "bydel",
+      "bydele",
+      "byld",
+      "daybed",
+      "dybe",
+      "dybde",
+      "ebbe",
+      "ebbe",
+      "ebbede",
+      "fabel",
+      "fable",
+      "fabl",
+      "fablede",
+      "fablea",
+      "falbyde",
+      "falbyd",
+      "flab",
+      "flabe",
+      "flabede",
+      "labbe",
+      "labbede",
+      "label",
+      "label"
+    ],
+    "maxPoints": 145,
+    "pangramCount": 1,
+    "pangrams": [
+      "falbyde"
+    ],
+    "hints": {
+      "twoLetterCounts": {
+        "ba": 8,
+        "be": 7,
+        "bl": 10,
+        "by": 4,
+        "ab": 2,
+        "af": 6,
+        "al": 2,
+        "da": 1,
+        "dy": 2,
+        "eb": 3,
+        "fa": 7,
+        "fl": 3,
+        "la": 4
+      },
+      "wordsByLength": {
+        "b": {
+          "4": 14,
+          "5": 7,
+          "6": 4,
+          "7": 2,
+          "8": 2
+        },
+        "a": {
+          "4": 2,
+          "5": 2,
+          "6": 1,
+          "7": 3,
+          "9": 2
+        },
+        "d": {
+          "4": 1,
+          "5": 1,
+          "6": 1
+        },
+        "e": {
+          "4": 2,
+          "6": 1
+        },
+        "f": {
+          "4": 2,
+          "5": 3,
+          "6": 2,
+          "7": 3
+        },
+        "l": {
+          "5": 3,
+          "7": 1
+        },
+        "y": {}
+      },
+      "lengthTotals": {
+        "4": 21,
+        "5": 16,
+        "6": 9,
+        "7": 9,
+        "8": 2,
+        "9": 2
+      }
+    }
+  }
+]
