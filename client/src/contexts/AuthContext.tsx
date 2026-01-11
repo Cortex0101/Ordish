@@ -51,8 +51,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const htmlElement = document.documentElement;
     
     if (theme === 'auto') {
-      // Remove data-bs-theme to use system preference
-      htmlElement.removeAttribute('data-bs-theme');
+      // Detect system preference
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      htmlElement.setAttribute('data-bs-theme', prefersDark ? 'dark' : 'light');
     } else {
       // Set explicit theme
       htmlElement.setAttribute('data-bs-theme', theme);

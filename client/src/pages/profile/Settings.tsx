@@ -18,6 +18,7 @@ const Settings: React.FC = () => {
   const { user, preferences, updatePreferences } = useAuth();
 
   const handleThemeChange = async (theme: "light" | "dark" | "auto") => {
+    console.log("Preferences before update:", preferences);
     if (preferences) {
       await updatePreferences({ ...preferences, theme });
     }
@@ -179,7 +180,7 @@ const Settings: React.FC = () => {
                   <Form.Select
                     className="w-25"
                     size="sm"
-                    value={preferences?.theme || "auto"}
+                    value={preferences?.theme || "dark"}
                     onChange={(e) =>
                       handleThemeChange(
                         e.target.value as "light" | "dark" | "auto"
