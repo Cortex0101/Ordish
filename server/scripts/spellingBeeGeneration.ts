@@ -278,9 +278,11 @@ export class SpellingBee {
             const isPangram = (wd.mask & puzzleMask) === puzzleMask;
             if (isPangram) {
               pangramCount++;
+              /*
               console.log(
                 `Pangram found: ${wd.word} (${wd.mask.toString(2)})`
               );
+              */
             }
 
             const pts = wd.baseScore + (isPangram ? 7 : 0);
@@ -337,5 +339,8 @@ const now = new Date();
 const puzzles = sb.findValidPuzzles(4, 3, 100, 175, 1);
 console.log("Generated puzzles " + puzzles.length + " in " + (new Date().getTime() - now.getTime()) + "ms");
 if (puzzles.length > 0) {
-  puzzles[0].printTable();
+  for (const puzzle of puzzles) {
+    puzzle.printTable();
+    console.log("\n====================\n");
+  }
 }
