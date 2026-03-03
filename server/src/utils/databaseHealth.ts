@@ -1,5 +1,23 @@
 import { getPool } from '../db.js';
-import { log } from './logger.js';
+
+function getReadableDbError(error: any): string {
+  const message = error?.message?.toString?.().trim();
+  if (message) {
+    return message;
+  }
+
+  const sqlMessage = error?.sqlMessage?.toString?.().trim();
+  if (sqlMessage) {
+    return sqlMessage;
+  }
+
+  const code = error?.code?.toString?.().trim();
+  if (code) {
+    return `Database error: ${code}`;
+  }
+
+  return 'Unknown database error';
+}
 
 /**
  * Check if all required tables exist in the database
@@ -38,7 +56,7 @@ export async function checkDatabaseHealth(): Promise<{ healthy: boolean; missing
     return {
       healthy: false,
       missingTables: [],
-      error: error.message
+      error: getReadableDbError(error)
     };
   }
 }
@@ -56,7 +74,7 @@ export async function waitForDatabase(maxRetries = 100, retryInterval = 2000): P
         return;
       }
       
-      if (health.error) {
+      if (health.error !== undefined) {
         console.log(`⏳ Database connection attempt ${i + 1}/${maxRetries}: ${health.error}`);
       } else {
         console.log(`⏳ Database connected but missing tables: ${health.missingTables.join(', ')}`);

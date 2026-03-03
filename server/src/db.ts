@@ -12,18 +12,25 @@ export function initializeDatabase() {
     return pool;
   }
 
+  const dbHost = process.env.DB_HOST || '127.0.0.1';
+  const dbPort = parseInt(process.env.DB_PORT || '3307', 10);
+  const dbUser = process.env.DB_USER || 'root';
+  const dbPassword = process.env.DB_PASSWORD || 'devpassword';
+  const dbName = process.env.DB_NAME || 'ordish_db_dev';
+
   log.info('Initializing database connection', {
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    database: process.env.DB_NAME,
+    host: dbHost,
+    port: dbPort,
+    user: dbUser,
+    database: dbName,
   });
 
   pool = mysql.createPool({
-    host: process.env.DB_HOST as string,
-    port: parseInt(process.env.DB_PORT || '3306'),
-    user: process.env.DB_USER as string,
-    password: process.env.DB_PASSWORD as string,
-    database: process.env.DB_NAME as string,
+    host: dbHost,
+    port: dbPort,
+    user: dbUser,
+    password: dbPassword,
+    database: dbName,
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0,
