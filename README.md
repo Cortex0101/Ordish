@@ -1,6 +1,6 @@
 # Ordish
 
-A modern full-stack web application built with React, TypeScript, Express, and MariaDB. Features include internationalization support, React Bootstrap UI components, and Docker-based database management.
+A modern full-stack web application built with React, TypeScript, Express, and MariaDB. Features include user authentication with OAuth (Google, Facebook, Apple), session management, internationalization support, React Bootstrap UI components, and Docker-based database management.
 
 ## 🚀 Quick Start
 
@@ -21,34 +21,51 @@ ordish/
 ├── client/                    # React Frontend (TypeScript + Vite)
 │   ├── src/
 │   │   ├── components/        # Reusable React components
-│   │   ├── pages/            # Page components (Home, Login, Wordle)
-│   │   ├── locales/          # i18n translation files
-│   │   ├── assets/           # Images, fonts, etc.
-│   │   ├── App.tsx           # Main React component
-│   │   ├── main.tsx          # React entry point
-│   │   ├── index.scss        # Global styles with Bootstrap
-│   │   └── i18n.ts           # Internationalization config
-│   ├── public/               # Static assets (favicon, etc.)
-│   ├── dist/                 # Built React app (generated)
-│   ├── vite.config.ts        # Vite config with API proxy
-│   └── package.json          # Client dependencies
+│   │   │   ├── Header/        # Navigation header
+│   │   │   └── ThemeToggle/   # Dark/light theme switcher
+│   │   ├── pages/             # Page components
+│   │   │   ├── home/          # Home page
+│   │   │   ├── about/         # About page
+│   │   │   ├── login/         # Login and SignUp pages
+│   │   │   └── profile/       # Profile and Settings pages
+│   │   ├── contexts/          # React contexts (Auth, Theme)
+│   │   ├── locales/           # i18n translation files (en, da)
+│   │   ├── utils/             # Utility functions
+│   │   ├── assets/            # Images, fonts, etc.
+│   │   ├── App.tsx            # Main React component
+│   │   ├── main.tsx           # React entry point
+│   │   ├── index.scss         # Global styles with Bootstrap
+│   │   └── i18n.ts            # Internationalization config
+│   ├── tests/                 # Playwright tests
+│   ├── public/                # Static assets (favicon, etc.)
+│   ├── dist/                  # Built React app (generated)
+│   ├── vite.config.ts         # Vite config with API proxy
+│   └── package.json           # Client dependencies
 ├── server/                    # Express Backend (TypeScript)
 │   ├── src/
-│   │   ├── routes/           # API route handlers
-│   │   ├── WordleCruncher/   # Wordle game logic
-│   │   ├── benchmarks/       # Performance benchmarks
-│   │   ├── index.ts          # Main server file
-│   │   └── db.ts             # Database connection pool
-│   ├── dist/                 # Compiled TypeScript (generated)
-│   ├── .env.development      # Development environment variables
-│   ├── .env.production       # Production environment variables
-│   ├── tsconfig.json         # TypeScript configuration
-│   ├── jest.config.cjs       # Jest testing configuration
-│   └── package.json          # Server dependencies
+│   │   ├── routes/            # API route handlers
+│   │   ├── services/          # Business logic (auth, user management)
+│   │   ├── middleware/        # Express middleware
+│   │   ├── models/            # Database models
+│   │   ├── config/            # Configuration (passport, database)
+│   │   ├── utils/             # Utility functions
+│   │   ├── assets/            # Server assets (CSV files, etc.)
+│   │   ├── index.ts           # Main server file
+│   │   └── db.ts              # Database connection pool
+│   ├── database/
+│   │   ├── init.sql           # Database initialization script
+│   │   └── migrations/        # Database migrations
+│   ├── scripts/               # Utility scripts (initDb, checkDb)
+│   ├── dist/                  # Compiled TypeScript (generated)
+│   ├── .env.example           # Example environment variables
+│   ├── tsconfig.json          # TypeScript configuration
+│   ├── jest.config.cjs        # Jest testing configuration
+│   └── package.json           # Server dependencies
 ├── docker-compose.yml         # MariaDB container setup
-├── package.json              # Root scripts and dependencies
-├── DEPLOYMENT.md             # Deployment instructions
-└── .gitignore                # Git ignore rules
+├── package.json               # Root scripts and dependencies
+├── DEPLOYMENT.md              # Deployment instructions
+├── GOOGLE_OAUTH_SETUP.md      # Google OAuth setup guide
+└── .gitignore                 # Git ignore rules
 ```
 
 ## 🛠 Prerequisites
@@ -79,24 +96,39 @@ This installs:
 
 ### 3. Setup Environment Variables
 
-Create environment files in the `server/` directory:
+Create environment file in the `server/` directory based on the example:
 
-**`.env.development`:**
+**`server/.env.development`** (or copy from `.env.example`):
 ```bash
-# Server development Configuration
+# Server Configuration
 PORT=3001
+NODE_ENV=development
 
 # Database
 DB_HOST=127.0.0.1
+DB_PORT=3306
 DB_USER=root
 DB_PASSWORD=devpassword
-DB_NAME=woordle_db_dev
+DB_NAME=ordish_db_dev
+
+# Session Secret (change in production!)
+SESSION_SECRET=your-super-secret-session-key-change-in-production
+
+# OAuth Credentials (optional - see GOOGLE_OAUTH_SETUP.md)
+GOOGLE_CLIENT_ID=your-google-client-id
+GOOGLE_CLIENT_SECRET=your-google-client-secret
+GOOGLE_CALLBACK_URL=http://localhost:3000/api/auth/google/callback
 ```
+
+> **Note**: For OAuth setup, see [GOOGLE_OAUTH_SETUP.md](GOOGLE_OAUTH_SETUP.md)
 
 ### 4. Start MariaDB Database
 ```bash
 # Start MariaDB container
 docker compose up -d
+
+# Initialize database tables
+npm run dev:db:init
 
 # Verify it's running
 docker ps
@@ -106,15 +138,16 @@ docker ps
 
 ### Start Everything at Once
 ```bash
-# Starts database, client, and server
-npm run dev:all
+# Recommended: Starts database, initializes tables, client, and server
+npm run dev
 ```
 
 This command:
 1. Starts MariaDB Docker container
-2. Runs React dev server on `http://localhost:5173/`
-3. Runs Express API server on `http://localhost:3001/`
-4. Automatically stops database when you exit
+2. Initializes database tables if needed
+3. Runs React dev server on `http://localhost:5173/`
+4. Runs Express API server on `http://localhost:3001/`
+5. Automatically stops database when you exit
 
 ### Individual Commands
 ```bash
@@ -127,8 +160,14 @@ npm run dev:server
 # Database only
 npm run dev:db
 
-# Combined frontend + backend (no DB)
-npm run dev
+# Initialize/reset database tables
+npm run dev:db:init
+
+# Check database status
+npm run dev:db:check
+
+# Combined frontend + backend (assumes DB already running)
+npm run dev:quick
 ```
 
 ### Database Management
@@ -136,15 +175,25 @@ npm run dev
 # Start database
 docker compose up -d
 
+# Initialize/reset tables to default schema
+npm run dev:db:init
+
+# Check database status
+npm run dev:db:check
+
 # Stop database
 docker compose down
 
-# Reset database (removes all data)
+# Reset database (removes all data and volumes)
 docker compose down -v
 docker compose up -d
+npm run dev:db:init
+
+# View database logs
+npm run dev:db:logs
 
 # Access MariaDB CLI
-docker exec -it <container_name> mariadb -u root -p
+docker exec -it ordish-mariadb-1 mariadb -u root -pdevpassword ordish_db_dev
 ```
 
 ## 🔧 Build Process
@@ -195,45 +244,51 @@ The project includes VS Code debug configurations for full-stack debugging:
 ### Manual Debug Commands
 ```bash
 # Start individual components for debugging
-npm run dev:db           # Database only
-npm run dev:db:init      # reinitialize tables to default values
+npm run dev:db           # Start database
+npm run dev:db:init      # Initialize/reset tables
 npm run dev:client       # React dev server
 npm run dev:server       # Express with debugging enabled
-
-# normal flow
-npm run dev:db           # Database only
-npm run dev:db:init      # reinitialize tables to default values
-npm run dev:all
 ```
 
-## 🧪 Testing & Benchmarking
+## 🧪 Testing
 
-### Unit Tests
+### Client Tests (Playwright)
+```bash
+# Run all tests
+cd client
+npm test
+
+# Run tests in UI mode
+npm run test:ui
+
+# Run tests in headed mode (see browser)
+npm run test:headed
+
+# Run specific test suite
+npm run test:auth
+
+# View test report
+npm run test:report
+```
+
+### Server Tests (Jest)
 ```bash
 # Run server tests
 cd server
 npm test
-
-# Run client tests (when available)
-cd client
-npm test
-```
-
-### Performance Benchmarks
-```bash
-# Run all server benchmarks
-cd server
-npm run bench
 ```
 
 ## 📚 Available Scripts
 
 ### Root Scripts
-- `npm run dev` - Start client and server dev mode
-- `npm run dev:all` - Start database, client, and server
+- `npm run dev` - Start database, initialize tables, client, and server
+- `npm run dev:quick` - Start client and server (assumes DB running)
 - `npm run dev:db` - Start MariaDB container
+- `npm run dev:db:init` - Initialize/reset database tables
+- `npm run dev:db:check` - Check database status
+- `npm run dev:db:logs` - View database logs
 - `npm run build` - Build client and server for production
-- `npm run start` - Start production server
+- `npm start` - Start production server
 - `npm run install:all` - Install all dependencies
 
 ### Client Scripts (`client/`)
@@ -241,13 +296,14 @@ npm run bench
 - `npm run build` - Build React app for production
 - `npm run preview` - Preview production build
 - `npm run lint` - Run ESLint
+- `npm test` - Run Playwright tests
+- `npm run test:ui` - Run tests in UI mode
 
 ### Server Scripts (`server/`)
 - `npm run dev` - Start Express dev server with watch mode
 - `npm run build` - Compile TypeScript to JavaScript
 - `npm run start` - Start production server
-- `npm run test` - Run Jest unit tests
-- `npm run bench` - Run performance benchmarks
+- `npm test` - Run Jest unit tests
 
 ## 🌐 Technology Stack
 
@@ -266,10 +322,19 @@ npm run bench
 - **Express 4.21.2** - Web framework
 - **TypeScript** - Type safety
 - **mysql2** - MariaDB/MySQL client
+- **Passport.js** - Authentication middleware
+  - Google OAuth 2.0
+  - Facebook OAuth
+  - Apple OAuth
+  - Local strategy (username/password)
+- **bcrypt** - Password hashing
+- **express-session** - Session management
+- **jsonwebtoken** - JWT tokens
 - **dotenv** - Environment variable management
 - **cors** - Cross-origin resource sharing
+- **winston** - Logging
 - **Jest** - Unit testing
-- **Benchmark.js** - Performance testing
+- **validator** - Input validation
 
 ### Database
 - **MariaDB 11** - Primary database
@@ -280,6 +345,28 @@ npm run bench
 - **Concurrently** - Run multiple commands
 - **tsx** - TypeScript execution
 - **Docker** - Database containerization
+- **Playwright** - End-to-end testing
+
+## 🔐 Authentication
+
+The application supports multiple authentication methods:
+
+### Local Authentication
+- Email/password registration and login
+- Password hashing with bcrypt
+- Email verification (structure in place)
+
+### OAuth Authentication
+- **Google** - Sign in with Google account
+- **Facebook** - Sign in with Facebook account
+- **Apple** - Sign in with Apple ID
+
+For OAuth setup instructions, see [GOOGLE_OAUTH_SETUP.md](GOOGLE_OAUTH_SETUP.md)
+
+### Session Management
+- Express sessions with secure cookies
+- Session persistence in database
+- Automatic session cleanup
 
 ## 🌍 Internationalization
 
@@ -312,117 +399,92 @@ Translation files are organized by namespace:
 - API Base: `http://localhost:3000/api/`
 - Test Endpoint: `http://localhost:3000/api/test`
 
-## Database
+## 💾 Database Schema
 
-CREATE TABLE users (
-  id INT PRIMARY KEY AUTO_INCREMENT,
-  email VARCHAR(255) UNIQUE NOT NULL,
-  password_hash VARCHAR(255), -- NULL for social logins
-  first_name VARCHAR(100),
-  last_name VARCHAR(100),
-  avatar_url TEXT,
-  email_verified BOOLEAN DEFAULT FALSE,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-);
+The application uses MariaDB with the following main tables:
 
-CREATE TABLE social_accounts (
-  id INT PRIMARY KEY AUTO_INCREMENT,
-  user_id INT NOT NULL,
-  provider ENUM('google', 'apple', 'facebook') NOT NULL,
-  provider_id VARCHAR(255) NOT NULL, -- ID from the social provider
-  provider_email VARCHAR(255),
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-  UNIQUE KEY unique_provider_account (provider, provider_id)
-);
+- **users** - User accounts (email, username, password, avatar)
+- **social_accounts** - OAuth provider accounts linked to users
+- **user_preferences** - User settings (theme, language, timezone)
+- **user_sessions** - Active user sessions
 
-CREATE TABLE user_preferences (
-  id INT PRIMARY KEY AUTO_INCREMENT,
-  user_id INT NOT NULL,
-  theme ENUM('light', 'dark', 'auto') DEFAULT 'auto',
-  language VARCHAR(10) DEFAULT 'en',
-  timezone VARCHAR(50) DEFAULT 'UTC',
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
-);
+The complete schema is defined in `server/database/init.sql`.
 
-CREATE TABLE user_sessions (
-  id INT PRIMARY KEY AUTO_INCREMENT,
-  user_id INT NOT NULL,
-  token_hash VARCHAR(255) NOT NULL,
-  expires_at TIMESTAMP NOT NULL,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-  INDEX idx_token_hash (token_hash),
-  INDEX idx_expires_at (expires_at)
-);
+### Database Initialization
+
+The database is automatically initialized when you run:
+```bash
+npm run dev:db:init
+```
+
+This script creates all necessary tables and indexes. To reset the database to a clean state, use:
+```bash
+docker compose down -v  # Remove all data
+docker compose up -d    # Start fresh
+npm run dev:db:init     # Recreate tables
+```
 
 ## 🐛 Troubleshooting
 
-### Common Issues
+### Database Connection Issues
 
-**Database tables missing (shows "Database connected but missing tables"):**
+**Error: Database tables missing**
 ```bash
-# The init.sql script doesn't run if the Docker volume already exists
-# Solution: Manually create tables
-Get-Content server/database/init.sql | docker exec -i ordish-mariadb-1 mariadb -u root -pdevpassword ordish_db_dev
+# Initialize tables
+npm run dev:db:init
 
-# OR reset database completely (removes all data)
+# Or reset database completely
 docker compose down -v
 docker compose up -d
+npm run dev:db:init
 ```
 
-**Authentication method failures:**
+**Error: Port 3306 already in use**
 ```bash
-# Check if another MariaDB instance is running
-netstat -ano | findstr :3306
+# Check if another MariaDB is running
+netstat -ano | findstr :3306  # Windows
+lsof -i :3306                 # Linux/Mac
 
-# Kill conflicting process
-taskkill /pid <PID> /F
-
-# Restart with clean database
-docker compose down -v
-docker compose up -d
+# Stop Docker container
+docker compose down
 ```
 
-**Port conflicts:**
+**Error: Cannot connect to database**
 ```bash
-# Check what's using a port
-netstat -ano | findstr :3000
-netstat -ano | findstr :5173
-
-# Kill process by PID
-Stop-Process -Id <PID> -Force
-```
-
-**Database connection errors:**
-```bash
-# Ensure MariaDB is running
+# Check if container is running
 docker ps
 
-# Check container logs
-docker logs ordish-mariadb-1
+# View container logs
+npm run dev:db:logs
 
-# Test connection manually
-docker exec -it ordish-mariadb-1 mariadb -u root -pdevpassword ordish_db_dev
-
-# Reset database (removes all data)
-docker compose down -v && docker compose up -d
+# Restart database
+docker compose restart mariadb
 ```
 
-**Environment variables not loading:**
+### Application Issues
+
+**Port conflicts (3000, 3001, 5173)**
+```bash
+# Windows: Find process using port
+netstat -ano | findstr :5173
+taskkill /pid <PID> /F
+
+# Linux/Mac: Find and kill process
+lsof -i :5173
+kill <PID>
+```
+
+**Environment variables not loading**
 - Ensure `.env.development` exists in `server/` directory
 - Restart the server after editing env files
-- Check that dynamic imports are used in server startup
+- Verify environment variables are correctly formatted
 
-**Debug mode not hitting breakpoints:**
-- Ensure you're using "Debug Full Stack" configuration
-- Set breakpoints in server TypeScript files (not compiled JS)
-- Make sure the request actually reaches your breakpoint code path
+**OAuth authentication not working**
+- See [GOOGLE_OAUTH_SETUP.md](GOOGLE_OAUTH_SETUP.md) for setup instructions
+- Verify OAuth credentials in `.env.development`
+- Check callback URLs match Google Console configuration
 
-**Build errors:**
+**Build errors**
 ```bash
 # Clear build cache
 rm -rf client/dist server/dist
@@ -434,10 +496,3 @@ npm run install:all
 ## 📄 License
 
 This project is private and not licensed for public use.
-
-## Known issues
-If starting the database fails with (authententicaiton method xxxxx failed), a different 
-mariadb might be runnning
-
-1. Run netstat -ano -p tcp
-2. See if anything is running on port 3000/3006, if so do taskkill /pid xyxy /F    
